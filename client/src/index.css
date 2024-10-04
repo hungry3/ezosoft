@@ -1,0 +1,55 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+img {
+  pointer-events: none;
+}
+
+:root {
+  font-family:"Exo 2";
+  line-height: 1.5;
+  font-weight: 400;
+
+
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+@font-face {
+  font-family: 'Exo 2';
+  src: url('./assets/fonts/static/Exo2-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Exo 2';
+  src: url('./assets/fonts/static/Exo2-Medium.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+.bouncing-image {
+  animation: bounce 3s infinite;
+}

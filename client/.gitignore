@@ -1,0 +1,64 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build output
+dist/
+build/
+
+# Vite
+.vite/
+*.temp
+
+# Static files
+/public/temp/
+
+# Dependency directories
+/.pnp
+.pnp.js
+
+# IDE-specific files (optional)
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# TypeScript cache
+*.tsbuildinfo
+
+# MacOS files
+.DS_Store
+
+# Optional JetBrains IDE settings
+/.idea/
+
+# Windows thumbnail cache files
+Thumbs.db
+
+# Cloudinary temporary files
+public/uploads/temp/
+
+# Miscellaneous
+*.bak
