@@ -77,7 +77,7 @@ const Navbar = () => {
         </div>
 
         <NavLink to="/signup">
-        <div className="flex-shrink-0">
+        <div className="hidden sm:flex-shrink-0">
           <button className="bg-grey  hover:bg-gradient hover:border border-white text-white px-4 py-2 font-[600] rounded-md hover:bg- font-[Poppins]">
           Start Free Trial
           </button>
@@ -114,16 +114,9 @@ const Navbar = () => {
              isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
           >
-            Product
+            Home
           </NavLink>
-          <NavLink
-            to="/solution"
-            className={({ isActive }) =>
-              isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
-            }
-          >
-            Solution
-          </NavLink>
+         
           <NavLink
             to="/resources"
             className={({ isActive }) =>

@@ -3,7 +3,7 @@ import Icon from '/src/assets/images/blog-categories-forward-icon.svg'
 import { useQuery } from '@tanstack/react-query';
 import { axiosConfig } from '../../utils/axiosConfig'
 import formatDate from '../../utils/dateFormat'
-import BlogLoader from '../Loaders/blogLoader'
+import BlogLoader from '../Loaders/BlogLoader'
 import { NavLink } from 'react-router-dom'
 
 const fetchBlogs = async () => {
