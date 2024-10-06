@@ -1,5 +1,5 @@
 import React from 'react'
-import Hero from '../blog-inner-page/Hero'
+import Hero from '../Blog-Inner-Page/Hero'
 import Navbar from '../Navbar'
 
 const BlogNavbar = () => {

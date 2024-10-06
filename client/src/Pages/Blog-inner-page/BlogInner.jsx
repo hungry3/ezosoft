@@ -1,5 +1,3 @@
-
-
 import Section1 from '../../components/Blog-Inner-Page/Section1'
 import Trial from '../../components/home-page/Trial'
 import Footer from '../../components/Footer'

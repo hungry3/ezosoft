@@ -1,5 +1,4 @@
-// import React from 'react'
-// import Dashboard from '/src/assets/images/about-dashboard.svg'
+
 
 const  Hero =({tittle,subtittle}) => {
   return (
