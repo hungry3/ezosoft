@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
- const baseURL = import.meta.env.VITE_API_BASE_URL|| 'http://api.ezosoft.com/'
+ const baseURL = `${import.meta.env.VITE_API_BASE_URL}/api`|| 'http://api.ezosoft.com/api'
 
 export const axiosConfig =  axios.create({
     baseURL,
