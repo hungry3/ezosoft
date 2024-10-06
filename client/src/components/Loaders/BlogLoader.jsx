@@ -1,5 +1,3 @@
-
-
 const BlogLoader = () => {
     return (
         <div className='flex flex-col mt-[31px] max-w-[396px] w-full border border-[#EBEBEB] rounded-xl animate-pulse'>

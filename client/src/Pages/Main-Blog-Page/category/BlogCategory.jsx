@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 
 import { axiosConfig } from '../../../utils/axiosConfig';
-import BlogLoader from '../../../components/Loaders/blogLoader';
+import BlogLoader from '../../../components/Loaders/BlogLoader';
 import formatDate from '../../../utils/dateFormat';
 import Navbar from '../../../components/Navbar';
 import BlogNavbar from '../../../components/Main-Blog/BlogNavbar';
