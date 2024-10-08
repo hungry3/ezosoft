@@ -34,11 +34,9 @@ import SingleTemplate from "./Pages/singletemplate/SingleTemplate.jsx";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckOutForm from "./Pages/checkout/CeckoutForm.jsx";
+// import CheckOutForm from "./Pages/checkout/CeckoutForm.jsx";
 
-const stripePromise = loadStripe(
-  "pk_test_51PpoZ0JAqu9i4Tpd9eQshFnir4xKLoCn6D54SyChw3yJbHzgwokgmPa20jG4r6njoky3gWQgKyoKfYzFvc9OzKjs00iUUo7Dh5"
-);
+
 
 const queryClient = new QueryClient();
 function App() {
@@ -84,11 +82,7 @@ function App() {
                   <Route path="/contactSupport" element={<ContactSupport />} />
                   <Route path="/documents" element={<Documents />} />
                   <Route path="/document1" element={<Document1 />} />
-                  <Route path ='/checkout' element={
-                  <Elements  stripe={stripePromise} >
-                  <CheckOutForm/>
-                  </Elements>
-                  } />
+                 
 
                   {/* <Route path="/template" element={<Template/>} /> */}
                   <Route path="/presentation" element={<Presentation />} />

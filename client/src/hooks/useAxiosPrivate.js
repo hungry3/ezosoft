@@ -7,7 +7,6 @@ const useAxiosPrivate = () => {
     const refresh = useRefreshToken();
     const { auth } = useAuth();
 
-    console.log("useAuth returned:", auth);
 
     useEffect(() => {
         // If auth is null, do nothing and skip axios setup

@@ -9,282 +9,141 @@ import crypto from 'crypto'
 import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// const UserSubscriptionPlan = asyncHandler(async(req,res,next)=>{
-//   try{
-//     const {planId,customTeamOptionId,paymentMethodId} =req.body;
-//     const userId = req.user.id;
-
-//     console.log("userid>>>>>>>>>>>>>",userId);
-    
-
-//     const Plan = await SubscriptionPlan.findById(planId)
-//     if (!Plan) {
-//       return next(new ErrorHandler('Subscription Plan not found', 404));
-//     }
-//     const user = await User.findById(userId);
-//     console.log("userasdlkjfkjahsfk",user)
-
-//     if (!user) {
-//       return next(new ErrorHandler('User not found', 404));
-//     }
-
-//     // let discountPercentage = 0;
-//     // if (user.paymentCount >= 1) {
-//     //   discountPercentage = 10; 
-//     // }
-
-  
-
-//     const now = new Date();
-//     let endDate ;
-// if(Plan.duration ==="Monthly"){
-//   endDate = new Date(now.setMonth(now.getMonth()+1))
-
-// }
-// else if(Plan.duration === "Yearly"){
-//   endDate = new Date(now.setFullYear(now.getFullYear()+1))
-// }
-
-// if(Plan.planName=== 'Custom Team'){
-//   if(!Plan.customTeamOptions || Plan.customTeamOptions.length === 0){
-//     return next(new ErrorHandler('Please provide custom team options', 400));
-//   }
-
-
-
-// const selectedCustomTeamOption = Plan.customTeamOptions.find(
-//   (option) => option._id.toString() === customTeamOptionId
-// );
-
-// if (!selectedCustomTeamOption) {
-//   return next(new ErrorHandler('Invalid custom team option selected', 400));
-// }
-
-// const totalPrice = selectedCustomTeamOption.userCount * selectedCustomTeamOption.pricePerUser * (1 - selectedCustomTeamOption.discount / 100);
-
-// Plan.price = totalPrice;
-
-// }
-
-//    let stripeCustomerId = user.stripeCustomerId
-
-//    if(!stripeCustomerId){
-
-//     const customer = await stripe.customers.create({
-//       email:user.email,
-//       name:`${user.firstName} ${user.lastName}`,
-//       payment_method : paymentMethodId,
-//       invoice_setting:{
-//         default_payment_method:paymentMethodId
-//       }
-//     })
-
-//     stripeCustomerId = customer.id
-
-//     user.stripeCustomerId = stripeCustomerId
-//    }
-   
-    
-//      await stripe.paymentMethods.attach(paymentMethodId, {
-//       customer: stripeCustomerId,
-//     });
-//      await  stripe.customers.update(stripeCustomerId,{
-//       invoice_settings:{
-//         default_payment_method:paymentMethodId
-//       },
-//      })
-
-
-//      const subscription = await stripe.subscriptions.create({
-//       customer:stripeCustomerId,
-//       items:[{
-//         price_data:{
-//           currency:'usd',
-//           // product:Plan.stripeProductId,
-//           unit_amount:Math.round(totalPrice*100),
-//           recurring:{
-//             interval: Plan.duration === 'Monthly' ? 'month' : 'year',
-//           }
-//         }
-//       }],
-//       payment_behavior: 'default_incomplete',
-//       // expand: ['latest_invoice.payment_intent'],
-//       expand: ['latest_invoice.payment_intent']
-//      })
-
-//      const latestInvoice = subscription.latest_invoice;
-//      const paymentIntent = latestInvoice.payment_intent;
-//      const clientSecret = paymentIntent.client_secret;
-   
-
-
-
-// await Plan.save();
-
-// user.subscriptionPlan = Plan._id;
-//     user.subscriptionStartDate = new Date()
-//     user.subscriptionEndDate = endDate
-//     user.subscriptionStatus = 'active';
-//     user.stripeSubscriptionId = subscription.id;
-
-
-//     await user.save();
-
-//     res.status(200).json({
-//       success: true,
-//       message: 'Subscription Plan selected successfully',
-//     paymentIntentId: paymentIntent.id,
-//   subscriptionId: subscription.id,
-//   clientSecret: clientSecret,
-//     });
-
-//   }
-//   catch (error) {
-//     console.log("error>>>>>>>", error);
-    
-//     return next(new ErrorHandler('Something went wrong', 500));
-//   }
-// })
-
-
-
-// Create subscription plan
- const UserSubscriptionPlan = asyncHandler(async (req, res, next) => {
-  try {
-    const { planId, customTeamOptionId, paymentMethodId } = req.body;
+const UserSubscriptionPlan = asyncHandler(async(req,res,next)=>{
+  try{
+    const {planId,customTeamOptionId,payment_info} =req.body;
     const userId = req.user.id;
 
-    // Fetch subscription plan
-    const plan = await SubscriptionPlan.findById(planId);
-    if (!plan) {
-      return next(new ErrorHandler('Subscription Plan not found', 404));
+    if (payment_info) {
+      if ("id" in payment_info) {
+        const paymentIntentId = payment_info.id;
+        const paymentIntent = await stripe.paymentIntents.retrieve(
+          paymentIntentId
+        );
+
+        if (paymentIntent.status !== "succeeded") {
+          return next(new ErrorHandler("Payment not authorized!", 400));
+        }
+      }
     }
 
-    // Fetch user details
+    console.log("userid>>>>>>>>>>>>>",userId);
+    
+
+    const Plan = await SubscriptionPlan.findById(planId)
+    if (!Plan) {
+      return next(new ErrorHandler('Subscription Plan not found', 404));
+    }
     const user = await User.findById(userId);
+    console.log("userasdlkjfkjahsfk",user)
+
     if (!user) {
       return next(new ErrorHandler('User not found', 404));
     }
 
-    // Calculate subscription end date
-    const endDate = calculateEndDate(plan.duration);
+    // let discountPercentage = 0;
+    // if (user.paymentCount >= 1) {
+    //   discountPercentage = 10; 
+    // }
 
-    // Handle custom team option
-    let totalPrice = await handleCustomTeamOption(plan, customTeamOptionId);
+  
 
-    // Create or retrieve Stripe customer
-    const stripeCustomerId = await getOrCreateStripeCustomer(user, paymentMethodId);
+    const now = new Date();
+    let endDate ;
+if(Plan.duration ==="Monthly"){
+  endDate = new Date(now.setMonth(now.getMonth()+1))
 
-    // Attach payment method and update customer
-    await attachPaymentMethod(stripeCustomerId, paymentMethodId);
+}
+else if(Plan.duration === "Yearly"){
+  endDate = new Date(now.setFullYear(now.getFullYear()+1))
+}
 
-    // Create Stripe subscription
-    const subscription = await createStripeSubscription(stripeCustomerId, totalPrice, plan.duration);
+if(Plan.planName=== 'Custom Team'){
+  if(!Plan.customTeamOptions || Plan.customTeamOptions.length === 0){
+    return next(new ErrorHandler('Please provide custom team options', 400));
+  }
 
-    // Update user subscription details
-    await updateUserSubscription(user, plan, endDate, subscription.id);
 
-    // Send response to the client
+
+const selectedCustomTeamOption = Plan.customTeamOptions.find(
+  (option) => option._id.toString() === customTeamOptionId
+);
+
+if (!selectedCustomTeamOption) {
+  return next(new ErrorHandler('Invalid custom team option selected', 400));
+}
+
+const totalPrice = selectedCustomTeamOption.userCount * selectedCustomTeamOption.pricePerUser * (1 - selectedCustomTeamOption.discount / 100);
+
+Plan.price = totalPrice;
+
+}
+
+  
+
+await Plan.save();
+
+user.subscriptionPlan = Plan._id;
+    user.subscriptionStartDate = new Date()
+    user.subscriptionEndDate = endDate
+    user.subscriptionStatus = 'active';
+   
+
+
+    await user.save();
+
     res.status(200).json({
       success: true,
       message: 'Subscription Plan selected successfully',
-      paymentIntentId: subscription.latest_invoice.payment_intent.id,
-      subscriptionId: subscription.id,
-      clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+  
     });
-  } catch (error) {
+
+  }
+  catch (error) {
     console.log("error>>>>>>>", error);
+    
     return next(new ErrorHandler('Something went wrong', 500));
   }
-});
+})
 
-// Helper functions
 
-const calculateEndDate = (duration) => {
-  const now = new Date();
-  if (duration === "Monthly") {
-    return new Date(now.setMonth(now.getMonth() + 1));
-  } else if (duration === "Yearly") {
-    return new Date(now.setFullYear(now.getFullYear() + 1));
-  }
-  return null; // Handle unexpected duration
-};
 
-const handleCustomTeamOption = async (plan, customTeamOptionId) => {
-  if (plan.planName === 'Custom Team') {
-    if (!plan.customTeamOptions || plan.customTeamOptions.length === 0) {
-      throw new ErrorHandler('Please provide custom team options', 400);
-    }
+ const newPayment = asyncHandler(async(req,res,next)=>{
+  try{
 
-    const selectedCustomTeamOption = plan.customTeamOptions.find(
-      (option) => option._id.toString() === customTeamOptionId
-    );
-
-    if (!selectedCustomTeamOption) {
-      throw new ErrorHandler('Invalid custom team option selected', 400);
-    }
-
-    return selectedCustomTeamOption.userCount * selectedCustomTeamOption.pricePerUser * (1 - selectedCustomTeamOption.discount / 100);
-  }
-
-  return plan.price; // Return the original plan price if not custom
-};
-
-const getOrCreateStripeCustomer = async (user, paymentMethodId) => {
-  let stripeCustomerId = user.stripeCustomerId;
-  if (!stripeCustomerId) {
-    const customer = await stripe.customers.create({
-      email: user.email,
-      name: `${user.firstName} ${user.lastName}`,
-      payment_method: paymentMethodId,
-      invoice_settings: {
-        default_payment_method: paymentMethodId,
+    const myPayment = await stripe.paymentIntents.create({
+      amount: req.body.amount,
+      currency: "USD",
+      description: "Project Management Software for Business Excellence",
+      metadata: {
+        company: "ezosoft",
       },
-    });
-    stripeCustomerId = customer.id;
-    user.stripeCustomerId = stripeCustomerId;
-  }
-  return stripeCustomerId;
-};
-
-const attachPaymentMethod = async (stripeCustomerId, paymentMethodId) => {
-  await stripe.paymentMethods.attach(paymentMethodId, {
-    customer: stripeCustomerId,
-  });
-  await stripe.customers.update(stripeCustomerId, {
-    invoice_settings: {
-      default_payment_method: paymentMethodId,
-    },
-  });
-};
-
-const createStripeSubscription = async (stripeCustomerId, totalPrice, duration) => {
-  return await stripe.subscriptions.create({
-    customer: stripeCustomerId,
-    items: [{
-      price_data: {
-        currency: 'usd',
-        unit_amount: Math.round(totalPrice * 100),
-        recurring: {
-          interval: duration === 'Monthly' ? 'month' : 'year',
+      automatic_payment_methods: {
+        enabled: true,
+      },
+      shipping: {
+        name: "John Doe",
+        address: {
+          line1: "  jsldkjfals ",
+          postal_code: "98140",
+          city: "San Francisco",
+          state: "CA",
+          country: "US",
         },
       },
-    }],
-    payment_behavior: 'default_incomplete',
-    expand: ['latest_invoice.payment_intent'],
-  });
-};
+    });
+console.log("myPayment.client_secret",myPayment);
 
-const updateUserSubscription = async (user, plan, endDate, stripeSubscriptionId) => {
-  user.subscriptionPlan = plan._id;
-  user.subscriptionStartDate = new Date();
-  user.subscriptionEndDate = endDate;
-  user.subscriptionStatus = 'active';
-  user.stripeSubscriptionId = stripeSubscriptionId;
+    res.status(200).json({
+      success: true,
+      client_secret: myPayment.client_secret,})
+  }
+  catch(error){
+    console.log("error>>>payment", error);
 
-  await user.save();
-};  
-
+    return next(new ErrorHandler('Something went wrong', 500));
+  }
+})
 
 
 
@@ -521,4 +380,4 @@ const templates = await Template.find(searchCondition)
   }) 
 
 
-  export {AddnewMember,UserSubscriptionPlan,AcceptInvite,GetTemplates,TemplatesWithAuth,getSingleTemplate,getSingleTemplateUrl}
+  export {AddnewMember,UserSubscriptionPlan,AcceptInvite,GetTemplates,TemplatesWithAuth,getSingleTemplate,getSingleTemplateUrl,newPayment}

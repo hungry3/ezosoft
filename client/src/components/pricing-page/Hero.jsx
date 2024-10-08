@@ -15,20 +15,32 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import CheckOutForm from "../checkout/CeckoutForm";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const stripePromise = loadStripe("pk_test_51PpoZ0JAqu9i4Tpd9eQshFnir4xKLoCn6D54SyChw3yJbHzgwokgmPa20jG4r6njoky3gWQgKyoKfYzFvc9OzKjs00iUUo7Dh5");
+
 
 function Hero() {
+  const [plan, setPlans] = useState([]);
   const [openPopup, setOpenPopup] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false); 
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [selectedCustomOption, setSelectedCustomOption] = useState(null);
-
-
+  const [selectedPlanId, setSelectedPlanId] = useState(null); // Track selected plan for checkout
+const [selectedCustomTeamOptionId, setSelectedCustomTeamOptionId] = useState(null); 
+const [clientSecret, setClientSecret] = useState("");
+ 
   const axiosprivate = useAxiosPrivate()
 
 const fetchSubscriptionPlans = async () => {
     const { data } = await axiosprivate.get("/admin/get-allSubscriptionPlan");
+    setPlans(data?.data);
     return data;
+  
   };
 
   const { data, isLoading, isError, error } = useQuery({
@@ -36,6 +48,7 @@ const fetchSubscriptionPlans = async () => {
     queryFn: fetchSubscriptionPlans,
   });
   const plans = data?.data || [];
+  // setPlans(plans);
 
   const handleCustomPlanClick = (plan) => {
     setSelectedPlan(plan);
@@ -47,6 +60,59 @@ const fetchSubscriptionPlans = async () => {
     setSelectedCustomOption(null);
   };
 
+
+
+  const calculateAmount = (planId, plans, customTeamOptionId) => {
+    const selectedPlan = plans.find((plan) => plan._id === planId);
+    if (!selectedPlan) {
+      throw new Error("Invalid plan selected.");
+    }
+  
+    let amount = selectedPlan.price;
+    if (selectedPlan.customTeamOptions && customTeamOptionId) {
+      const selectedCustomOption = selectedPlan.customTeamOptions.find(
+        (option) => option._id === customTeamOptionId
+      );
+      if (selectedCustomOption) {
+        amount =
+          selectedCustomOption.userCount *
+          selectedCustomOption.pricePerUser *
+          (1 - selectedCustomOption.discount / 100);
+      }
+    }
+  
+    return Math.round(amount * 100);
+  };
+
+
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      if(clientSecret)
+        return
+      try {
+        const amount = calculateAmount(selectedPlanId, plan, selectedCustomTeamOptionId);
+        const { data } = await axiosprivate.post("/user/payment", { amount });
+
+        console.log("Fetched clientSecret:", data.client_secret);
+        
+        // Ensure the client_secret is not empty
+        if (!data.client_secret) {
+          throw new Error("Received empty client_secret from the server.");
+        }
+
+        setClientSecret(data.client_secret);  
+     
+      } catch (error) {
+        console.log("Failed to initialize payment: " + error.message);
+      }
+    };
+
+    if (selectedPlanId && plan.length > 0 && selectedCustomTeamOptionId !== undefined) {
+      fetchClientSecret(); 
+    }
+  }, [selectedPlanId, plan, selectedCustomTeamOptionId]);
+
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -55,14 +121,24 @@ const fetchSubscriptionPlans = async () => {
     return <div>Error: {error.message}</div>;
   }
 
+
+
+
+
+
+
+
+
+
+
   const handleGetStarted = async (plan) => {
     console.log(`Selected plan: ${plan.planName}`);
+  
+    const customOptionId = selectedCustomOption?._id || null;
 
-     const response =  await axiosprivate.post("/user/get-subscription",
-        {planId: plan._id},
-        
-     )
-     console.log("response>>>>>>>>>>>>>>>>",response);
+    setSelectedPlanId(plan._id);
+    setSelectedCustomTeamOptionId(customOptionId);
+    setShowCheckout(true);  
      
   };
 
@@ -90,6 +166,7 @@ const fetchSubscriptionPlans = async () => {
 
     
 
+   
 
   return (
     <>
@@ -294,6 +371,30 @@ const fetchSubscriptionPlans = async () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      { clientSecret && (
+        <Elements stripe={stripePromise} options={{ clientSecret }}>  
+        
+        <Dialog open={showCheckout} onClose={() => setShowCheckout(false)} maxWidth="sm" fullWidth>
+  <DialogTitle>Complete Your Payment</DialogTitle>
+  <DialogContent>
+    {selectedPlanId ? (
+      <CheckOutForm
+        planId={selectedPlanId}
+        customTeamOptionId={selectedCustomTeamOptionId}
+        plans={plan} 
+      />
+    ) : (
+      <p>Loading...</p>
+    )}
+  </DialogContent>
+ 
+</Dialog>;
+        
+        
+             </Elements>
+      ) }
+    
     </>
   );
 }

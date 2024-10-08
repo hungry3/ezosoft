@@ -10,7 +10,7 @@ import blogRouter from './src/routers/blog.router.js'
 const app = express()
 
 app.use(cors({
-    origin: ['http://ezosoft.com', process.env.FRONTEND_URL],
+    origin: ['http://ezosoft.com', process.env.FRONTEND_URL,process.env.CLIENT_URL],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
   }));
