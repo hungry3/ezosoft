@@ -3,7 +3,7 @@ import leftarrow from '/src/assets/images/left arrow.svg'
 import rightarrow from '/src/assets/images/right arrow.svg'
 import { useQuery } from '@tanstack/react-query';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import { Link, useParams } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import { axiosConfig } from '../../utils/axiosConfig';
 import { useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
@@ -15,18 +15,25 @@ import building from '/src/assets/images/building-icon.svg'
 import { Dialog,  DialogContent } from '@mui/material';
 import useGoogleLoginHandler from '../../hooks/useGoogleLogin';
 
+
 // Define the SingleTemplate component
 const SingleTemplate = () => {
   const { id: templateId } = useParams();
   const location = useLocation();
   const { someProp } = location.state || {}; 
   const { auth } = useAuth();
-  const axiosPrivate = useAxiosPrivate();
+ 
   const [showLoginPopup, setShowLoginPopup] = useState(false);
-   console.log("auth>>>>>>>>>>>>>>>>", auth)
+   console.log("auth>>>>>>>>>>>>>>>>", auth?.accessToken?.user)
+
+   const user = auth?.accessToken?.user
+
+
+const axiosPrivate = useAxiosPrivate()
+   
    const login = useGoogleLoginHandler();
   const fetchTemplate = async (id) => {
-    const response = await axiosConfig.get(`user/templates/${id}`);
+    const response = await axiosPrivate.get(`user/templates/${id}`);
     return response.data;
   };
   
@@ -52,7 +59,7 @@ const SingleTemplate = () => {
  
   
   const images = data?.templatePageImage || [];
-  console.log(data);
+  // console.log(data);
   
   
 
@@ -73,7 +80,7 @@ const SingleTemplate = () => {
   };
 
 
-
+  console.log(user?.subscriptionStatus,"user subscription")
 
 
 const handleDownload = async()=>{
@@ -81,11 +88,19 @@ const handleDownload = async()=>{
   if(!auth){
     setShowLoginPopup(true)
   }
+  else if(user?.subscriptionStatus!=="active") {
+    
+
+      console.log("ajhfdkljwe");
+      
+      setShowLoginPopup(true)
+    
+    
+  }
   else{
-  
     try{
       const response = await axiosPrivate.get(`/user/templateUrl/${templateId}`)
-      console.log(response.data.data.templates[0]);
+      // console.log(response.data.data.templates[0]);
      
     
         const template = response.data.data.templates[0];
@@ -93,7 +108,7 @@ const handleDownload = async()=>{
         if (url.startsWith("http://")) {
           url = url.replace("http://", "https://");
       }
-      console.log(url);
+      // console.log(url);
       
         if (url && url.startsWith("https://")) {
         
@@ -257,7 +272,7 @@ const handleDownload = async()=>{
       <img
           src={images[activeImageIndex] || "/src/assets/images/secondSection-img.svg" }
           alt="template-preview"
-          style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px' }}
+          style={{ maxWidth: '100%',maxHeight: '500px', borderRadius: '8px' }}
         />
       </div>
       
@@ -268,6 +283,62 @@ const handleDownload = async()=>{
   </DialogContent>
   
 </Dialog>
+
+
+
+
+
+<Dialog open={showLoginPopup} onClose={() => setShowLoginPopup(false)}
+  PaperProps={{
+    style: {
+      width: '80%', 
+      maxWidth: '900px', 
+    },
+  }}
+>
+  {/* <DialogTitle></DialogTitle> */}
+  <DialogContent sx={{padding:'0px'}}>
+    <div className='flex flex-wrap items-center justify-center gap-2 '>
+     
+      <div className='w-[49%] h-full mt-[25px] pl-3 py-5 '>
+      <div className='flex flex-col gap-4 m-auto'>
+      <div className='text-[30px]  font-semibold   text-center'>Limited access. Purchase to unlock full features.</div>
+      <div className='text-center text-[18px]'> In publishing and graphic design, Lorem ipsum is a placeholder text commonly.</div>
+      <div>
+      <NavLink to='/pricing'>
+        <button className="flex items-start justify-center w-full gap-4 py-3 transition border rounded-md hover:bg-gray-100 cursor bg-blue">
+          
+            <span className='text-[16px] leading-[20px]  text-white  font-semibold'> Buy Now</span>
+          </button>
+          </NavLink>
+        </div>
+      
+       
+        </div>
+      </div>
+
+    
+      <div className='flex items-center justify-center w-1/2 min-h-full m-auto overflow-hidden bg-gray-300 h-[500px]'>
+      <div className='h-'>
+      <img
+          src={images[activeImageIndex] || "/src/assets/images/secondSection-img.svg" }
+          alt="template-preview"
+          style={{ maxWidth: '100%', maxHeight: '550px', borderRadius: '8px' }}
+        />
+      </div>
+      
+      </div>
+       
+    
+    </div>
+  </DialogContent>
+  
+</Dialog>
+
+
+
+
+
     </>
   );
 };

@@ -10,11 +10,7 @@ const useAxiosPrivate = () => {
 
     useEffect(() => {
         // If auth is null, do nothing and skip axios setup
-        if (auth === null) {
-            refresh()
-            console.log("No auth found, skipping axios setup.");
-            return;
-        }
+       
 
         // If access token is not valid, refresh the token
         if (!auth?.accessToken) {
@@ -34,7 +30,7 @@ const useAxiosPrivate = () => {
                 // Attach Authorization header if not already present
                 if (!config.headers['Authorization']) {
                     config.headers['Authorization'] = `Bearer ${auth.accessToken}`;
-                    console.log("Using Access Token:", auth.accessToken);
+                    console.log("Using Access Token:", auth.accessToken?.accessToken);
                 }
                 return config;
             },
@@ -56,10 +52,11 @@ const useAxiosPrivate = () => {
                     console.log("Attempting to Refresh Token...");
 
                     try {
-                        const newAccessToken = await refresh(); 
+                        const newAccessToken= await refresh(); 
                         console.log("New Access Token:", newAccessToken);
+                        const token = newAccessToken.accessToken
 
-                        prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                        prevRequest.headers['Authorization'] = `Bearer ${token}`;
                         return axiosConfig(prevRequest);
                     } catch (refreshError) {
                         console.error("Failed to Refresh Token: ", refreshError);

@@ -1,26 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import RightIcon from "/src/assets/images/correct-icon.svg";
-
 import CrossIcon from "/src/assets/images/cross-icon.svg";
-import { axiosConfig } from "../../utils/axiosConfig";
 import { useQuery } from "@tanstack/react-query";
-
+import logo from '/src/assets/images/card.logo.svg'
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Button,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import CheckOutForm from "../checkout/CeckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import useAuth from "../../hooks/useAuth";
 
+import fb from '/src/assets/images/fb-icon.svg'
+import email from '/src/assets/images/email-icon.svg'
+import building from '/src/assets/images/building-icon.svg'
+import Google from '/src/assets/images/google.svg'
 const stripePromise = loadStripe("pk_test_51PpoZ0JAqu9i4Tpd9eQshFnir4xKLoCn6D54SyChw3yJbHzgwokgmPa20jG4r6njoky3gWQgKyoKfYzFvc9OzKjs00iUUo7Dh5");
 
 
@@ -32,10 +32,16 @@ function Hero() {
   const [selectedCustomOption, setSelectedCustomOption] = useState(null);
   const [selectedPlanId, setSelectedPlanId] = useState(null); // Track selected plan for checkout
 const [selectedCustomTeamOptionId, setSelectedCustomTeamOptionId] = useState(null); 
+const [showLoginPopup, setShowLoginPopup] = useState(false);
 const [clientSecret, setClientSecret] = useState("");
  
   const axiosprivate = useAxiosPrivate()
 
+  const { auth } = useAuth();
+  console.log(auth,"authlasfdlk");
+  
+  
+  
 const fetchSubscriptionPlans = async () => {
     const { data } = await axiosprivate.get("/admin/get-allSubscriptionPlan");
     setPlans(data?.data);
@@ -133,12 +139,23 @@ const fetchSubscriptionPlans = async () => {
 
   const handleGetStarted = async (plan) => {
     console.log(`Selected plan: ${plan.planName}`);
-  
-    const customOptionId = selectedCustomOption?._id || null;
+    
+    if(!auth){
+      setShowLoginPopup(true)
+      setOpenPopup(false)
+      
+      
+    }
+    else {
+      const customOptionId = selectedCustomOption?._id || null;
 
     setSelectedPlanId(plan._id);
     setSelectedCustomTeamOptionId(customOptionId);
     setShowCheckout(true);  
+      
+    }
+  
+    
      
   };
 
@@ -147,27 +164,23 @@ const fetchSubscriptionPlans = async () => {
 };
 
   const handleConfirmCustomPlan = async () => {
-  
-    if (selectedCustomOption) {
-        console.log(`Selected custom plan: ${selectedPlan.planName}, Option: ${selectedCustomOption.userCount} users at $${selectedCustomOption.pricePerUser}/user with ${selectedCustomOption.discount}% discount`);
-        try {
-            const response = await axiosConfig.post('/user/get-subscription', {
-              planId: selectedPlan._id,
-              customTeamOptionId: selectedCustomOption._id,
-            });
-            console.log('Subscription successful', response.data);
-            setOpenPopup(false);
-        } catch (error) {
-            console.error('Error subscribing to plan:', error);
-           
-          }
+
+    if(!auth){
+      setShowLoginPopup(true)
+      setOpenPopup(false)
+      
+      
+    }
+
+    else if (selectedCustomOption) {
+      setSelectedPlanId(selectedPlan._id)    
+      setSelectedCustomTeamOptionId(selectedCustomOption._id)
+      setShowCheckout(true);
+    setOpenPopup(false)
+        
         }
       }
-
-    
-
-   
-
+      
   return (
     <>
       <div className="relative w-full -mt-[100px]  lg:h-[120vh] xl:[110vh] bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
@@ -376,7 +389,7 @@ const fetchSubscriptionPlans = async () => {
         <Elements stripe={stripePromise} options={{ clientSecret }}>  
         
         <Dialog open={showCheckout} onClose={() => setShowCheckout(false)} maxWidth="sm" fullWidth>
-  <DialogTitle>Complete Your Payment</DialogTitle>
+  <DialogTitle className="flex items-center justify-center "><img src={logo} alt="logo" className="w-[200px] mt-2 mb-2 "/></DialogTitle>
   <DialogContent>
     {selectedPlanId ? (
       <CheckOutForm
@@ -390,10 +403,60 @@ const fetchSubscriptionPlans = async () => {
   </DialogContent>
  
 </Dialog>;
-        
-        
              </Elements>
       ) }
+
+
+
+{/* login popup */}
+
+
+<Dialog open={showLoginPopup} onClose={() => setShowLoginPopup(false)}
+ 
+>
+  {/* <DialogTitle></DialogTitle> */}
+  <DialogContent sx={{padding:'0px'}}>
+    <div className='flex flex-wrap gap-2'>
+     
+      <div className='w-[100%] h-full mt-[25px] px-3 py-5 '>
+      <div className='flex flex-col gap-4 ml-4'>
+      <div className='text-[25px]  font-semibold '>Log in or sign up to Purchase This Package</div>
+      <div> Use your email or another service to continue
+      with ezosoft (it's free)!</div>
+        <div>
+        <button className="flex items-start justify-start w-full gap-4 py-3 transition border border-gray-300 rounded-md hover:bg-gray-100 cursor">
+            <img src={Google} alt="Google" loading='lazy' className="w-5 h-5 ml-4 mr-2" />
+            <span className='text-[16px] leading-[20px] font-[Poppins]  font-semibold'> Continue with Google</span>
+          </button>
+        </div>
+        <div>
+        <button className="flex items-start justify-start w-full gap-4 py-3 transition border border-gray-300 rounded-md hover:bg-gray-100 cursor" >
+            <img src={fb} alt="facebook" loading='lazy' className="w-5 h-5 ml-4 mr-2" />
+            <span className='text-[16px] leading-[20px] font-[Poppins]  font-semibold'> Continue with Facebook</span>
+          </button>
+        </div>
+        <div>
+        <NavLink to='/login'>
+        <button className="flex items-start justify-start w-full gap-4 py-3 transition border border-gray-300 rounded-md hover:bg-gray-100 cursor" >
+            <img src={email} alt="email" loading='lazy' className="w-5 h-5 ml-4 mr-2" />
+            <span className='text-[16px] leading-[20px] font-[Poppins]  font-semibold'> Continue with Email</span>
+          </button>
+          </NavLink>
+        </div>
+        <div>By continuing, you agree to ezosoft's Terms of Use. Read our <Link to='/privacy' className='underline'> Privacy Policy.</Link></div>
+        <div className='flex items-center justify-start gap-4'> <div><img src={building} alt='terms'/></div> <div>Sign up with your work email</div></div>
+        </div>
+      </div>
+
+    
+      
+       
+    
+    </div>
+  </DialogContent>
+  
+</Dialog>
+      
     
     </>
   );

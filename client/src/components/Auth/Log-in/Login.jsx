@@ -13,7 +13,7 @@ import 'aos/dist/aos.css';
 import { axiosConfig } from '../../../utils/axiosConfig';
 import useAuth from '../../../hooks/useAuth';
 import useGoogleLoginHandler from '../../../hooks/useGoogleLogin';
-import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
+
 
 
 
@@ -35,9 +35,9 @@ try {
   const response = await axiosConfig.post("/auth/login",data)
   
 
-  const accessToken = response?.data?.accessToken;
-  const user = response?.data?.user
-  setAuth({ user, accessToken });
+  const accessToken = response?.data
+  // const user = response?.data?.user
+  setAuth({ accessToken });
   toast.success("Login Successful");
   reset()
   navigate('/dashboard')

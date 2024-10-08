@@ -31,15 +31,13 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import CategoryPage from "./Pages/Main-Blog-Page/category/BlogCategory.jsx";
 import Terms from "./Pages/Terms-and-Conditions/Terms.jsx";
 import SingleTemplate from "./Pages/singletemplate/SingleTemplate.jsx";
-
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-// import CheckOutForm from "./Pages/checkout/CeckoutForm.jsx";
-
+import ScrollToTop from "./utils/Scroll.jsx";
 
 
 const queryClient = new QueryClient();
 function App() {
+
+
   return (
     <>
       <GoogleOAuthProvider
@@ -51,6 +49,7 @@ function App() {
           <AuthProvider>
             <BrowserRouter>
               {/* <Navbar /> */}
+              <ScrollToTop/>
               <ErrorBoundary>
                 <Routes>
                   <Route path="/" element={<Home />} />

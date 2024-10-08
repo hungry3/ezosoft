@@ -26,16 +26,25 @@ import ExitIcon from "/src/assets/images/Exit Top Right.svg";
 import { axiosConfig } from "../../utils/axiosConfig";
 import { useQuery } from "@tanstack/react-query";
 import { NavLink } from "react-router-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const fetchTemplates = async () => {
-  const response = await axiosConfig.get("/user/templates-with-auth");
-  console.log(response?.data);
-  console.log("templates>>>>>>>>>>>>>>..", response?.data);
-  return response?.data?.data.templates || [];
-};
+
 
 const BodyContent = ({ activeContent }) => {
+
+  const axiosPrivate = useAxiosPrivate()
+  
   const [activeTab, setActiveTab] = useState(1);
+
+
+  const fetchTemplates = async () => {
+    const response = await axiosPrivate.get("/user/templates-with-auth");
+    console.log(response?.data);
+    console.log("templates>>>>>>>>>>>>>>..", response?.data);
+    return response?.data?.data.templates || [];
+  };
+
+  
 
   const {
     data: templates,
@@ -48,6 +57,10 @@ const BodyContent = ({ activeContent }) => {
 
   if (isLoading) return <div>Loading...</div>;
 
+
+
+
+
   console.log("templates>>>>>>>>>>>>lkjshdf", templates);
   if (error) {
     console.error(error);
@@ -58,47 +71,8 @@ const BodyContent = ({ activeContent }) => {
   const filteredTemplates = templates?.filter(
     (template) => template.category === activeContent
   );
-  console.log(">>>>>>>>>>>kjgiuiuyuyyiy", filteredTemplates);
 
-  // const Data = [
-  //   { id: 1, icon: Initiation, alt: 'Dashboard', text: 'Project Initiation' },
-  //   { id: 2, icon: Planing, alt: 'planing-icon', text: 'Project planning' },
-  //   { id: 3, icon: Execution, alt: 'Execution', text: 'Project Execution' },
-  //   { id: 4, icon: Tracking, alt: 'Tracking', text: 'Project Tracking' },
-  //   { id: 5, icon: Comunication, alt: 'Comunication', text: 'Project Communication' },
-  //   { id: 6, icon: Management, alt: 'Management', text: 'Change Management' },
-  //   { id: 7, icon: Risk, alt: 'Risk', text: 'Risk & Issue Management' },
-  //   { id: 8, icon: Procurement, alt: 'Procurement', text: 'Project Procurement' },
-  //   { id: 9, icon: Costing, alt: 'Costing', text: 'Project Costing' },
-  //   { id: 10, icon: Essentials, alt: 'Essentials', text: 'PM Essentials' },
-  //   { id: 11, icon: TaskManagement, alt: 'TaskManagement', text: 'Task Management' },
-  //   { id: 12, icon: Qualitymanagement, alt: 'Qualitymanagement', text: 'Quality Management' },
-  //   { id: 13, icon: SatffManagement, alt: 'SatffManagement', text: 'Staff Management' },
-  //   { id: 14, icon: Stakeholder, alt: 'Stakeholder', text: 'Stakeholder Management' },
-  //   { id: 15, icon: Wbs, alt: 'Wbs', text: 'WBS Management' },
-  //   { id: 16, icon: Scheduling, alt: 'Scheduling', text: 'Project Scheduling' },
-  //   { id: 17, icon: Timeline, alt: 'Timeline', text: 'Project Timeline' },
-  // ];
 
-  // const CardData = [
-  //   { id: 1, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 2, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 3, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 4, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 5, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 6, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 7, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 8, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 9, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 10, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 11, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 12, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 13, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 14, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 15, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 16, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  //   { id: 17, img: Wordfile, alt: 'abc', icon: WordIcon, text: 'Lorem Ipsum', icon2: ExitIcon },
-  // ];
 
   return (
     <div className="bg-[#F9F9F9] full">

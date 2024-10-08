@@ -4,11 +4,7 @@ import { isAuthenticated } from '../middleware/auth.middleware.js'
 import { handleStripeWebhook } from '../utils/StripeWebHook.js'
 
 const router = express.Router()
-
-
-
 // webhook
-
 router.post('/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook)
 router.post('/get-subscription',isAuthenticated,UserSubscriptionPlan)
 router.post('/add-member', isAuthenticated, AddnewMember);
@@ -18,6 +14,6 @@ router.get('/templates',GetTemplates)
 router.get('/templates/:id',getSingleTemplate)
 router.get('/templates-with-auth',TemplatesWithAuth)
 router.get('/templateUrl/:id',isAuthenticated,getSingleTemplateUrl)
-router.post('/payment',newPayment)
+router.post('/payment',isAuthenticated,newPayment)
 
 export default router;
