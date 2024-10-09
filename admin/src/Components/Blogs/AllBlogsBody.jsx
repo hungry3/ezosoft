@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
+import { axiosConfig } from '../../utils/axiosConfig';
 
 const style = {
   position: 'absolute',
@@ -29,20 +30,16 @@ const style = {
 
 const AllBlogsBody = () => {
   const [isError, seterror] =useState('')
-  const [data1, setData] = useState([
-    // { id: '1', category: 'Template', title:  `Lorem ipsum is a placeholder text commonly used to.........`, image: TableImage    , author:'lorem ipsum'},
-    // { id: '2', category: 'Presentation', title: 'Lorem ipsum is a placeholder text commonly used to.........', image: TableImage , author:'lorem ipsum'},
-    // { id: '3', category: 'Template', title: 'Lorem ipsum is a placeholder text commonly used to.........' , image: TableImage    , author:'lorem ipsum'},
-    // { id: '4', category: 'Presentation', title: 'Lorem ipsum is a placeholder text commonly used to.........' , image: TableImage, author:'lorem ipsum'},
-    // { id: '5', category: 'Template', title: 'Lorem ipsum is a placeholder text commonly used to.........', image: TableImage     , author:'lorem ipsum'},
-    // { id: '6', category: 'Presentation', title: 'Lorem ipsum is a placeholder text commonly used to.........' , image: TableImage, author:'lorem ipsum'},
-  ]);
+  const [data1, setData] = useState([]);
 
   const getApiData =  async () => {
     try {
-      const response = await axios.get('https://fakestoreapi.com/products');
+      const response = await axiosConfig.get('/blog/all');
+      
+     console.log(response.data.data,"response");
      
-      setData(response.data);
+     
+      setData(response.data.data);
     } catch (error) {
       console.error('Error fetching data:', error);
       seterror(error.message)
@@ -57,31 +54,40 @@ const AllBlogsBody = () => {
   const navigate =useNavigate()
   const location = useLocation();
 
-  const [editId, setEditId] = useState(null); // Track which row is being edited
-  const [editData, setEditData] = useState({ id: '', category: '', title: '' }); // Track the data to be edited
-  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-  const [selectedRows, setSelectedRows] = useState([]); // Track selected rows for multiple delete
+  const [editId, setEditId] = useState(null); 
+  const [editData, setEditData] = useState({ id: '', category: '', title: '' }); 
+
+  const [selectedRows, setSelectedRows] = useState([]); 
   const [open, setOpen] = React.useState(false);
 
   const [selectedDeleteId, setSelectedDeleteId] = useState(null);
+  console.log(selectedDeleteId,"selectedDeleteId")
 
   const handleOpen = (id) => {
-    setSelectedDeleteId(id); // Store the id of the row to be deleted
+    setSelectedDeleteId(id); 
     setOpen(true);
   };
   
   const handleClose = () => {
-    setSelectedDeleteId(null); // Reset the id
+    setSelectedDeleteId(null); 
     setOpen(false);
   };
-  // Handle delete action
-  const handleDelete = () => {
-    
-   
-      const updatedData = data1.filter((item) => item.id !== selectedDeleteId);
+
+  const handleDelete = async () => {
+    try {
+      await axiosConfig.delete(`/blog/delete`, { data: { id: selectedDeleteId } });
+      const updatedData = data1.filter((item) => item._id !== selectedDeleteId);
+      
       setData(updatedData);
-      handleClose()
+      console.log(data1);
+      
+      
+      alert("deleted successfully")
+      handleClose();
+    } catch (error) {
+      console.error('Error deleting the blog:', error);
    
+    }
   };
 
 
@@ -89,45 +95,32 @@ const AllBlogsBody = () => {
   const handleDeleteMultiple = () => {
     const updatedData = data1.filter(item => !selectedRows.includes(item.id));
     setData(updatedData);
-    setSelectedRows([]); // Clear selection after deletion
+    setSelectedRows([]);
   };
   const handleSelectedRows = (state) => {
     setSelectedRows(state.selectedRows.map(row => row.id));
   };
   
 
-   // Check if there's updated data passed via navigate
+
    useEffect(() => {
     if (location.state && location.state.updatedRow) {
       const updatedRow = location.state.updatedRow;
-      
-      // Update the data array with the new row values
+
       setData((prevData) =>
         prevData.map((row) => (row.id === updatedRow.id ? updatedRow : row))
       );
     }
   }, [location.state]);
-  // Handle edit action
-  const handleEdit = (row) => {
-    // setEditId(row.id); // Set the row being edited
-    // setEditData(row); // Set the current data to be edited
-    navigate(`/edit/${row.id}`, { state: row }); // Pass the selected row as state
-  };
 
-  // Handle input change for the edit form
+
+
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditData({ ...editData, [name]: value });
   };
 
-  // Handle save action
-  const handleSave = () => {
-    const updatedData = data1.map((item) =>
-      item.id === editId ? editData : item
-    );
-    setData(updatedData); // Update the data with the edited row
-    setEditId(null); // Exit edit mode
-  };
 
 
   
@@ -170,14 +163,14 @@ const AllBlogsBody = () => {
             <img
               src={row.image}
               alt='Table Item'
-              style={{ width: '100px', height: '50px', marginRight: '10px' }} // Adjust size and spacing
+              style={{ width: '100px', height: '50px', marginRight: '10px' }} 
             />
             <div className='flex items-center'>{row.title}</div>
           </div>
         ),
       sortable: true,
       width: '50%',
-      // This centers the content inside the column
+      
     },
     
     {
@@ -223,13 +216,13 @@ const AllBlogsBody = () => {
             src={EditIcon}
             alt='edit'
             className='cursor-pointer'
-            onClick={() => handleEdit(row.id)} // Navigate to edit page with selected row
+            onClick={() => handleEdit(row.id)} 
           />
           <img
             src={DeleteIcon}
             alt='delete'
             className='cursor-pointer'
-            onClick={() => handleOpen(row.id)}
+            onClick={() => handleOpen(row._id)}
           />
         </div>
       ),
@@ -243,8 +236,8 @@ const AllBlogsBody = () => {
     const conditionalRowStyles = [
       {
         when: (row, index) => {
-          console.log(`Row: ${row}, Index: ${index}`);
-          return index % 2 === 0; // Check if the index is even
+          // console.log(`Row: ${row}, Index: ${index}`);
+          return index % 2 === 0; 
         },
         style: {
           backgroundColor: 'black',

@@ -32,7 +32,7 @@ export default useFacebookLoginHandler;
 //   return (
 //     <FacebookLogin
 //       appId="YOUR_FACEBOOK_APP_ID"
-//       fields="name,email,picture"
+//         fields="first_name,last_name,email"
 //       callback={login}
 //     />
 //   );

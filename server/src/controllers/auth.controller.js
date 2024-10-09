@@ -232,92 +232,50 @@ const updatePassword = asyncHandler(async (req, res, next) => {
 });
 
 
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const googleLogin = asyncHandler(async (req, res, next) => {
+  
+    const user = req.user;
 
-const googleLogin = asyncHandler(async(req,res,next)=>{
-    try{
-        const { token } = req.body;
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: process.env.GOOGLE_CLIENT_ID,
-        });
-        const { email, name, given_name: firstName, family_name: lastName } = ticket.getPayload();
-        let user = await User.findOne({ email });
-        if (!user) {
-            
-            user = new User({
-                email,
-                firstName,
-                lastName,
-                password: null, 
-                role: 'user',
-                subscription: 'free', 
-                subscriptionStatus: 'trial', 
-            });
-            await user.save();
-        }
-        const accessToken = user.SignAccessToken();
-        const refreshToken = user.SignRefreshToken();
-        req.cookie("access_token", accessToken, accessTokenOptions);
-        res.cookie("refresh_token", refreshToken, refreshTokenOptions);
-        res.status(200).json({
-            success: true,
-            user: {
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                role: user.role,
-                subscription: user.subcription,
-                subscriptionStatus: user.subscriptionStatus,
-            },
-        });
-    }
-    catch(error){
-        console.log(error)
-        next(new ErrorHandler("something wrong Please try again later",500))
-    }
-})
-const  facebookLogin = asyncHandler(async(req,res,next)=>{
-    try{
-        const {accessToken} = req.body
-        const url = `https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,email`;
-        const {data} = await GoogleAuthExceptionMessages.get(url);
-        let user = await User.findOne({email:data.email})
-        
-        if (!user) {
-            
-            user = new User({
-                email: data.email,
-                firstName: data.first_name,
-                lastName: data.last_name,
-                password: null, 
-                role: 'user',
-                subscription: 'free', 
-                subscriptionStatus: 'trial',
-            });
-            await user.save();
-        }
-        const accessTokenJWT = user.SignAccessToken();
-        const refreshTokenJWT = user.SignRefreshToken();
-        req.cookie("access_token", accessTokenJWT, accessTokenOptions);
-        res.cookie("refresh_token", refreshTokenJWT, refreshTokenOptions);
+    const accessToken = user.SignAccessToken();
+    const refreshToken = user.SignRefreshToken();
 
-        res.status(200).json({
-            success: true,
-            user: {
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                role: user.role,
-                subscription: user.subcription,
-                subscriptionStatus: user.subscriptionStatus,
-            },
-        });
-    }
-    catch(error){
-        console.log(error)
-        next(new ErrorHandler("something wrong Please try again later",500))
-    }
-})
+    res.cookie("access_token", accessToken, accessTokenOptions);
+    res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+
+    res.status(200).json({
+        success: true,
+        user: {
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            role: user.role,
+            subscription: user.subscription,
+            subscriptionStatus: user.subscriptionStatus,
+        },
+    });
+});
+
+const facebookLogin = asyncHandler(async (req, res, next) => {
+   
+    const user = req.user;
+
+    const accessToken = user.SignAccessToken();
+    const refreshToken = user.SignRefreshToken();
+
+    res.cookie("access_token", accessToken, accessTokenOptions);
+    res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+
+    res.status(200).json({
+        success: true,
+        user: {
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            role: user.role,
+            subscription: user.subscription,
+            subscriptionStatus: user.subscriptionStatus,
+        },
+    });
+});
 
 export {registerUser,LoginUser,LogoutUser,updateAccessToken,updateInfo,resetPassword,updatePassword,forgotPassword,googleLogin,facebookLogin}

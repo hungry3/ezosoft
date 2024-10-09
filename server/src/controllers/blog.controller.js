@@ -11,9 +11,10 @@ const createBlog = asyncHandler(async (req, res, next) => {
 
     const { title, content, details, category, author } = req.body;
 
-    if (!title || !content || !category || !author || !req.files ) {
-        return next(new ErrorHandler("All fields are required", 400));
-    }
+    if (!title || !content || !category || !author ) {
+      return next(new ErrorHandler("All fields are required", 400));
+  }
+   
 
     // Check if an image file is uploaded
     const imageFile = req.files.find(file => file.fieldname === 'image');
@@ -32,16 +33,16 @@ const createBlog = asyncHandler(async (req, res, next) => {
 
         // Process details if provided
         const processedDetails = await Promise.all(details.map(async (detail, index) => {
-            const { title: detailTitle, description } = detail;
+            const { title, description } = detail;
 
-            if (!detailTitle || !description) {
+            if ( !description) {
                 throw new ErrorHandler("Detail title and description are required", 400);
             }
 
             let detailImageUrl = '';
          
             
-            const detailImageFile = req.files.find(file => file.fieldname === `details[${index}][image]`);
+            const detailImageFile = req.files?.find(file => file.fieldname === `details[${index}][image]`);
             console.log("detailsImagesFile", detailImageFile)
             if (detailImageFile) {
                 const detailUploadResult = await uploadOnCloudinary(detailImageFile.path, 'detail_images');
@@ -51,9 +52,9 @@ const createBlog = asyncHandler(async (req, res, next) => {
                 }
             }
             return {
-                title: detailTitle,
+                title,
                 description,
-                image: detailImageUrl || undefined 
+                image: detailImageUrl || "" 
             };
         }));
 
@@ -68,7 +69,7 @@ const createBlog = asyncHandler(async (req, res, next) => {
         });
 
         res.status(201).json(
-            new ApiResponse(201, newBlog, 'Blog created successfully')
+            new ApiResponse(newBlog,201 , 'Blog created successfully')
         );
     } catch (error) {
         console.error("Error in createBlog:", error);
@@ -154,16 +155,19 @@ const editBlog = asyncHandler(async (req, res, next) => {
   );
 });
 const deleteBlog = asyncHandler(async (req, res, next) => {
-  const blogId = req.params.id;
+  const {id} = req.body;
+
+  console.log(req.body);
+  
 
   
-  const existingBlog = await BlogModel.findById(blogId);
+  const existingBlog = await BlogModel.findById(id);
   if (!existingBlog) {
       return next(new ErrorHandler("Blog not found", 404));
   }
 
   
-  await BlogModel.findByIdAndDelete(blogId);
+  await BlogModel.findByIdAndDelete(id);
 
   res.status(200).json(
       new ApiResponse(200, null, 'Blog deleted successfully')

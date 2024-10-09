@@ -33,7 +33,7 @@
 // })
 
 
-import SubscriptionPlan from '../models/subcription.model.js';
+import SubscriptionPlan from '../models/subscription.model.js';
 import Template from '../models/template.model.js';
 import User from '../models/user.model.js'
 import { ApiResponse } from '../utils/ApiResponse.js';
@@ -497,7 +497,7 @@ catch(error){
   });
   
   
-   const GetAllSubcriptionPlans = 
+   const GetAllsubscriptionPlans = 
    asyncHandler(async (req,res,next)=>{
 
     try{
@@ -513,7 +513,7 @@ catch(error){
     
    })
 
-   const GetSingleSubcriptionPlan = asyncHandler(async(req,res,next)=>{
+   const GetSinglesubscriptionPlan = asyncHandler(async(req,res,next)=>{
     const plan = await SubscriptionPlan.findById(req.params.id)
 
 
@@ -533,4 +533,4 @@ catch(error){
 
    
 
- export { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllSubcriptionPlans,GetSingleSubcriptionPlan}
+ export { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan}

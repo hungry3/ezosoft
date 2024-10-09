@@ -1,4 +1,4 @@
-import SubscriptionPlan from "../models/subcription.model.js";
+import SubscriptionPlan from "../models/subscription.model.js";
 import Template from "../models/template.model.js";
 import User from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";

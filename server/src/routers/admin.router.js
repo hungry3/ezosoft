@@ -1,6 +1,6 @@
 import express from "express";
 import { templateUpload, upload } from "../middleware/multer.middleware.js";
-import { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllSubcriptionPlans,GetSingleSubcriptionPlan,} from "../controllers/admin.controller.js";
+import { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan,} from "../controllers/admin.controller.js";
 
 import { isAuthenticated, isAdmin } from "../middleware/auth.middleware.js";
 const router = express.Router()
@@ -15,10 +15,10 @@ router.post('/create-subscriptionPlan',templateUpload.any(), isAuthenticated, is
 
 router.put('/update-ubscriptionPlan/:id', isAuthenticated, isAdmin, UpdateSubscriptionPlan);
 
-router.get('/get-allSubscriptionPlan', GetAllSubcriptionPlans);
+router.get('/get-allSubscriptionPlan', GetAllsubscriptionPlans);
 
 
-router.get('/single-subscriptionPlan/:id', isAuthenticated, GetSingleSubcriptionPlan);
+router.get('/single-subscriptionPlan/:id', isAuthenticated, GetSinglesubscriptionPlan);
 
 router.get('/user/:id',isAuthenticated, isAdmin, getUserById);
 router.get('/all-users',isAuthenticated, isAdmin, getAllUsers);

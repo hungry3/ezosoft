@@ -25,9 +25,13 @@ const LoginPage = () => {
 
  const navigate = useNavigate()
 //  const axiosPrivate = useAxiosPrivate()
-  const login = useGoogleLoginHandler();
+  // const login = useGoogleLoginHandler();
 const {setAuth} = useAuth()
 const {register,handleSubmit,formState:{errors},reset} = useForm()
+const handleGoogleLogin = () => {
+  window.location.href = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/api/auth/google`;
+};
+
 const onSubmit = async(data)=>{
  
 try {
@@ -120,7 +124,7 @@ try {
           </div>
           </form>
           {/* Google Sign-in */}
-          <button className="flex items-center justify-center w-full py-2 transition border border-gray-300 rounded-md hover:bg-gray-100 cursor " onClick={login}>
+          <button className="flex items-center justify-center w-full py-2 transition border border-gray-300 rounded-md hover:bg-gray-100 cursor " onClick={handleGoogleLogin}>
             <img src={Google} alt="Google" loading='lazy' className="w-5 h-5 mr-2" />
             <span className='text-[16px] leading-[20px] font-[Poppins] font-[500]'> Google</span>
           </button>

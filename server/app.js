@@ -2,11 +2,13 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import ErrorMiddleware from './src/middleware/error.middleware.js'
+import passport from 'passport';
 
 import authRouter from './src/routers/auth.router.js'
 import adminRouter from './src/routers/admin.router.js'
 import  userRouter from './src/routers/User.router.js'
 import blogRouter from './src/routers/blog.router.js'
+import './src/middleware/passport.middleware.js'
 const app = express()
 
 app.use(cors({
@@ -16,6 +18,7 @@ app.use(cors({
   }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
+app.use(passport.initialize());
 app.use(express.json())
 app.use("/api/blog/",blogRouter)
 app.use("/api/auth/",authRouter)
