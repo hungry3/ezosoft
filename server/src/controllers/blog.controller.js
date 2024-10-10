@@ -84,18 +84,18 @@ const createBlog = asyncHandler(async (req, res, next) => {
 });
 
 
-const editBlog = asyncHandler(async (req, res, next) => {
-  const blogId = req.params.id; 
-  console.log('Files:', req.files);
-  console.log('Body:', req.body);
+  const editBlog = asyncHandler(async (req, res, next) => {
+    const blogId = req.params.blogId; 
+    console.log('Files:', req.files);
+    console.log('Body:', req.body);
 
-  const { title, content, details, category, author } = req.body;
+    const { title, content, details, category, author } = req.body;
 
- 
-  const existingBlog = await BlogModel.findById(blogId);
-  if (!existingBlog) {
-      return next(new ErrorHandler("Blog not found", 404));
-  }
+  
+    const existingBlog = await BlogModel.findById(blogId);
+    if (!existingBlog) {
+        return next(new ErrorHandler("Blog not found", 404));
+    }
 
   
   if (!title || !content || !category || !author) {

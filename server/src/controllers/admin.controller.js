@@ -218,16 +218,16 @@ const updateTemplate = asyncHandler(async (req, res, next) => {
   // console.log('Body:', req.body); 
 
   const  id  = req.params.id;
-  console.log(id);
+  // console.log(id);
   
   const { name, description, templates, category } = req.body;
 
   
 
   const templateExists = await Template.findOne({ name });
-  if (templateExists) {
-      return next(new ErrorHandler("Template with this name already exists", 400));
-  } 
+  // if (templateExists) {
+  //     return next(new ErrorHandler("Template with this name already exists", 400));
+  // } 
 
  
 
@@ -348,7 +348,7 @@ const updateTemplate = asyncHandler(async (req, res, next) => {
 
     }
 
-    res.status(200).json(new ApiResponse(200,templates))
+    res.status(200).json(new ApiResponse(templates,200))
 }
 catch(error){
     console.error("Error in getAllTemplates:", error);
@@ -356,6 +356,22 @@ catch(error){
 }
    }) 
 
+   const getTemplateById = asyncHandler(async (req, res, next) => {
+    try {
+      const templateId = req.params.id;
+      const template = await Template.findById(templateId);
+  
+      if (!template) {
+        return next(new ErrorHandler("Template not found", 404));
+      }
+  
+      res.status(200).json(new ApiResponse(template, 200));
+    } catch (error) {
+      console.error("Error in getTemplateById:", error);
+      return next(new ErrorHandler("Something went wrong", 500));
+    }
+  });
+  
 
    const CreateSubscriptionPlan = asyncHandler(async(req,res,next)=>{
     const {planName, duration,price , customTeamOptions,details, description} = req.body
@@ -533,4 +549,4 @@ catch(error){
 
    
 
- export { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan}
+ export { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan,getTemplateById}

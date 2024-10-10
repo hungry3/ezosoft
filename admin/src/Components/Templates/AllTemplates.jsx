@@ -10,7 +10,8 @@ import DropDownArrow from '/src/assets/images/downwardarowicon.svg'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import axios from 'axios';
+
+import { axiosConfig } from '../../utils/axiosConfig';
 
 const style = {
   position: 'absolute',
@@ -31,27 +32,17 @@ const AllTemplates = () => {
 
   const [iserror, seterror] = useState('')
   const [data1, setData] = useState([
-
-    // { id: '1', category: 'Template', title: 'Template Name here' },
-    // { id: '2', category: 'Presentation', title: 'Presentation Name here' },
-    // { id: '3', category: 'Template', title: 'Template Name here' },
-    // { id: '4', category: 'Presentation', title: 'Presentation Name here' },
-    // { id: '5', category: 'Template', title: 'Template Name here' },
-    // { id: '6', category: 'Presentation', title: 'Presentation Name here' },
   ]);
 
-  // useEffect(()=>{
-  //   fetch('https://fakestoreapi.com/products')
-  //   .then(res => res.json())
-  //   .then(json=>setData(json))
-  //   .catch(error => console.log(error))
-  // },[])
+  console.log(data1,"data1");
+  
+
 
    const getApiData =  async () => {
      try {
-       const response = await axios.get('https://ezosoft-server.vercel.app/api/admin/');
+       const response = await axiosConfig.get('/admin/all-templates');
       
-       setData(response.data);
+       setData(response.data?.data);
      } catch (error) {
        console.error('Error fetching data:', error);
        seterror(error.message)
@@ -66,21 +57,20 @@ const AllTemplates = () => {
   const navigate =useNavigate()
   const location = useLocation();
 
-  const [editId, setEditId] = useState(null); // Track which row is being edited
-  const [editData, setEditData] = useState({ id: '', category: '', title: '' }); // Track the data to be edited
-  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-  const [selectedRows, setSelectedRows] = useState([]); // Track selected rows for multiple delete
+  const [editData, setEditData] = useState({ id: '', category: '', title: '' }); 
+ 
+  const [selectedRows, setSelectedRows] = useState([]);
   const [open, setOpen] = React.useState(false);
 
   const [selectedDeleteId, setSelectedDeleteId] = useState(null);
 
   const handleOpen = (id) => {
-    setSelectedDeleteId(id); // Store the id of the row to be deleted
+    setSelectedDeleteId(id);
     setOpen(true);
   };
   
   const handleClose = () => {
-    setSelectedDeleteId(null); // Reset the id
+    setSelectedDeleteId(null); 
     setOpen(false);
   };
   // Handle delete action
@@ -98,62 +88,39 @@ const AllTemplates = () => {
   const handleDeleteMultiple = () => {
     const updatedData = data1.filter(item => !selectedRows.includes(item.id));
     setData(updatedData);
-    setSelectedRows([]); // Clear selection after deletion
+    setSelectedRows([]); 
   };
   const handleSelectedRows = (state) => {
     setSelectedRows(state.selectedRows.map(row => row.id));
   };
   
 
-   // Check if there's updated data passed via navigate
+
    useEffect(() => {
     if (location.state && location.state.updatedRow) {
       const updatedRow = location.state.updatedRow;
       
-      // Update the data array with the new row values
+
       setData((prevData) =>
         prevData.map((row) => (row.id === updatedRow.id ? updatedRow : row))
       );
     }
   }, [location.state]);
-  // Handle edit action
+
   const handleEdit = (row) => {
-    // setEditId(row.id); // Set the row being edited
-    // setEditData(row); // Set the current data to be edited
-    navigate(`/edit/${row.id}`, { state: row }); // Pass the selected row as state
+  
+    navigate(`/edit/${row._id}`, { state: row }); 
   };
 
-  // Handle input change for the edit form
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditData({ ...editData, [name]: value });
   };
 
-  // Handle save action
-  const handleSave = () => {
-    const updatedData = data1.map((item) =>
-      item.id === editId ? editData : item
-    );
-    setData(updatedData); // Update the data with the edited row
-    setEditId(null); // Exit edit mode
-  };
 
-  const handleSort = (columnKey) => {
-    // Toggle sorting direction based on the current state
-    let direction = 'asc';
-    if (sortConfig.key === columnKey && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    }
-    setSortConfig({ key: columnKey, direction });
-  
-    // Perform sorting on the data based on the column and direction
-    const sortedData = [...data].sort((a, b) => {
-      if (a[columnKey] < b[columnKey]) return direction === 'asc' ? -1 : 1;
-      if (a[columnKey] > b[columnKey]) return direction === 'asc' ? 1 : -1;
-      return 0;
-    });
-    setData(sortedData);
-  };
+
+ 
   
   
 
@@ -161,7 +128,7 @@ const AllTemplates = () => {
   const columns = [
     {
       name: (<div className='font-bold'>#</div>),
-      selector: (row) => row.id,
+      selector: (row,index) =>index+1 ,
       sortable: true,
       width:'10%'
       
@@ -174,19 +141,11 @@ const AllTemplates = () => {
         </div>
       ),
       selector: (row) =>
-        editId === row.id ? (
-          <input
-            type='text'
-            name='category'
-            value={editData.category}
-            onChange={handleInputChange}
-            className='p-2 border border-red-400 rounded'
-          />
-        ) : (
-          row.category
-        ),
-      sortable: true,
-      width:'20%',
+      
+          row.category,
+          sortable: true,
+          width: '20%',
+     
     },
     {
       name: (
@@ -196,22 +155,14 @@ const AllTemplates = () => {
         </div>
       ),
       selector: (row) =>
-        editId === row.id ? (
-          <input
-            type='text'
-            name='title'
-            value={editData.title}
-            onChange={handleInputChange}
-            className='p-2 border border-red-400 rounded'
-          />
-        ) : (
-          row.title
-        ),
-      sortable: true,
-      width: '60%'
+       
+          row.name,
+          sortable: true,
+          width: '40%',
+     
     },
     {
-      name: (<div className='font-bold'>Actions</div>),
+      name: (<div className='w-3 font-bold'>Actions</div>),
       cell: (row) =>
          (
           <div className='flex gap-2'>
@@ -219,7 +170,7 @@ const AllTemplates = () => {
               src={EditIcon}
               alt='edit'
               className='cursor-pointer'
-              onClick={() => handleEdit(row.id)} // Navigate to edit page with selected row
+              onClick={() => handleEdit(row)} 
             />
             <img
               src={DeleteIcon}
@@ -231,7 +182,7 @@ const AllTemplates = () => {
             
           </div>
         ),
-      width:'6%',
+      width:'15%',
     },
 
   ];
@@ -242,7 +193,7 @@ const AllTemplates = () => {
       {
         when: (row, index) => {
           console.log(`Row: ${row}, Index: ${index}`);
-          return index % 2 === 0; // Check if the index is even
+          return index % 2 === 0; 
         },
         style: {
           backgroundColor: 'black',

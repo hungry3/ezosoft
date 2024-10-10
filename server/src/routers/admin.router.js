@@ -1,14 +1,22 @@
 import express from "express";
 import { templateUpload, upload } from "../middleware/multer.middleware.js";
-import { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan,} from "../controllers/admin.controller.js";
+import { getAllUsers, getUserById,getTemplateById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan,} from "../controllers/admin.controller.js";
 
 import { isAuthenticated, isAdmin } from "../middleware/auth.middleware.js";
 const router = express.Router()
 
-router.post('/create-template',isAuthenticated, isAdmin, templateUpload.any(), createTemplate);
-router.put('/update-template/:id',isAuthenticated, isAdmin, templateUpload.any(), updateTemplate);
+// router.post('/create-template',isAuthenticated, isAdmin, templateUpload.any(), createTemplate);
+router.post('/create-template', templateUpload.any(), createTemplate);
+
+// router.put('/update-template/:id',isAuthenticated, isAdmin, templateUpload.any(), updateTemplate);
+router.put('/update-template/:id', templateUpload.any(), updateTemplate);
+
 router.delete('/delete-template/',isAuthenticated, isAdmin,deleteTemplate)
-router.get('/all-templates',isAuthenticated, isAdmin, getAllTemplates);
+// router.get('/all-templates',isAuthenticated, isAdmin, getAllTemplates);
+
+router.get('/template/:id', getTemplateById);
+router.get('/all-templates', getAllTemplates);
+
 
 // ? subscription section
 router.post('/create-subscriptionPlan',templateUpload.any(), isAuthenticated, isAdmin, CreateSubscriptionPlan);

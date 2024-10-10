@@ -1,165 +1,304 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { axiosConfig } from '../../utils/axiosConfig';
 import Image from '/src/assets/images/admin-dashboard-image-icon.svg';
-import axios from 'axios';
 
-const EditTemplates = () => {
-  const [templates, setTemplates] = useState([{ coverImage: '', images: [], document: '', title: '', category: '', description: '' }]);
-  const [values, setValues] = useState({ name: '', email: '' });
-  const [mainCoverImage, setMainCoverImage] = useState('');
-  const fileInputRef = useRef(null);
-  const { register, handleSubmit, formState: { errors } } = useForm();
+const EditTemplate = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+  const coverImageRefs = useRef([]);
+  const multipleImageRefs = useRef([]); // Ref to store multiple images
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  // Fetch existing data on component mount
-  const getApiData = async () => {
-    try {
-      const res = await axios.get(`https://ezosoft-server.vercel.app/api/admin/update-user`);
-      setValues({ ...values, name: res.data.name, email: res.data.email });
-      setTemplates(res.data.templates); // Prepopulate templates
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [templateData, setTemplateData] = useState({
+    title: '',
+    description: '',
+    category: '',
+    avatar: null,
+    templates: [{ templateTitle: '', templateContent: '', templateImage: null, templatePageImage: [], templateUrl: '' }]
+  });
 
   useEffect(() => {
-    getApiData();
-  }, []);
+    const fetchTemplateData = async () => {
+      try {
+        const { data } = await axiosConfig.get(`/admin/template/${id}`);
+        const fetchedTemplate = data.data;
 
-  // Function to handle form submission (send updated data to backend)
-  const handleSave = async (data) => {
-    try {
-      await axios.put(`https://ezosoft-server.vercel.app/api/admin/update-template/${id}`, {
-        name: values.name,
-        email: values.email,
-        templates: data.templates, // Updated templates
-      });
-      console.log('Data updated successfully!');
-      navigate('/allTemplates');
-    } catch (error) {
-      console.log('Error updating data:', error);
+        setTemplateData({
+          title: fetchedTemplate.name,
+          description: fetchedTemplate.description,
+          category: fetchedTemplate.category,
+          avatar: fetchedTemplate.avatar || null,
+          templates: fetchedTemplate.templates || [{ templateTitle: '', templateContent: '', templateImage: null, templatePageImage: [], templateUrl: '' }]
+        });
+      } catch (error) {
+        console.error('Error fetching template data:', error);
+      }
+    };
+    fetchTemplateData();
+  }, [id]);
+
+  const handleTemplateChange = (event, field) => {
+    setTemplateData({ ...templateData, [field]: event.target.value });
+  };
+
+  const handleTemplateDetailChange = (value, index, field) => {
+    const updatedTemplates = [...templateData.templates];
+    updatedTemplates[index][field] = value;
+    setTemplateData({ ...templateData, templates: updatedTemplates });
+  };
+
+  const handleAvatarChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setTemplateData((prevData) => ({ ...prevData, avatar: file }));
     }
   };
 
-  // Handle file selection for cover image
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleTemplateImageChange = (event, index) => {
+    const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setMainCoverImage(imageUrl); // Set main cover image
+      const updatedTemplates = [...templateData.templates];
+      updatedTemplates[index].templateImage = file;
+      setTemplateData({ ...templateData, templates: updatedTemplates });
+    }
+  };
+
+  const handleMultipleImagesChange = (event, index) => {
+    const files = Array.from(event.target.files);
+    const updatedTemplates = [...templateData.templates];
+    updatedTemplates[index].templatePageImage = files.map((file) => URL.createObjectURL(file)); // Preview images
+    setTemplateData({ ...templateData, templates: updatedTemplates });
+  };
+
+  const addNewTemplate = () => {
+    setTemplateData((prevData) => ({
+      ...prevData,
+      templates: [...prevData.templates, { templateTitle: '', templateContent: '', templateImage: null, templatePageImage: [], templateUrl: '' }]
+    }));
+    coverImageRefs.current.push(React.createRef());
+    multipleImageRefs.current.push(React.createRef());
+  };
+
+  const removeTemplate = (index) => {
+    const updatedTemplates = templateData.templates.filter((_, i) => i !== index);
+    setTemplateData({ ...templateData, templates: updatedTemplates });
+    coverImageRefs.current.splice(index, 1);
+    multipleImageRefs.current.splice(index, 1);
+  };
+
+  const onSubmit = async () => {
+    const formData = new FormData();
+    formData.append('name', templateData.title);
+    formData.append('description', templateData.description);
+    formData.append('category', templateData.category);
+
+    if (templateData.avatar instanceof File) {
+      formData.append('avatar', templateData.avatar);
+    }
+
+    templateData.templates.forEach((template, index) => {
+      formData.append(`templates[${index}][templateTitle]`, template.templateTitle);
+      formData.append(`templates[${index}][templateContent]`, template.templateContent);
+
+      if (template.templateImage instanceof File) {
+        formData.append(`templates[${index}][templateImage]`, template.templateImage);
+      }
+
+      // Handle multiple images for templatePageImage
+      template.templatePageImage.forEach((image, imgIndex) => {
+        const fileInput = document.getElementById(`multipleImagesInput-${index}`);
+        const files = fileInput?.files;
+        if (files && files[imgIndex]) {
+          formData.append(`templates[${index}][templatePageImage]`, files[imgIndex]);
+        }
+      });
+
+      if (template.templateUrl) {
+        formData.append(`templates[${index}][templateUrl]`, template.templateUrl);
+      }
+    });
+
+    try {
+      const response = await axiosConfig.post(`/admin/update-template/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      if (response.status === 200) {
+        navigate('/allTemplates');
+      } else {
+        console.error('Error updating template:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error updating template:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(handleSave)}>
-      <div className="flex flex-col w-full bg-[#F9F9F9]">
-        <div className="lg:m-[40px] xl:m-[40px] md:m-[20px] bg-white border border-[] rounded-md px-[10px] py-[30px] lg:px-[40px] xl:px-[40px] md:px-[40px]">
-          <h2 className="text-[20px] leading-[30px] font-[500] font-[Poppins]">Edit Template</h2>
+    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+      <div className='flex flex-col w-full bg-[#F9F9F9]'>
+        <div className='lg:m-[40px] xl:m-[40px] md:m-[20px] bg-white border rounded-md px-[10px] py-[30px] lg:px-[40px] xl:px-[40px] md:px-[40px] flex flex-col'>
+          <h2 className='text-[24px] font-semibold mb-6'>Edit Template</h2>
 
-          <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row w-[100%] gap-[20px]">
-            <div className="w-full flex flex-col w-[60%] gap-[50px]">
-              {/* Category & Title */}
-              <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row mt-[30px] w-[100%] gap-[30px] xl:items-center lg:items-center md:items-center items-start">
-                <div className="flex flex-col lg:w-[40%] xl:w-[40%] md:w-[40%] w-[100%]">
-                  <p className="text-[14px] leading-[21px] font-[Poppins] font-[400]">Category</p>
-                  <select
-                    className=" mt-[4px] px-[10px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins]"
-                    {...register('category', { required: true })}
-                    defaultValue={templates[0]?.category || ''}
-                  >
-                    <option value="" disabled>Please select</option>
-                    <option value="template">template</option>
-                    <option value="free template">free template</option>
-                    <option value="pricing">pricing</option>
-                  </select>
-                  {errors.category && <span className="text-red-400">Please select a category</span>}
-                </div>
+          {/* Template Info Section */}
+          <div className='mb-[30px]'>
+            <h3 className='text-[20px] font-semibold mb-4'>Template Information</h3>
+            <div className='flex flex-col md:flex-row gap-[20px]'>
 
-                <div className="flex flex-col w-[100%]">
-                  <p className="text-[14px] leading-[21px] font-[Poppins] font-[400]">Title</p>
-                  <input
-                    type="text"
-                    defaultValue={templates[0]?.title || ''}
-                    placeholder="Text Here"
-                    className="border mt-[4px] border-grey pl-[22px] mr-[30px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full"
-                    {...register('title', { required: true })}
-                  />
-                  {errors.title && <span className="text-red-400">Title is required</span>}
-                </div>
+              {/* Category */}
+              <div className='flex flex-col w-[50%]'>
+                <label className='text-[14px] font-[Poppins] font-medium'>Category</label>
+                <select
+                  className='mt-[4px] px-[10px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
+                  {...register('category', { required: true })}
+                  value={templateData.category}
+                  onChange={(e) => handleTemplateChange(e, 'category')}
+                >
+                  <option value='' disabled>Select a category</option>
+                  <option value='template'>Template</option>
+                  <option value='free template'>Free Template</option>
+                  <option value='lifestyle'>Lifestyle</option>
+                </select>
+                {errors.category && <span className='text-red-400'>Category is required</span>}
               </div>
 
-              {/* Description */}
-              <div className="flex mt-[30px] max-w-[100%] w-full items-center">
-                <div className="flex flex-col">
-                  <p className="text-[14px] leading-[21px] font-[Poppins] font-[400]">Description</p>
-                  <textarea
-                    defaultValue={templates[0]?.description || ''}
-                    placeholder="Text Here"
-                    cols={300}
-                    className="pl-[10px] resize-none border mt-[4px] w-full border-grey px-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins]"
-                    {...register('description', { required: true })}
-                  />
-                  {errors.description && <span className="text-red-400">Description is required</span>}
-                </div>
+              {/* Title */}
+              <div className='flex flex-col w-[50%]'>
+                <label className='text-[14px] font-[Poppins] font-medium'>Title</label>
+                <input
+                  type='text'
+                  placeholder='Enter Template Title'
+                  className='mt-[4px] pl-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
+                  {...register('title', { required: true })}
+                  value={templateData.title}
+                  onChange={(e) => handleTemplateChange(e, 'title')}
+                />
+                {errors.title && <span className='text-red-400'>Title is required</span>}
               </div>
-            </div>
-
-            {/* Image Upload Section */}
-            <div className="flex flex-col mt-[30px] lg:w-[30%] xl:w-[30%] md:w-[40%] w-[90%]">
-              <div
-                className="h-[263px] border-2 border-[#293950] border-dashed rounded-lg bg-[#E7E8F1] flex items-center justify-center"
-                onClick={() => fileInputRef.current.click()}
-              >
-                {mainCoverImage ? (
-                  <img src={mainCoverImage} alt="Uploaded preview" className="object-cover w-full h-full rounded-lg" />
-                ) : (
-                  <div className="w-[32px] h-[32px] rounded-full bg-white flex items-center justify-center">
-                    <img src={Image} alt="Upload icon" />
-                  </div>
-                )}
-              </div>
-              <input type="file" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
-              {errors.coverImage && <span className="text-red-400">Please select an image</span>}
             </div>
           </div>
 
-          {/* Template Content */}
-          {templates.map((template, index) => (
-            <div key={index}>
-              <h2 className="text-[20px] leading-[30px] font-[Poppins] font-[500] mt-[40px]">Template Content {index + 1}</h2>
-              <div className="w-full border border-[#D9D9D9] rounded-lg mt-[15px] p-[30px] flex flex-col">
-                {/* Title Input */}
-                <div className="w-full flex flex-col lg:flex-row xl:flex-row lg:items-center sm:items-start lg:gap-[50px] xl:gap-[50px]">
-                  <p className="text-[16px] leading-[21px] font-[400] font-[Poppins]">Title</p>
-                  <div className="flex flex-col w-full">
-                    <input
-                      type="text"
-                      defaultValue={template.title || ''}
-                      onChange={(e) => handleInputChange(e, index, 'title')}
-                      placeholder="Text Here"
-                      className="w-full border mt-[4px] border-[#D9D9D9] bg-[#F9F9F9] pl-[16px] py-[10px] rounded-md outline-none text-[16px] font-[Poppins]"
-                      {...register(`templates.${index}.title`, { required: true })}
-                    />
-                    {errors.templates && errors.templates[index]?.title && (
-                      <span className="text-red-400">Title is required</span>
-                    )}
-                  </div>
-                </div>
-                {/* Other template fields... */}
-              </div>
-            </div>
-          ))}
-        </div>
+          {/* Description */}
+          <div className='mb-[30px]'>
+            <h3 className='text-[20px] font-semibold mb-4'>Template Description</h3>
+            <textarea
+              className='w-full h-[150px] px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
+              placeholder='Enter Template Description'
+              value={templateData.description}
+              onChange={(e) => handleTemplateChange(e, 'description')}
+            ></textarea>
+          </div>
 
-        <div className="w-full flex justify-end mt-[40px]">
-          <button type="submit" className="bg-[#293950] text-white px-[40px] py-[10px] rounded-lg">Save Changes</button>
+                  {/* Avatar Image */}
+                  <div className='mb-[30px]'>
+            <h3 className='text-[20px] font-semibold mb-4'>Cover Image</h3>
+            <div onClick={() => fileInputRef.current.click()} className='w-fit flex items-center justify-center border border-[#D9D9D9] bg-[#FAFAFA] cursor-pointer rounded-md h-[300px]'>
+              {templateData.avatar ? (
+                <img
+                  src={typeof templateData.avatar === 'string' ? templateData.avatar : URL.createObjectURL(templateData.avatar)}
+                  alt='Cover'
+                  className='object-contain w-full h-full rounded-md'
+                />
+              ) : (
+                <img src={Image} alt="Placeholder" />
+              )}
+            </div>
+            <input type='file' accept='image/*' ref={fileInputRef} onChange={handleAvatarChange} style={{ display: 'none' }} />
+          </div>
+
+          {/* Template Details */}
+          <div className='mb-[30px]'>
+            <h3 className='text-[20px] font-semibold mb-4'>Template Details</h3>
+            {templateData.templates.map((template, index) => (
+              <div key={index} className='mb-[20px] p-[20px] border border-[#D9D9D9] bg-[#FAFAFA] rounded-md'>
+                <div className='mb-[20px]'>
+                  <label className='text-[14px] font-[Poppins] font-medium'>Template Title</label>
+                  <input
+                    type='text'
+                    className='w-full mt-[4px] px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
+                    value={template.templateTitle}
+                    onChange={(e) => handleTemplateDetailChange(e.target.value, index, 'templateTitle')}
+                  />
+                </div>
+
+                <div className='mb-[20px]'>
+                  <label className='text-[14px] font-[Poppins] font-medium'>Template Description</label>
+                  <textarea
+                    className='w-full mt-[4px] px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
+                    value={template.templateContent}
+                    onChange={(e) => handleTemplateDetailChange(e.target.value, index, 'templateContent')}
+                  ></textarea>
+                </div>
+
+                <div className='mb-[20px]'>
+                  <label className='text-[14px] font-[Poppins] font-medium'>Template URL</label>
+                  <input
+                    type='text'
+                    className='w-full mt-[4px] px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
+                    placeholder='Enter Template URL'
+                    value={template.templateUrl}
+                    onChange={(e) => handleTemplateDetailChange(e.target.value, index, 'templateUrl')}
+                  />
+                </div>
+
+                {/* Template Page Images */}
+                <div className='mb-[20px]'>
+                  <label className='text-[14px] font-[Poppins] font-medium'>Template Page Images</label>
+                  <div className='flex flex-wrap gap-2 mt-2'>
+                    {template.templatePageImage.map((image, imgIndex) => (
+                      <div key={imgIndex} className='relative'>
+                        <img src={image} alt={`Template Page ${imgIndex + 1}`} className='w-[100px] h-[100px] rounded-md object-cover' />
+                        <button
+                          type='button'
+                          onClick={() => {
+                            const updatedTemplates = [...templateData.templates];
+                            updatedTemplates[index].templatePageImage.splice(imgIndex, 1);
+                            setTemplateData({ ...templateData, templates: updatedTemplates });
+                          }}
+                          className='absolute top-0 right-0 p-1 text-red-500 bg-white rounded-full'
+                        >
+                          X
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <input
+                    type='file'
+                    accept='image/*'
+                    multiple
+                    onChange={(e) => handleMultipleImagesChange(e, index)}
+                    className='mt-[10px]'
+                    id={`multipleImagesInput-${index}`}
+                  />
+                </div>
+
+                {/* Remove Template Button */}
+                {templateData.templates.length > 1 && (
+                  <button
+                    type='button'
+                    className='bg-red-500 text-white px-[10px] py-[5px] rounded-md'
+                    onClick={() => removeTemplate(index)}
+                  >
+                    Remove Template
+                  </button>
+                )}
+              </div>
+            ))}
+
+            <button type='button' className='bg-blue-500 text-white px-[20px] py-[10px] rounded-md mt-[10px]' onClick={addNewTemplate}>
+              Add New Template
+            </button>
+          </div>
+
+          <button type='submit' className='bg-green-500 text-white px-[20px] py-[10px] rounded-md'>Update Template</button>
         </div>
       </div>
-      <lable htmlFor='email'>email</lable>
-      <input value={values.email} className='border-2 border-black'/>
     </form>
   );
 };
 
-export default EditTemplates;
+export default EditTemplate;
+
+         

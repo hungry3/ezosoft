@@ -3,10 +3,7 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import DeleteIcon from '/src/assets/images/delete-icon.svg';
 import EditIcon from '/src/assets/images/edit-icon.svg';
-import SaveIcon from '/src/assets/images/SaveIcon.svg';
-import UpArrowicon from '/src/assets/images/dropdown-arrow.svg'
-import DropDownArrow from '/src/assets/images/downwardarowicon.svg'
-import TableImage from '/src/assets/images/table-image.svg'
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -129,36 +126,19 @@ const AllBlogsBody = () => {
   const columns = [
     {
       name: '#',
-      selector: (row) => row.id,
-      sortable: true,
+      selector: (row,index) => index+1,
+      sortable: false,
       width: '6%',
     },
-    // {
-    //   name: '',
-    //   selector: (row) => (
-    //     <img
-    //       src={row.image} 
-    //       alt='Table Item'
-    //       style={{ width: '150px', height: '30px' }} // Adjust the size as needed
-    //     />
-    //   ),
-    //   sortable: false,
-    //   width: '15%',
-    // },
+  
     {
       name: (
         <div className='w-full font-bold text-center'>Title</div>
       ),
       selector: (row) =>
-        editId === row.id ? (
-          <input
-            type='text'
-            name='title'
-            value={editData.title}
-            onChange={handleInputChange}
-            className='p-2 border border-red-400 rounded'
-          />
-        ) : (
+       
+         
+          <NavLink to={`/blog/single/${row._id}`}>
           <div className='flex' >
             <img
               src={row.image}
@@ -167,7 +147,8 @@ const AllBlogsBody = () => {
             />
             <div className='flex items-center'>{row.title}</div>
           </div>
-        ),
+            </NavLink>
+        ,
       sortable: true,
       width: '50%',
       
@@ -212,12 +193,13 @@ const AllBlogsBody = () => {
       name: (<div className='font-bold'>Actions</div>),
       cell: (row) => (
         <div className='flex gap-2'>
+        <NavLink to={`/blog/edit/${row._id}`}>
           <img
             src={EditIcon}
             alt='edit'
             className='cursor-pointer'
-            onClick={() => handleEdit(row.id)} 
           />
+        </NavLink>
           <img
             src={DeleteIcon}
             alt='delete'

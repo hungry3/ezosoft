@@ -1,25 +1,16 @@
-import Template from './Pages/Templates-page/AddNewTemplates'
-import Dashboard from './Pages/Templates-page/AllTemplates'
 import AllBlogs from './Pages/Blogs-page/AllBlogs'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Blogs from './Pages/Blogs-page/AddNewBlogs'
 import AllTemplates from './Pages/Templates-page/AllTemplates'
 import AddNewTemplates from './Pages/Templates-page/AddNewTemplates'
 import Pricing from './Pages/Pricing-page/Pricing'
-import EditTemplates from './Pages/Templates-page/EditTemplate'
+import EditTemplates from './Pages/Templates-page/EditTemplate-page'
 import AddNewBlogs from './Pages/Blogs-page/AddNewBlogs'
 import User from './Pages/User-page/User'
-import Template4 from './Pages/Templates-page/Template4'
-
-
-
+import EditedBlog from './Pages/Blogs-page/EditedBlog'
+import SingleBlogPage from './Pages/Blogs-page/Single-blog'
 function App() {
-
   return (
     <>
-    {/* <Dashboard/> */}
-    {/* <Template/> */}
-    
     <BrowserRouter>
     <Routes>
       <Route exact path='/' element={<User/>} />
@@ -28,10 +19,10 @@ function App() {
       <Route exact path='/allblogs' element={<AllBlogs/>} />
       <Route exact path='/pricing' element={<Pricing/>} />
       <Route exact path='/user' element={<User/>} />
-      
       <Route exact path='/addTemplates' element={<AddNewTemplates/>} />
-      <Route path="/edit/:_id" element={<EditTemplates/>} />
-     
+      <Route path="/edit/:id" element={<EditTemplates/>} />
+      <Route path='/blog/edit/:blogId' element={<EditedBlog/>}/>
+      <Route path='/blog/single/:blogId' element={<SingleBlogPage />} />  
     </Routes>
     </BrowserRouter>
     </>
