@@ -154,9 +154,11 @@ const AllTemplates = () => {
          
         </div>
       ),
-      selector: (row) =>
+      selector: (row) =>( <NavLink to={`/view-template/${row._id}`} className='cursor-pointer hover:underline'>
+          {row.name}
+      </NavLink>),
        
-          row.name,
+        
           sortable: true,
           width: '40%',
      
@@ -187,8 +189,6 @@ const AllTemplates = () => {
 
   ];
 
-
-    // Conditional Row Styles
     const conditionalRowStyles = [
       {
         when: (row, index) => {
@@ -201,7 +201,6 @@ const AllTemplates = () => {
         },
       },
     ];
-    
     
   return (
     <>
@@ -252,8 +251,6 @@ const AllTemplates = () => {
           </div>
 
           <div className='mt-[33px] lg:mx-[50px] xl:mx-[50px] mx-[10px] lg:px-[47px] xl:px-[47px] px-[10px] pt-[25px] pb-[41px] border border-[#D9D9D9] bg-[#F9F9F9] rounded-lg flex flex-col gap-[30px] justify-between items-end'>
-          
-          
           <Modal
         open={open}
         onClose={handleClose}

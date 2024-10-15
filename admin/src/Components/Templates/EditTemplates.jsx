@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -13,7 +14,7 @@ const EditTemplate = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const [templateData, setTemplateData] = useState({
-    title: '',
+    name: '',
     description: '',
     category: '',
     avatar: null,
@@ -27,11 +28,17 @@ const EditTemplate = () => {
         const fetchedTemplate = data.data;
 
         setTemplateData({
-          title: fetchedTemplate.name,
+          name: fetchedTemplate.name,
           description: fetchedTemplate.description,
           category: fetchedTemplate.category,
           avatar: fetchedTemplate.avatar || null,
-          templates: fetchedTemplate.templates || [{ templateTitle: '', templateContent: '', templateImage: null, templatePageImage: [], templateUrl: '' }]
+          templates: fetchedTemplate.templates.map(template => ({
+            templateTitle: template.templateTitle,
+            templateContent: template.templateContent,
+            templateImage: template.templateImage || null,
+            templatePageImage: template.templatePageImage || [],
+            templateUrl: template.templateUrl
+          })) || [{ templateTitle: '', templateContent: '', templateImage: null, templatePageImage: [], templateUrl: '' }]
         });
       } catch (error) {
         console.error('Error fetching template data:', error);
@@ -39,6 +46,7 @@ const EditTemplate = () => {
     };
     fetchTemplateData();
   }, [id]);
+  console.log("templatesData",templateData)
 
   const handleTemplateChange = (event, field) => {
     setTemplateData({ ...templateData, [field]: event.target.value });
@@ -69,7 +77,13 @@ const EditTemplate = () => {
   const handleMultipleImagesChange = (event, index) => {
     const files = Array.from(event.target.files);
     const updatedTemplates = [...templateData.templates];
-    updatedTemplates[index].templatePageImage = files.map((file) => URL.createObjectURL(file)); // Preview images
+    updatedTemplates[index].templatePageImage = files;
+    setTemplateData({ ...templateData, templates: updatedTemplates });
+  };
+
+  const removeImage = (index, imgIndex) => {
+    const updatedTemplates = [...templateData.templates];
+    updatedTemplates[index].templatePageImage.splice(imgIndex, 1); 
     setTemplateData({ ...templateData, templates: updatedTemplates });
   };
 
@@ -91,7 +105,7 @@ const EditTemplate = () => {
 
   const onSubmit = async () => {
     const formData = new FormData();
-    formData.append('name', templateData.title);
+    formData.append('name', templateData.name);
     formData.append('description', templateData.description);
     formData.append('category', templateData.category);
 
@@ -105,24 +119,28 @@ const EditTemplate = () => {
 
       if (template.templateImage instanceof File) {
         formData.append(`templates[${index}][templateImage]`, template.templateImage);
+      } else if (typeof template.templateImage === 'string') {
+        formData.append(`templates[${index}][templateImage]`, template.templateImage);
       }
 
-      // Handle multiple images for templatePageImage
-      template.templatePageImage.forEach((image, imgIndex) => {
-        const fileInput = document.getElementById(`multipleImagesInput-${index}`);
-        const files = fileInput?.files;
-        if (files && files[imgIndex]) {
-          formData.append(`templates[${index}][templatePageImage]`, files[imgIndex]);
-        }
-      });
+      const fileInput = multipleImageRefs.current[index]?.current;
+      if (fileInput && fileInput.files) {
+        Array.from(fileInput.files).forEach((file) => {
+          formData.append(`templates[${index}][templatePageImage]`, file);
+        });
+      }
 
       if (template.templateUrl) {
         formData.append(`templates[${index}][templateUrl]`, template.templateUrl);
       }
     });
+    console.log('Logging FormData before submission:');
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}:`, pair[1]);
+    }
 
     try {
-      const response = await axiosConfig.post(`/admin/update-template/${id}`, formData, {
+      const response = await axiosConfig.put(`/admin/update-template/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
@@ -172,7 +190,7 @@ const EditTemplate = () => {
                   placeholder='Enter Template Title'
                   className='mt-[4px] pl-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
                   {...register('title', { required: true })}
-                  value={templateData.title}
+                  value={templateData.name}
                   onChange={(e) => handleTemplateChange(e, 'title')}
                 />
                 {errors.title && <span className='text-red-400'>Title is required</span>}
@@ -185,114 +203,114 @@ const EditTemplate = () => {
             <h3 className='text-[20px] font-semibold mb-4'>Template Description</h3>
             <textarea
               className='w-full h-[150px] px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
-              placeholder='Enter Template Description'
+              {...register('description', { required: true })}
               value={templateData.description}
               onChange={(e) => handleTemplateChange(e, 'description')}
-            ></textarea>
+              placeholder='Enter Template Description'
+            />
+            {errors.description && <span className='text-red-400'>Description is required</span>}
           </div>
 
-                  {/* Avatar Image */}
-                  <div className='mb-[30px]'>
-            <h3 className='text-[20px] font-semibold mb-4'>Cover Image</h3>
-            <div onClick={() => fileInputRef.current.click()} className='w-fit flex items-center justify-center border border-[#D9D9D9] bg-[#FAFAFA] cursor-pointer rounded-md h-[300px]'>
+          {/* Avatar */}
+          <div className='mb-[30px]'>
+            <h3 className='text-[20px] font-semibold mb-4'>Avatar</h3>
+            <input type='file' ref={fileInputRef} className='hidden' onChange={handleAvatarChange} />
+            <div className='flex items-center justify-center'>
               {templateData.avatar ? (
-                <img
-                  src={typeof templateData.avatar === 'string' ? templateData.avatar : URL.createObjectURL(templateData.avatar)}
-                  alt='Cover'
-                  className='object-contain w-full h-full rounded-md'
-                />
+                <img src={templateData.avatar instanceof File ? URL.createObjectURL(templateData.avatar) : templateData.avatar} alt='Template Avatar' className='w-[120px] h-[120px] object-cover rounded-md' />
               ) : (
-                <img src={Image} alt="Placeholder" />
+                <img src={Image} alt='Default Avatar' className='w-[120px] h-[120px] object-cover rounded-md' />
               )}
             </div>
-            <input type='file' accept='image/*' ref={fileInputRef} onChange={handleAvatarChange} style={{ display: 'none' }} />
+            <button type='button' className='px-4 py-2 mt-4 text-white rounded-md bg-blue' onClick={() => fileInputRef.current.click()}>Change Avatar</button>
           </div>
 
-          {/* Template Details */}
-          <div className='mb-[30px]'>
-            <h3 className='text-[20px] font-semibold mb-4'>Template Details</h3>
-            {templateData.templates.map((template, index) => (
-              <div key={index} className='mb-[20px] p-[20px] border border-[#D9D9D9] bg-[#FAFAFA] rounded-md'>
-                <div className='mb-[20px]'>
-                  <label className='text-[14px] font-[Poppins] font-medium'>Template Title</label>
-                  <input
-                    type='text'
-                    className='w-full mt-[4px] px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
-                    value={template.templateTitle}
-                    onChange={(e) => handleTemplateDetailChange(e.target.value, index, 'templateTitle')}
-                  />
-                </div>
+          {/* Templates */}
+          {templateData.templates.map((template, index) => (
+            <div key={index} className='mb-[30px]'>
+              <h3 className='text-[20px] font-semibold mb-4'>Template {index + 1}</h3>
 
-                <div className='mb-[20px]'>
-                  <label className='text-[14px] font-[Poppins] font-medium'>Template Description</label>
-                  <textarea
-                    className='w-full mt-[4px] px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
-                    value={template.templateContent}
-                    onChange={(e) => handleTemplateDetailChange(e.target.value, index, 'templateContent')}
-                  ></textarea>
-                </div>
-
-                <div className='mb-[20px]'>
-                  <label className='text-[14px] font-[Poppins] font-medium'>Template URL</label>
-                  <input
-                    type='text'
-                    className='w-full mt-[4px] px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
-                    placeholder='Enter Template URL'
-                    value={template.templateUrl}
-                    onChange={(e) => handleTemplateDetailChange(e.target.value, index, 'templateUrl')}
-                  />
-                </div>
-
-                {/* Template Page Images */}
-                <div className='mb-[20px]'>
-                  <label className='text-[14px] font-[Poppins] font-medium'>Template Page Images</label>
-                  <div className='flex flex-wrap gap-2 mt-2'>
-                    {template.templatePageImage.map((image, imgIndex) => (
-                      <div key={imgIndex} className='relative'>
-                        <img src={image} alt={`Template Page ${imgIndex + 1}`} className='w-[100px] h-[100px] rounded-md object-cover' />
-                        <button
-                          type='button'
-                          onClick={() => {
-                            const updatedTemplates = [...templateData.templates];
-                            updatedTemplates[index].templatePageImage.splice(imgIndex, 1);
-                            setTemplateData({ ...templateData, templates: updatedTemplates });
-                          }}
-                          className='absolute top-0 right-0 p-1 text-red-500 bg-white rounded-full'
-                        >
-                          X
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                  <input
-                    type='file'
-                    accept='image/*'
-                    multiple
-                    onChange={(e) => handleMultipleImagesChange(e, index)}
-                    className='mt-[10px]'
-                    id={`multipleImagesInput-${index}`}
-                  />
-                </div>
-
-                {/* Remove Template Button */}
-                {templateData.templates.length > 1 && (
-                  <button
-                    type='button'
-                    className='bg-red-500 text-white px-[10px] py-[5px] rounded-md'
-                    onClick={() => removeTemplate(index)}
-                  >
-                    Remove Template
-                  </button>
-                )}
+              {/* Template Title */}
+              <div className='mb-[15px]'>
+                <label className='text-[14px] font-[Poppins] font-medium'>Template Title</label>
+                <input
+                  type='text'
+                  className='mt-[4px] w-full px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
+                  value={template.templateTitle}
+                  onChange={(e) => handleTemplateDetailChange(e.target.value, index, 'templateTitle')}
+                  placeholder='Enter Template Title'
+                />
               </div>
-            ))}
 
-            <button type='button' className='bg-blue-500 text-white px-[20px] py-[10px] rounded-md mt-[10px]' onClick={addNewTemplate}>
-              Add New Template
-            </button>
-          </div>
+              {/* Template Content */}
+              <div className='mb-[15px]'>
+                <label className='text-[14px] font-[Poppins] font-medium'>Template Content</label>
+                <textarea
+                  className='mt-[4px] w-full h-[100px] px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
+                  value={template.templateContent}
+                  onChange={(e) => handleTemplateDetailChange(e.target.value, index, 'templateContent')}
+                  placeholder='Enter Template Content'
+                />
+              </div>
 
-          <button type='submit' className='bg-green-500 text-white px-[20px] py-[10px] rounded-md'>Update Template</button>
+              {/* Template Image */}
+              <div className='mb-[15px]'>
+                <label className='text-[14px] font-[Poppins] font-medium'>Template Image</label>
+                <input
+                  type='file'
+                  ref={el => coverImageRefs.current[index] = el}
+                  onChange={(e) => handleTemplateImageChange(e, index)}
+                  className='hidden'
+                />
+                <div className='flex items-center justify-center'>
+                  {template.templateImage ? (
+                    <img src={template.templateImage instanceof File ? URL.createObjectURL(template.templateImage) : template.templateImage} alt={`Template ${index + 1} Image`} className='w-[120px] h-[120px] object-cover rounded-md' />
+                  ) : (
+                    <img src={Image} alt='Default Template Image' className='w-[120px] h-[120px] object-cover rounded-md' />
+                  )}
+                </div>
+                <button type='button' className='px-4 py-2 mt-4 text-white rounded-md bg-blue' onClick={() => coverImageRefs.current[index].click()}>Change Image</button>
+              </div>
+
+              {/* Multiple Page Images */}
+              <div className='mb-[15px]'>
+                <label className='text-[14px] font-[Poppins] font-medium'>Page Images</label>
+                <input
+                  type='file'
+                  multiple
+                  ref={el => multipleImageRefs.current[index] = el}
+                  onChange={(e) => handleMultipleImagesChange(e, index)}
+                  className='hidden'
+                />
+                <div className='flex flex-wrap gap-4'>
+                  {template.templatePageImage.map((image, imgIndex) => (
+                    <div key={imgIndex} className='relative'>
+                      <img src={image instanceof File ? URL.createObjectURL(image) : image} alt={`Page Image ${imgIndex + 1}`} className='w-[120px] h-[120px] object-cover rounded-md' />
+                      <button type='button' className='absolute top-0 right-0 p-1 text-white bg-red-500 rounded-full' onClick={() => removeImage(index, imgIndex)}>X</button>
+                    </div>
+                  ))}
+                </div>
+                <button type='button' className='px-4 py-2 mt-4 text-white rounded-md bg-blue' onClick={() => multipleImageRefs.current[index].click()}>Add More Images</button>
+              </div>
+
+              {/* Template URL */}
+              <div className='mb-[15px]'>
+                <label className='text-[14px] font-[Poppins] font-medium'>Template URL</label>
+                <input
+                  type='text'
+                  className='mt-[4px] w-full px-[22px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px]'
+                  value={template.templateUrl}
+                  onChange={(e) => handleTemplateDetailChange(e.target.value, index, 'templateUrl')}
+                  placeholder='Enter Template URL'
+                />
+              </div>
+
+              <button type='button' className='px-4 py-2 mt-2 text-white bg-red-500 rounded-md' onClick={() => removeTemplate(index)}>Remove Template</button>
+            </div>
+          ))}
+
+          <button type='button' className='px-4 py-2 mt-4 text-white rounded-md bg-green' onClick={addNewTemplate}>Add New Template</button>
+          <button type='submit' className='px-4 py-2 mt-4 text-white rounded-md bg-blue'>Save Changes</button>
         </div>
       </div>
     </form>
@@ -300,5 +318,3 @@ const EditTemplate = () => {
 };
 
 export default EditTemplate;
-
-         
