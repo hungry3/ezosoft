@@ -5,8 +5,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-none px-4 lg:px-[110px] md:px-[0px] pt-12 relative z-[20]">
-      <div className="container flex items-center justify-between mx-auto">
+    <nav className="bg-none px-4 lg:px-[100px] xl:px-[100px] md:px-[10px] pt-12 relative z-[20] w-[100%] ">
+      <div className=" flex items-center justify-between w-[100%]">
        
         <div className="flex-shrink-0">
           <NavLink to="/" className="text-2xl font-bold text-gray-800">
@@ -46,7 +46,7 @@ const Navbar = () => {
                isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
           >
-            Enterprise
+            Blogs
           </NavLink>
         
 
@@ -77,12 +77,14 @@ const Navbar = () => {
         </div>
 
         <NavLink to="/signup">
-        <div className="hidden sm:flex-shrink-0">
+        <div className=" sm:flex-shrink-0">
           <button className="bg-grey  hover:bg-gradient hover:border border-white text-white px-4 py-2 font-[600] rounded-md hover:bg- font-[Poppins]">
           Start Free Trial
           </button>
         </div>
         </NavLink>
+
+        
 
         {/* Hamburger Menu for Mobile */}
         <div className="lg:hidden">
@@ -132,7 +134,7 @@ const Navbar = () => {
               isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
           >
-            Enterprise
+            Blogs
           </NavLink>
           <NavLink
             to="/pricing"

@@ -14,20 +14,20 @@ function Services() {
   return (
     <>
       <div className='bg-lightBlue w-full  py-[100px]'>
-     <div className='lg:px-[100px] w-full'>
+     <div className='lg:px-[100px] w-full px-[10px]'>
      <div className='flex items-center justify-center w-full ' data-aos="zoom-in-down"  data-aos-delay="400">  
           <h2 className='text-center max-w-[887px] text-[40px] md:text-[40px] lg:text-[40px] xl:text-[45px] leading-[50px] expo-medium'>
             Bring agility, accuracy and insights to your project portfolios
           </h2>
         </div>
        
-        <div className='flex gap-[50px] lg:flex-col xl:flex-col pl-5 '>
-         {/* Menu bar */}
-        <div className=' mt-[100px] lg:mt-[30px] xl:mt-[40px] flex lg:items-center  lg:justify-center xl:items-center  xl:justify-center'>
-          <div className='flex items-start lg:items-center  max-w-[1123px] md:flex-col flex-col lg:flex-row xl:flex-row gap-[20px] lg:gap-0 xl:gap-0 md:gap-0'>
+        <div className='flex gap-[50px] lg:flex-col xl:flex-col w-[100%] '>
+       
+        <div className=' mt-[100px] lg:mt-[30px] xl:mt-[40px] flex lg:items-center lg:justify-center xl:justify-center xl:items-center '>
+          <div className='flex items-start lg:items-center md:flex-col flex-col lg:flex-row xl:flex-row gap-[20px] lg:gap-[0px] xl:gap-[0px] md:gap-0'>
             <div
               onClick={() => setActiveTab('overview')}
-              className={`flex flex-col items-center lg:border-b-[2px] border-black border-solid cursor-pointer lg:pr-[100px]   ${   activeTab === 'overview' && '-mt-[2px]'}`}
+              className={`flex flex-col items-center lg:border-b-[2px] w-[50%] border-black border-solid cursor-pointer lg:pr-[100px]   ${   activeTab === 'overview' && '-mt-[2px]'}`}
             >
             
               <div
@@ -109,7 +109,7 @@ function Services() {
         </div>
      
 {activeTab==="overview" && (
-  <div className='mt-[73px]  flex flex-col lg:flex-row xl:flex-row  justify-between items-center'>
+  <div className='mt-[73px]  flex flex-col lg:flex-row xl:flex-row justify-center items-center gap-[100px]'>
         <div className='' data-aos="zoom-in-right" data-aos-delay="400"> 
         <p className='max-w-[497px]  mt-[30px] text-[30px] leading-[31px] font-[600]'>Detailed planning and execution</p>
         <p className='max-w-[518px] mt-[16px] text-[16px] leading-[26px] font-[Poppins] font-[400] '> For projects that require vigorous planning, forecasting, cost analysis, resource allocation, task management and reporting, ProjectManager outperforms the competition.</p>
@@ -127,7 +127,7 @@ function Services() {
         </div>
 
 
-        <div className='mt-[30px]' data-aos="zoom-in-left" data-aos-delay="400">
+        <div className='mt-[30px]' data-aos="zoom-in-right" data-aos-delay="400">
           <img src={HomeImage} alt='image'  loading='lazy'/>
         </div>
         
@@ -137,7 +137,7 @@ function Services() {
 
 {/*  2nd tab */}
 {activeTab==="manufacturing" && (
-  <div className='mt-[73px]  flex flex-col lg:flex-row xl:flex-row  justify-between items-center'>
+  <div className='mt-[73px]  flex flex-col lg:flex-row xl:flex-row  justify-center items-center gap-[100px]'>
         <div className='' data-aos="zoom-in-right" data-aos-delay="400">
         <p className='max-w-[497px]  mt-[30px] text-[30px] leading-[31px] font-[600]'>Detailed planning and execution</p>
         <p className='max-w-[518px] mt-[16px] text-[16px] leading-[26px] font-[Poppins] font-[400] '> For projects that require vigorous planning, forecasting, cost analysis, resource allocation, task management and reporting, ProjectManager outperforms the competition.</p>
@@ -155,7 +155,7 @@ function Services() {
         </div>
 
 
-        <div className='mt-[30px]' data-aos="zoom-in-left" data-aos-delay="300" >
+        <div className='mt-[30px]' data-aos="zoom-in-right" data-aos-delay="300" >
           <img src={HomeImage} alt='image' loading='lazy'/>
         </div>
         
@@ -164,7 +164,7 @@ function Services() {
 )}
     {/* 3rd tab */}
     {activeTab==="construction" && (
-      <div className='mt-[73px]  flex flex-col lg:flex-row xl:flex-row  justify-between items-center'>
+      <div className='mt-[73px]  flex flex-col lg:flex-row xl:flex-row  justify-center items-center gap-[100px]'>
         <div className='' data-aos="zoom-in-right" data-aos-delay="400">
         <p className='max-w-[497px]  mt-[30px] text-[30px] leading-[31px] font-[600]'>Detailed planning and execution</p>
         <p className='max-w-[518px] mt-[16px] text-[16px] leading-[26px] font-[Poppins] font-[400] '> For projects that require vigorous planning, forecasting, cost analysis, resource allocation, task management and reporting, ProjectManager outperforms the competition.</p>
@@ -182,7 +182,7 @@ function Services() {
         </div>
 
 
-        <div className='mt-[30px]' data-aos="zoom-in-left" data-aos-delay="300" >
+        <div className='mt-[30px]' data-aos="zoom-in-right" data-aos-delay="300" >
           <img src={HomeImage} alt='image' loading='lazy'/>
         </div>
         
@@ -191,7 +191,7 @@ function Services() {
 )}
     {/* 4th tab */}
     {activeTab==="it_teams" && (
-      <div className='mt-[73px]  flex flex-col lg:flex-row xl:flex-row  justify-between items-center'>
+      <div className='mt-[73px]  flex flex-col lg:flex-row xl:flex-row  justify-center items-center gap-[100px]'>
         <div className='' data-aos="zoom-in-right" data-aos-delay="300" >
         <p className='max-w-[497px]  mt-[30px] text-[30px] leading-[31px] font-[600]'>Detailed planning and execution</p>
         <p className='max-w-[518px] mt-[16px] text-[16px] leading-[26px] font-[Poppins] font-[400] '> For projects that require vigorous planning, forecasting, cost analysis, resource allocation, task management and reporting, ProjectManager outperforms the competition.</p>
@@ -209,7 +209,7 @@ function Services() {
         </div>
 
 
-        <div className='mt-[30px]' data-aos="zoom-in-left" data-aos-delay="300" >
+        <div className='mt-[30px]' data-aos="zoom-in-right" data-aos-delay="300" >
           <img src={HomeImage} alt='image' loading='lazy'/>
         </div>
         
@@ -218,7 +218,7 @@ function Services() {
 )}
     {/* 5th tab */}
     {activeTab==="pro_services" && (
-      <div className='mt-[73px]  flex flex-col lg:flex-row xl:flex-row  justify-between items-center'>
+      <div className='mt-[73px]  flex flex-col lg:flex-row xl:flex-row  justify-center  items-center gap-[100px]'>
         <div className='' data-aos="zoom-in-right" data-aos-delay="300" >
         <p className='max-w-[497px]  mt-[30px] text-[30px] leading-[31px] font-[600]'>Detailed planning and execution</p>
         <p className='max-w-[518px] mt-[16px] text-[16px] leading-[26px] font-[Poppins] font-[400] '> For projects that require vigorous planning, forecasting, cost analysis, resource allocation, task management and reporting, ProjectManager outperforms the competition.</p>
@@ -234,7 +234,7 @@ function Services() {
         </div>
         <div className='bg-[#6DC2ED] text-white h-[54px] w-[151px]  rounded-md flex items-center justify-center mt-[42px] hover:bg-[#E9F5F8] hover:border-2 border-black hover:text-black transition-all duration-200 cursor-pointer'>Learn More</div>
         </div>
-        <div className='mt-[30px]' data-aos="zoom-in-left" data-aos-delay="300" >
+        <div className='mt-[30px]' data-aos="zoom-in-right" data-aos-delay="300" >
           <img src={HomeImage} alt='image' loading='lazy'/>
         </div> 
         </div>

@@ -61,10 +61,10 @@ try {
     <>
       <ToastContainer />
       <div
-        className="relative w-full -mt-[200px] bg-cover h-[136vh] bg-[url('/src/assets/images/mainBg.svg')] bg-no-repeat bg-center"
+        className="relative w-full -mt-[200px] bg-cover  h-[120vh] bg-[url('/src/assets/images/mainBg.svg')] bg-no-repeat bg-center"
       >
       </div>
-      <div className='items-center justify-center -mt-[600px] mb-[100px]'   data-aos="zoom-out" data-aos-delay="400">
+      <div className='items-center justify-center lg:-mt-[800px] xl:-mt-[300px] md:-mt-[240px] sm:-mt-[300px] -mt-[300px] mb-[100px]'   data-aos="zoom-out" data-aos-delay="400">
     <div className='flex items-center justify-center'>
       {/* Login Card */}
       <div className="relative z-10 bg-white  rounded-lg p-8   max-w-[550px] w-[100%] shadow-custom ">
