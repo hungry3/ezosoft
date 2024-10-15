@@ -35,14 +35,13 @@ jobs:
       - name: Install dependencies for server
         run: |
           cd server
-          npm ci  # Ensure package-lock.json exists in server directory
+          npm ci  # Install in 'server' directory
 
       # Step 5: Run backend deployment script
       - name: Run deployment script for backend
         run: |
-          cd server
-          chmod +x ../deploy.sh
-          ../deploy.sh
+          chmod +x ./deploy.sh
+          ./deploy.sh
 
   # Frontend job (client)
   client_deploy:
@@ -74,7 +73,7 @@ jobs:
       - name: Install dependencies for client
         run: |
           cd client
-          npm ci  # Ensure package-lock.json exists in client directory
+          npm ci  # Install in 'client' directory
 
       # Step 5: Build client-side project
       - name: Build client
@@ -85,9 +84,8 @@ jobs:
       # Step 6: Run deployment script for client
       - name: Deploy client
         run: |
-          cd client
-          chmod +x ../deploy.sh
-          ../deploy.sh
+          chmod +x ./deploy.sh
+          ./deploy.sh
 
   # Admin job (admin panel)
   admin_deploy:
@@ -119,7 +117,7 @@ jobs:
       - name: Install dependencies for admin
         run: |
           cd admin
-          npm ci  # Ensure package-lock.json exists in admin directory
+          npm ci  # Install in 'admin' directory
 
       # Step 5: Build admin-side project
       - name: Build admin
@@ -130,6 +128,5 @@ jobs:
       # Step 6: Run deployment script for admin
       - name: Deploy admin
         run: |
-          cd admin
-          chmod +x ../deploy.sh
-          ../deploy.sh
+          chmod +x ./deploy.sh
+          ./deploy.sh
