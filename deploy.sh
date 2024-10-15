@@ -1,26 +1,23 @@
 #!/bin/bash
 
-# Exit immediately if a command exits with a non-zero status.
-set -e
+# Restart the backend
+echo "Deploying Backend..."
+cd /root/ezosoft/server
+npm ci  # Install dependencies
+pm2 restart backend
 
-# Print the start time of the deployment
-echo "Starting deployment at $(date)"
+# Restart the client
+echo "Deploying Client..."
+cd /root/ezosoft/client
+npm ci  # Install dependencies
+npm run build --if-present
+pm2 restart client
 
-# Navigate to the server directory
-cd server
+# Restart the admin
+echo "Deploying Admin..."
+cd /root/ezosoft/admin
+npm ci  # Install dependencies
+npm run build --if-present
+pm2 restart admin
 
-# Install any new dependencies
-npm install --production
-
-# Build the client app
-cd ../client
-npm install --production
-npm run build
-
-# Navigate back to the server directory
-cd ../server
-
-# Restart all applications managed by PM2
-pm2 restart all
-
-echo "Deployment completed successfully at $(date)"
+echo "Deployment completed!"
