@@ -14,12 +14,15 @@ const EditSingleUser = () => {
     role: '',
     subscription: '',
   });
+
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      try {
+      try { setLoading(true);
+
         const response = await axiosConfig.get(`/admin/user/${id}`);
         setUserData(response?.data?.data);
         setLoading(false);
@@ -39,6 +42,11 @@ const EditSingleUser = () => {
       [name]: value,
     });
   };
+
+
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -133,20 +141,7 @@ const EditSingleUser = () => {
             </select>
           </div>
 
-          <div className='flex flex-col mb-[20px]'>
-            <label className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>Subscription</label>
-            <select
-              name='subscription'
-              value={userData.subscription}
-              onChange={handleInputChange}
-              className='mt-[4px] px-[10px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins]'
-            >
-              <option value='free'>Free</option>
-              <option value='basic'>Basic</option>
-              <option value='premium'>Premium</option>
-              <option value='custom'>Custom</option>
-            </select>
-          </div>
+         
 
           <button type='submit' className='mt-[20px] px-[20px] py-[10px] bg-[#293950] text-white rounded-md'>
             Update User

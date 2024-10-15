@@ -56,14 +56,19 @@ const AllTemplates = () => {
   const navigate =useNavigate()
   const location = useLocation();
 
-  const [editData, setEditData] = useState({ id: '', category: '', title: '' }); 
+  // const [editData, setEditData] = useState({ id: '', category: '', title: '' }); 
  
   const [selectedRows, setSelectedRows] = useState([]);
   const [open, setOpen] = React.useState(false);
 
   const [selectedDeleteId, setSelectedDeleteId] = useState(null);
 
+  const [searchByName , setSearchByName] = useState("")
+  const [searchByCompany,setSearchByCompany] =  useState('')
+  
   const handleOpen = (id) => {
+    console.log("id",id);
+    
     setSelectedDeleteId(id);
     setOpen(true);
   };
@@ -73,22 +78,20 @@ const AllTemplates = () => {
     setOpen(false);
   };
   // Handle delete action
-  const handleDelete = () => {
+  const handleDelete = async ( ) => {
     
    
-      const updatedData = data1.filter((item) => item.id !== selectedDeleteId);
-      setData(updatedData);
+      const id = selectedDeleteId
+       const response = await axiosConfig.delete(`/admin/delete-user/${id}`)
+       console.log(response);
+       const updatedData = data1.filter((item) => item._id !== selectedDeleteId);
+       setData(updatedData);
+       
+      
       handleClose()
    
   };
   
-
-  // Handle multiple delete action
-  const handleDeleteMultiple = () => {
-    const updatedData = data1.filter(item => !selectedRows.includes(item.id));
-    setData(updatedData);
-    setSelectedRows([]); 
-  };
   const handleSelectedRows = (state) => {
     setSelectedRows(state.selectedRows.map(row => row.id));
   };
@@ -112,25 +115,43 @@ const AllTemplates = () => {
   };
 
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditData({ ...editData, [name]: value });
+
+
+
+
+  const handleSearchNameChange = (e) => {
+    setSearchByName(e.target.value);
   };
 
+  const  handleSearchCompanyChange = (e) =>{
+    setSearchByCompany(e.target.value)
+  }
 
+  const filterUser = data1.filter((user) => {
+     const matchName = searchByName == "" || 
+     (user?.firstName?.toLowerCase().includes(searchByName.toLowerCase())||
+    user?.lastName?.toLowerCase().includes(searchByCompany.toLowerCase())
+    )
+    const matchCompany = searchByCompany === "" || 
+    user?.companyName?.toLowerCase().includes(searchByCompany.toLowerCase())
+
+    return  matchName && matchCompany
+    
+  });
+  
+ 
+  
 
  
   
   
-
   // Define table columns
   const columns = [
     {
       name: (<div className='font-bold'>#</div>),
       selector: (row,index) =>index+1 ,
       sortable: true,
-      width:'10%'
-      
+      width:'50px' 
     },
     {
       name: (
@@ -147,7 +168,8 @@ const AllTemplates = () => {
       </NavLink>
            </div>,
           sortable: true,
-          width: '20%',
+          width:"200px"
+          
     },
     {
       name: (
@@ -157,13 +179,10 @@ const AllTemplates = () => {
         </div>
       ),
       selector: (row) =>( <NavLink to={`/ViewSingleUser/${row._id}`} className='cursor-pointer hover:underline'>
-          {row.companyName}
+          {row.companyName ? row.companyName :"N/A"}
       </NavLink>),
-       
-        
           sortable: true,
-          width: '20%',
-     
+          width:"150px"
     },
     {
       name: (
@@ -176,8 +195,7 @@ const AllTemplates = () => {
       
           <div> {row.email} </div>,
           sortable: true,
-          width: '20%',
-     
+          width:"200px"
     },
     {
       name: (
@@ -186,11 +204,13 @@ const AllTemplates = () => {
           
         </div>
       ),
-      selector: (row) =>
-      
-          <div> {row.phone}  </div>,
+      selector: (row) =>{
+        return row.phone ? row.phone : 'N/A'
+      },
+  
           sortable: true,
-          width: '15%',
+          width:"150px"
+         
      
     },
     {
@@ -204,7 +224,8 @@ const AllTemplates = () => {
       
           <div> {row?.name}  </div>,
           sortable: true,
-          width: '20%',
+          width:"100px"
+        
      
     },
 
@@ -219,7 +240,8 @@ const AllTemplates = () => {
           
          return row.subscriptionPlan ? row.subscriptionPlan?.duration : 'N/A'},
         sortable: true,
-          width: '20%',
+        width:"100px"
+         
      
       
     },
@@ -238,13 +260,13 @@ const AllTemplates = () => {
               src={DeleteIcon}
               alt='delete'
               className='cursor-pointer'
-              onClick={() => handleOpen(row.id)}
+              onClick={() => handleOpen(row._id)}
 
             />
             
           </div>
         ),
-      width:'15%',
+      width:'150px',
     },
 
   ];
@@ -252,7 +274,7 @@ const AllTemplates = () => {
     const conditionalRowStyles = [
       {
         when: (row, index) => {
-          console.log(`Row: ${row}, Index: ${index}`);
+          // console.log(`Row: ${row}, Index: ${index}`);
           return index % 2 === 0; 
         },
         style: {
@@ -276,7 +298,7 @@ const AllTemplates = () => {
               <label htmlFor='category' className='text-[16px] font-[Poppins] leading-[24px] font-[400]'>
                 Search by Name
               </label>
-              <input className='pl-[10px] pr-[15px] py-[10px] bg-white rounded-lg border border-[#D9D9D9]' placeholder='Name'/>
+              <input className='pl-[10px] pr-[15px] py-[10px] bg-white rounded-lg border border-[#D9D9D9]' placeholder='Name' onChange={handleSearchNameChange} />
                
               
             </div>
@@ -285,7 +307,7 @@ const AllTemplates = () => {
               <label htmlFor='title' className='text-[16px] font-[Poppins] leading-[24px] font-[400]'>
                 Search by Title
               </label>
-              <input className='pl-[10px] pr-[15px] py-[10px] bg-white rounded-lg border border-[#D9D9D9]' placeholder='company'/>
+              <input className='pl-[10px] pr-[15px] py-[10px] bg-white rounded-lg border border-[#D9D9D9]' placeholder='company'  onChange={handleSearchCompanyChange}/>
                
               
             </div>
@@ -297,7 +319,7 @@ const AllTemplates = () => {
             </div>
           </div>
 
-          <div className='mt-[33px] lg:mx-[50px] xl:mx-[50px] mx-[10px] lg:px-[47px] xl:px-[47px] px-[10px] pt-[25px] pb-[41px]  rounded-lg flex flex-col gap-[30px] justify-between items-end'>
+          <div className='mt-[33px] lg:mx-[50px] xl:mx-[50px] mx-[10px] lg:px-[47px] xl:px-[47px]  pt-[25px] pb-[41px] border  rounded-lg flex flex-col gap-[30px] justify-between items-end'>
           <Modal
         open={open}
         onClose={handleClose}
@@ -324,7 +346,7 @@ const AllTemplates = () => {
        
           <DataTable
            columns={columns} 
-           data={data1}
+           data={filterUser}
            selectableRows 
            fixedHeader 
            pagination

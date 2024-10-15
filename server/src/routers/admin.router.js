@@ -37,6 +37,8 @@ router.get('/all-users', getAllUsers);
 // router.put('/update-user/:id',isAuthenticated, isAdmin, updateUser);
 router.put('/update-user/:id', updateUser);
 
-router.delete('/delete-user/:id',isAuthenticated, isAdmin, deleteUser);
+// router.delete('/delete-user/:id',isAuthenticated, isAdmin, deleteUser);
+router.delete('/delete-user/:id', deleteUser);
+
 
 export default router;
