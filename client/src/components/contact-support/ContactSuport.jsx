@@ -5,7 +5,7 @@ function ContactSuport() {
   return (
     <>
      <div
-        className="relative w-full -mt-[100px] sm:-mt-[500px] md:-mt-[100px]  bg-cover md:h-[126vh] h-[136vh] sm:[100vh] bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center"
+        className="relative w-full -mt-[100px]   bg-cover md:h-[80vh] lg:h-[120vh] xl:h-[100vh] h-[100vh] bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center"
       
       >
         

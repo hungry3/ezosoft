@@ -43,10 +43,10 @@ function ClientReview() {
         </div>
 
         {/* Testimonials Grid */}
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-[40px]'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-[40px] w-full'>
           {testimonials.map((testimonial, index) => (
             <div key={index} className='flex items-center justify-center w-full'>
-              <div className='max-w-[800px] w-full'>
+              <div className='w-full '>
                 <div className='w-full h-[291px] bg-[url("/src/assets/images/bg-slider.svg")] bg-cover bg-center rounded-md'>
                   <p className='pl-[40px] py-[50px] max-w-[343px] font-[Poppins] text-[16px] leading-[26px]'>
                     {testimonial.text}

@@ -7,6 +7,9 @@ const MONGO_URI = process.env.MONGO_URI
 console.log(MONGO_URI);
 
 
+console.log(MONGO_URI);
+
+
 const connectDB = async()=>{
     try{
         await mongoose.connect(MONGO_URI).then((data)=>{
@@ -15,7 +18,7 @@ const connectDB = async()=>{
     }
     catch(error)
     {
-        console.log("Error connecting to MongoDB", error.message)
+        console.log("Error connecting to MongoDB", error)
         process.exit(1)
     }
 }

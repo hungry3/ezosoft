@@ -40,7 +40,7 @@ const Hero = () => {
       </div>
     </div>
     </div>
-<div className='mt-32 shadow-custom bouncing-image ' data-aos="zoom-in" data-aos-delay="500">
+<div className='mt-32 shadow-custom bouncing-image ' >
         
 <img src={banner} alt='banner' loading='lazy'/>
 </div>

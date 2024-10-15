@@ -10,12 +10,12 @@ function ContactSales() {
   return (
     <>
      <div
-        className="relative w-full -mt-[100px] sm:-mt-[500px] md:-mt-[100px]  bg-cover md:h-[126vh] h-[136vh] sm:[100vh] bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center"
+        className="relative w-full -mt-[100px]  bg-cover h-[150vh]  bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center"
       
       >
         
       </div>
-       <div className='relative xl:mx-[100px] lg:mx-[100px] md:mx-[50px] -mt-[1000px] mx-[30px] py-[300px] flex md:flex-nowrap flex-wrap items-center justify-between md:items-center gap-[100px]'  >
+       <div className='relative xl:mx-[100px] lg:mx-[100px] md:mx-[50px] lg:-mt-[950px] xl:-mt-[1100px] -mt-[1000px]  mx-[30px]  py-[400px] flex md:flex-nowrap flex-wrap items-center justify-between  gap-[100px]'  >
         <div className='flex flex-col items-start gap-[15px]' data-aos="fade-up-right" data-aos-delay="500">
         <p className='text-[40px] leading-[50px] font-[600] text-[white]'>Request a meeting with sales</p>
         <p className='max-w-[500px] text-[16px] leading-[24px] font-[Poppins] text-[white]'>Request a meeting to learn about Ezosoft’s advanced features, how we support large teams or get a custom quote for an Enterprise plan.</p>
@@ -38,7 +38,7 @@ function ContactSales() {
 
         </div>
       </div>
-      <div className='m-[0px] w-[580px]  bg-white py-[50px] md:px-[50px] px-[20px] rounded-lg shadow-custom flex flex-col gap-6' data-aos="fade-up-left" data-aos-delay="500">
+      <div className='m-o w-[580px]  bg-white py-[50px] md:px-[50px] px-[20px] rounded-lg shadow-custom flex flex-col gap-6' data-aos="" data-aos-delay="500">
             <input type='text' placeholder=' First Name*' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
             <input type='text' placeholder=' Last Name*' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
             <input type='email' placeholder=' Work Email' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
