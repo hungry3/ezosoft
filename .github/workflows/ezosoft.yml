@@ -1,0 +1,127 @@
+name: MERN CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # Job to deploy the backend
+  backend_deploy:
+    name: Backend CI/CD
+    runs-on: self-hosted
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          clean: false
+
+      # Step 2: Pull the latest changes
+      - name: Pull latest changes
+        run: |
+          git reset --hard
+          git checkout main
+          git pull origin main
+
+      # Step 3: Setup Node.js environment for backend
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      # Step 4: Install dependencies for the server
+      - name: Install dependencies for server
+        run: |
+          npm ci  # Install dependencies in the root directory
+
+      # Step 5: Run backend deployment script
+      - name: Run deployment script for backend
+        run: |
+          chmod +x ./deploy.sh
+          ./deploy.sh  # Run deploy.sh from the root folder
+
+  # Job to deploy the client
+  client_deploy:
+    name: Client CI/CD
+    runs-on: self-hosted
+    needs: backend_deploy  # Ensure the backend job runs first
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          clean: false
+
+      # Step 2: Pull the latest changes
+      - name: Pull latest changes
+        run: |
+          git reset --hard
+          git checkout main
+          git pull origin main
+
+      # Step 3: Setup Node.js environment for client
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      # Step 4: Install dependencies for client
+      - name: Install dependencies for client
+        run: |
+          npm ci  # Install dependencies in the root directory
+
+      # Step 5: Build client-side project
+      - name: Build client
+        run: |
+          npm run build --if-present
+
+      # Step 6: Run deployment script for client
+      - name: Deploy client
+        run: |
+          chmod +x ./deploy.sh
+          ./deploy.sh  # Run deploy.sh from the root folder
+
+  # Job to deploy the admin panel
+  admin_deploy:
+    name: Admin CI/CD
+    runs-on: self-hosted
+    needs: backend_deploy  # Ensure the backend job runs first
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          clean: false
+
+      # Step 2: Pull the latest changes
+      - name: Pull latest changes
+        run: |
+          git reset --hard
+          git checkout main
+          git pull origin main
+
+      # Step 3: Setup Node.js environment for admin
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      # Step 4: Install dependencies for admin
+      - name: Install dependencies for admin
+        run: |
+          npm ci  # Install dependencies in the root directory
+
+      # Step 5: Build admin-side project
+      - name: Build admin
+        run: |
+          npm run build --if-present
+
+      # Step 6: Run deployment script for admin
+      - name: Deploy admin
+        run: |
+          chmod +x ./deploy.sh
+          ./deploy.sh  # Run deploy.sh from the root folder
