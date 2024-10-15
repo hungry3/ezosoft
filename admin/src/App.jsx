@@ -8,6 +8,11 @@ import AddNewBlogs from './Pages/Blogs-page/AddNewBlogs'
 import User from './Pages/User-page/User'
 import EditedBlog from './Pages/Blogs-page/EditedBlog'
 import SingleBlogPage from './Pages/Blogs-page/Single-blog'
+
+import ViewSingleTemplate from './Pages/Templates-page/ViewSingleTemplate'
+import SingleUserPage from './Pages/User-page/SingleUserPage'
+
+import EditSingleUserPage from './Pages/User-page/EditSingleUserPage'
 function App() {
   return (
     <>
@@ -15,10 +20,16 @@ function App() {
     <Routes>
       <Route exact path='/' element={<User/>} />
       <Route exact path='/allTemplates' element={<AllTemplates/>} />
+      <Route path='/view-template/:id' element={<ViewSingleTemplate />} />
       <Route exact path='/addnewblogs' element={<AddNewBlogs/>} />
       <Route exact path='/allblogs' element={<AllBlogs/>} />
       <Route exact path='/pricing' element={<Pricing/>} />
       <Route exact path='/user' element={<User/>} />
+    
+      <Route exact path='/ViewSingleUser/:id' element={<SingleUserPage/>} />
+      <Route exact path='/editSingleUser/:id' element={<EditSingleUserPage/>} />
+
+      
       <Route exact path='/addTemplates' element={<AddNewTemplates/>} />
       <Route path="/edit/:id" element={<EditTemplates/>} />
       <Route path='/blog/edit/:blogId' element={<EditedBlog/>}/>

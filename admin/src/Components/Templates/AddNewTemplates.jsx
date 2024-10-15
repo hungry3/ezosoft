@@ -45,9 +45,16 @@ const AddNewTemplates = () => {
   // Handle multiple images upload
   const handleMultipleImagesChange = (event, index) => {
     const files = Array.from(event.target.files);
+    const newImageURLs = files.map((file) => URL.createObjectURL(file));
     const updatedTemplates = [...templates];
-    updatedTemplates[index].templatePageImage = files.map((file) => URL.createObjectURL(file));
+
+    
+    updatedTemplates[index].templatePageImage = [
+      ...(updatedTemplates[index].templatePageImage || []),
+      ...newImageURLs,
+    ];
     setTemplates(updatedTemplates);
+    event.target.value = null; 
   };
 
   const handleInputChange = (event, index, field) => {
@@ -61,6 +68,10 @@ const AddNewTemplates = () => {
     setTemplates([...templates, { templateImage: '', templatePageImage: [], templateUrl: '', title: '', description: '' }]);
   };
 
+  const removeTemplate = (index) => {
+    const updatedTemplates = templates.filter((_, i) => i !== index);
+    setTemplates(updatedTemplates);
+  }
   // Function to save all the data
   const handleUpload = async (data) => {
     const formData = new FormData();
@@ -144,7 +155,7 @@ const AddNewTemplates = () => {
 
                 <div className='flex flex-col w-[100%]'>
                   <p className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>Title</p>
-                  <input type='text' placeholder='Text Here' className='border mt-[4px] border-grey pl-[22px] mr-[30px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' {...register('title', { required: true })} />
+                  <input type='text' placeholder='Text Here' className=' mt-[4px]  pl-[22px] mr-[30px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' {...register('title', { required: true })} />
                   {errors.title && <span className='text-red-400'>Title is required</span>}
                 </div>
               </div>
@@ -153,7 +164,7 @@ const AddNewTemplates = () => {
               <div className='flex mt-[30px] max-w-[100%] w-full items-center'>
                 <div className='flex flex-col'>
                   <p className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>Description</p>
-                  <textarea type='text' placeholder='Text Here' cols={300} className='pl-[10px] resize-none border mt-[4px] w-full border-grey px-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins]' {...register('description', { required: true })} />
+                  <textarea type='text' placeholder='Text Here' cols={300} className='pl-[10px] resize-none  mt-[4px] w-full  px-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins]' {...register('description', { required: true })} />
                   {errors.description && <span className='text-red-400'>Description is required</span>}
                 </div>
               </div>
@@ -234,7 +245,7 @@ const AddNewTemplates = () => {
               <div className='flex flex-col mt-[20px]'>
                 <p className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>Upload Template URL</p>
                 <div className='flex items-center'>
-                  <input id={`docInput-${index}`} type='file' onChange={(event) => handleInputChange(event, index, 'templateUrl')} className='border border-grey pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' />
+                  <input id={`docInput-${index}`} type='file' onChange={(event) => handleInputChange(event, index, 'templateUrl')} className=' pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' />
                 </div>
               </div>
             </div>

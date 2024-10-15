@@ -27,12 +27,11 @@ const Sidebar = ({isCollapsed}) => {
    }
   return (
     <>
-       <div className={`relative  min-h-[100vh] bg-grey flex flex-col ${isCollapsed? 'w-[100px]':'w-[281px]'}`}>
-
+ <div className={`relative  min-h-[100vh] bg-grey flex flex-col ${isCollapsed? 'w-[100px]':'w-[281px]'}`}>
 <div className='flex flex-col items-center '>
 <img src={Logo} alt='EZOSOFT' className={`mt-[28px] h-[30px] ${isCollapsed? 'w-[80px]': 'w-[157px]'}`}/>
 <div className='mt-[13px] max-w-[238px] w-full border border-[#A3A3A3] '></div>
-{/* items */}
+
      <div className='flex flex-col '>
      <div className='mt-[44px] flex gap-[20px] items-center cursor-pointer'>
      <img src={DashboardIcon} alt='dashboard' className='w-[20px] h-[20px]'/>

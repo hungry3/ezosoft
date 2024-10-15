@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 
-// Load Stripe with your public key
+
 
 
 const CheckOutForm = ({ planId, customTeamOptionId, plans }) => {
@@ -63,14 +63,14 @@ const CheckOutForm = ({ planId, customTeamOptionId, plans }) => {
     }
   };
 
-  // Ensure that Elements is only rendered if we have a valid clientSecret
+ 
   return (
     <>
    
           <form id="payment-form" onSubmit={handleSubmit}>
             <LinkAuthenticationElement id="link-authentication-element" />
             <PaymentElement id="payment-element" onReady={() => console.log("Payment element mounted")} />
-            <button disabled={isLoading || !stripe || !elements} id="submit" className="flex justify-center items-center m-auto w-full">
+            <button disabled={isLoading || !stripe || !elements} id="submit" className="flex items-center justify-center w-full m-auto">
               <span id="button-text" className="flex flex-row justify-center items-center py-2 px-4  rounded-full cursor-pointer bg-blue text-white min-h-[45px] w-full text-[16px] font-Poppins text-nowrap font-semibold mt-2 !h-[35px]">
                 {isLoading ? "Paying..." : "Pay now"}
               </span>

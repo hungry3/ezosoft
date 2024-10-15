@@ -46,8 +46,8 @@ import { ErrorHandler } from '../utils/ErrorHandler.js';
 const getAllUsers = asyncHandler(async(req,res,next)=>{
 
     try{
-        const user = await User.find().select("-password");
-        res.status(200).json(new ApiResponse(200,user,"success"))
+        const user = await User.find().select("-password").populate("subscriptionPlan");
+        res.status(200).json(new ApiResponse(user,200,"success"))
     }
     catch(error){
         next(new ErrorHandler(error.message,500));
@@ -60,13 +60,13 @@ const getAllUsers = asyncHandler(async(req,res,next)=>{
 
     try{
         const userId = req.params.id;
-        const user = await User.findById(userId).select('-password');
+        const user = await User.findById(userId).select('-password').populate("subscriptionPlan");
 
         if(!user){
             return next(new ErrorHandler("User not found",404))
         }
 
-        res.status(200).json(new ApiResponse(200,user,' user retrieved Successfuly'))
+        res.status(200).json(new ApiResponse(user,200,' user retrieved Successfuly'))
     }
     catch(error){
         next(new ErrorHandler(error.message,500))
@@ -76,11 +76,12 @@ const getAllUsers = asyncHandler(async(req,res,next)=>{
  const updateUser =  asyncHandler(async (req,res,next)=>{
     try{
         const userId = req.params.id;
-        const { name , email,role} = req.body;
+        const { role ,...otherFields} = req.body;
         if(role && !["user", "admin"].includes(role)){
             return next(new ErrorHandler("Invalid role",400));
         }
-        const updatedUser = await User.findByIdAndUpdate(userId,{name,email,role}, {new:true,select:"-password"})
+
+        const updatedUser = await User.findByIdAndUpdate(userId,{...otherFields,role}, {new:true,select:"-password"})
 
         if(!updatedUser){
             return next(new ErrorHandler("User not found",404))
@@ -214,25 +215,14 @@ const getAllUsers = asyncHandler(async(req,res,next)=>{
 });
 
 const updateTemplate = asyncHandler(async (req, res, next) => {
-  // console.log('Files:', req.files); 
-  // console.log('Body:', req.body); 
-
   const  id  = req.params.id;
-  // console.log(id);
   
   const { name, description, templates, category } = req.body;
 
-  
 
-  const templateExists = await Template.findOne({ name });
-  // if (templateExists) {
-  //     return next(new ErrorHandler("Template with this name already exists", 400));
-  // } 
-
- 
 
   const template = await Template.findByIdAndUpdate(id);
-  console.log(template ,"template >>>>>>>>>>>>>>>>>>>>>>>>>>");
+  // console.log(template ,"template >>>>>>>>>>>>>>>>>>>>>>>>>>");
   
   if (!template) {
       return next(new ErrorHandler("Template not found", 404));
@@ -249,51 +239,54 @@ const updateTemplate = asyncHandler(async (req, res, next) => {
           avatarUrl = uploadResult.url;
       }
 
-      const updatedTemplates = await Promise.all(templates.map(async (templateData, index) => {
-          const { templateTitle, templateContent } = templateData;
 
-          if (!templateTitle || !templateContent) {
-              throw new ErrorHandler(`Template ${index} is missing required fields`, 400);
-          }
+    const updatedTemplates = await Promise.all(templates.map(async (templateData, index) => {
+      const { templateTitle, templateContent, templateImage, templateUrl } = templateData;
 
-          const templateImageFile = req.files.find(file => file.fieldname === `templates[${index}][templateImage]`);
-          if (!templateImageFile) {
-              throw new ErrorHandler(`Template ${index} is missing templateImage`, 400);
-          }
-          const uploadImageResult = await uploadOnCloudinary(templateImageFile.path, "template_thumbnail");
-          if (!uploadImageResult) {
-              throw new ErrorHandler("Failed to upload template image", 500);
-          }
-          const templateImageUrl = uploadImageResult.url;
+      if (!templateTitle || !templateContent) {
+        throw new ErrorHandler(`Template ${index} is missing required fields`, 400);
+      }
 
-          let templateUrl = '';
-          const templateUrlFile = req.files.find(file => file.fieldname === `templates[${index}][templateUrl]`);
-          if (templateUrlFile) {
-              const uploadFileResult = await uploadOnCloudinary(templateUrlFile.path, "template_files");
-              if (!uploadFileResult) {
-                  throw new ErrorHandler("Failed to upload template file", 500);
-              }
-              templateUrl = uploadFileResult.url;
-          }
 
-          const templatePageImageFiles = req.files.filter(file => file.fieldname.startsWith(`templates[${index}][templatePageImage]`));
-          const templatePageImageUrls = await Promise.all(
-              templatePageImageFiles.map(async (file) => {
-                  const uploadPageImageResult = await uploadOnCloudinary(file.path, "template_page_images");
-                  return uploadPageImageResult.url;
-              })
-          );
+      const currentTemplate = template.templates[index] || {};
 
-          return {
-              templateTitle,
-              templateContent,
-              templateImageUrl,
-              templateUrl: templateUrl || '',
-              templatePageImage: templatePageImageUrls
-          };
-      }));
+      let templateImageUrl = currentTemplate.templateImageUrl || templateImage;
+      const templateImageFile = req.files.find(file => file.fieldname === `templates[${index}][templateImage]`);
+      if (templateImageFile) {
+        const uploadImageResult = await uploadOnCloudinary(templateImageFile.path, "template_thumbnail");
+        if (!uploadImageResult) {
+          throw new ErrorHandler("Failed to upload template image", 500);
+        }
+        templateImageUrl = uploadImageResult.url;
+      }
 
-      const updatedTemplate = await Template.findByIdAndUpdate(templateId, {
+      let templateFileUrl = currentTemplate.templateUrl || templateUrl;
+      const templateUrlFile = req.files.find(file => file.fieldname === `templates[${index}][templateUrl]`);
+      if (templateUrlFile) {
+        const uploadFileResult = await uploadOnCloudinary(templateUrlFile.path, "template_files");
+        if (!uploadFileResult) {
+          throw new ErrorHandler("Failed to upload template file", 500);
+        }
+        templateFileUrl = uploadFileResult.url;
+      }
+
+      const templatePageImageFiles = req.files.filter(file => file.fieldname.startsWith(`templates[${index}][templatePageImage]`));
+      const templatePageImageUrls = templatePageImageFiles.length > 0 ? await Promise.all(
+        templatePageImageFiles.map(async (file) => {
+          const uploadPageImageResult = await uploadOnCloudinary(file.path, "template_page_images");
+          return uploadPageImageResult.url;
+        })
+      ) : currentTemplate.templatePageImage || [];
+
+      return {
+        templateTitle,
+        templateContent,
+        templateImageUrl,
+        templateUrl: templateFileUrl || '',
+        templatePageImage: templatePageImageUrls
+      };
+    }));
+      const updatedTemplate = await Template.findByIdAndUpdate(id, {
           name,
           description,
           avatar: avatarUrl,
