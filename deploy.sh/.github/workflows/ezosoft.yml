@@ -133,3 +133,4 @@ jobs:
           cd admin
           chmod +x ../deploy.sh
           ../deploy.sh  # Run deploy.sh from the root folder
+        
