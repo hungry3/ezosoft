@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  # Job to deploy the backend
+  # Backend job (server)
   backend_deploy:
     name: Backend CI/CD
     runs-on: self-hosted
@@ -31,20 +31,20 @@ jobs:
           node-version: 20.x
           cache: 'npm'
 
-      # Step 4: Install dependencies for the server
+      # Step 4: Install dependencies for server
       - name: Install dependencies for server
         run: |
           cd server
-          npm ci  # Install dependencies in the 'server' directory
+          npm ci  # Ensure package-lock.json exists in server directory
 
       # Step 5: Run backend deployment script
       - name: Run deployment script for backend
         run: |
           cd server
-          chmod +x ../../deploy.sh  # Adjust path if deploy.sh is in the root
-          ../../deploy.sh  # Run deploy.sh from the root folder
+          chmod +x ../deploy.sh
+          ../deploy.sh
 
-  # Job to deploy the client
+  # Frontend job (client)
   client_deploy:
     name: Client CI/CD
     runs-on: self-hosted
@@ -74,7 +74,7 @@ jobs:
       - name: Install dependencies for client
         run: |
           cd client
-          npm ci  # Install dependencies in the 'client' directory
+          npm ci  # Ensure package-lock.json exists in client directory
 
       # Step 5: Build client-side project
       - name: Build client
@@ -86,10 +86,10 @@ jobs:
       - name: Deploy client
         run: |
           cd client
-          chmod +x ../../deploy.sh  # Adjust path if deploy.sh is in the root
-          ../../deploy.sh  # Run deploy.sh from the root folder
+          chmod +x ../deploy.sh
+          ../deploy.sh
 
-  # Job to deploy the admin panel
+  # Admin job (admin panel)
   admin_deploy:
     name: Admin CI/CD
     runs-on: self-hosted
@@ -119,7 +119,7 @@ jobs:
       - name: Install dependencies for admin
         run: |
           cd admin
-          npm ci  # Install dependencies in the 'admin' directory
+          npm ci  # Ensure package-lock.json exists in admin directory
 
       # Step 5: Build admin-side project
       - name: Build admin
@@ -131,5 +131,5 @@ jobs:
       - name: Deploy admin
         run: |
           cd admin
-          chmod +x ../../deploy.sh  # Adjust path if deploy.sh is in the root
-          ../../deploy.sh  # Run deploy.sh from the root folder
+          chmod +x ../deploy.sh
+          ../deploy.sh
