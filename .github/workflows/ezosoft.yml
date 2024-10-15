@@ -34,13 +34,15 @@ jobs:
       # Step 4: Install dependencies for the server
       - name: Install dependencies for server
         run: |
-          npm ci  # Install dependencies in the root directory
+          cd server
+          npm ci  # Install dependencies in the 'server' directory
 
       # Step 5: Run backend deployment script
       - name: Run deployment script for backend
         run: |
-          chmod +x ./deploy.sh
-          ./deploy.sh  # Run deploy.sh from the root folder
+          cd server
+          chmod +x ../../deploy.sh  # Adjust path if deploy.sh is in the root
+          ../../deploy.sh  # Run deploy.sh from the root folder
 
   # Job to deploy the client
   client_deploy:
@@ -71,18 +73,21 @@ jobs:
       # Step 4: Install dependencies for client
       - name: Install dependencies for client
         run: |
-          npm ci  # Install dependencies in the root directory
+          cd client
+          npm ci  # Install dependencies in the 'client' directory
 
       # Step 5: Build client-side project
       - name: Build client
         run: |
+          cd client
           npm run build --if-present
 
       # Step 6: Run deployment script for client
       - name: Deploy client
         run: |
-          chmod +x ./deploy.sh
-          ./deploy.sh  # Run deploy.sh from the root folder
+          cd client
+          chmod +x ../../deploy.sh  # Adjust path if deploy.sh is in the root
+          ../../deploy.sh  # Run deploy.sh from the root folder
 
   # Job to deploy the admin panel
   admin_deploy:
@@ -113,15 +118,18 @@ jobs:
       # Step 4: Install dependencies for admin
       - name: Install dependencies for admin
         run: |
-          npm ci  # Install dependencies in the root directory
+          cd admin
+          npm ci  # Install dependencies in the 'admin' directory
 
       # Step 5: Build admin-side project
       - name: Build admin
         run: |
+          cd admin
           npm run build --if-present
 
       # Step 6: Run deployment script for admin
       - name: Deploy admin
         run: |
-          chmod +x ./deploy.sh
-          ./deploy.sh  # Run deploy.sh from the root folder
+          cd admin
+          chmod +x ../../deploy.sh  # Adjust path if deploy.sh is in the root
+          ../../deploy.sh  # Run deploy.sh from the root folder
