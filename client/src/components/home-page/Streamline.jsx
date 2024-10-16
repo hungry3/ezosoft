@@ -31,7 +31,7 @@ function Streamline() {
 </div>
 
 {/* 02 */}
-<div className='flex flex-col mb-10 lg:w-[28%] xl:w-[28%] md:w-[28%] w-[100%]' data-aos="fade-up-right"  data-aos-delay="300">
+<div className='flex flex-col mb-10 lg:w-[26%] xl:w-[26%] md:w-[26%] w-[100%]' data-aos="fade-up-right"  data-aos-delay="300">
   <div className='flex flex-row items-center justify-between w-full'>
     <div className='h-[50px] w-[50px] bg-blue rounded-full flex items-center justify-center'>
       <p className='text-white text-[16px] font-[Poppins]'>02</p>
@@ -45,7 +45,7 @@ function Streamline() {
 </div>
 
 {/* 03 */}
-<div className='flex flex-col mb-10 lg:w-[28%] xl:w-[28%] md:w-[28%] w-[100%]' data-aos="fade-up-right"  data-aos-delay="300">
+<div className='flex flex-col mb-10 lg:w-[26%] xl:w-[26%] md:w-[26%] w-[100%]' data-aos="fade-up-right"  data-aos-delay="300">
   <div className='flex flex-row items-center justify-between w-full'>
     <div className='h-[50px] w-[50px] bg-cyanDark rounded-full flex items-center justify-center'>
       <p className='text-white text-[16px] font-[Poppins]'>03</p>
@@ -59,7 +59,7 @@ function Streamline() {
 </div>
 
 {/* 04 */}
-<div className='flex flex-col mb-10 lg:w-[16%] xl:w-[16%] md:w-[16%] w-[100%]' data-aos="fade-up-right"  data-aos-delay="300">
+<div className='flex flex-col mb-10 lg:w-[20%] xl:w-[20%] md:w-[20%] w-[100%]' data-aos="fade-up-right"  data-aos-delay="300">
   <div className='flex flex-row items-center justify-between w-full'>
     <div className='h-[50px] w-[50px] bg-blue rounded-full flex items-center justify-center'>
       <p className='text-white text-[16px] font-[Poppins]'>04</p>

@@ -29,7 +29,7 @@ function Transforming({bgColor}) {
          </div>
          </div>
          {/* second card */}
-         <div className='w-[396px] h-[333px] border-t border-[#6DC2ED] bg-white shadow-lg overflow-hidden'    data-aos="fade-up-left" data-aos-delay="400">
+         <div className='w-[396px] h-[333px] border-t border-[#6DC2ED] bg-white shadow-lg overflow-hidden'    data-aos="fade-up-bottom" data-aos-delay="400">
          <div className='ml-[38px] mt-[54px]'> 
          <div className='flex items-center justify-between'>
          <div className=''><img src={CardIcon} alt='icon' loading='lazy' /></div>
@@ -41,7 +41,7 @@ function Transforming({bgColor}) {
          </div>
          </div>
           {/* third card */}
-          <div className='w-[396px] h-[333px] border-t border-[#6DC2ED] bg-white shadow-lg overflow-hidden'   data-aos="fade-down-left" data-aos-delay="400">
+          <div className='w-[396px] h-[333px] border-t border-[#6DC2ED] bg-white shadow-lg overflow-hidden'   data-aos="fade-down-right" data-aos-delay="400">
          <div className='ml-[38px] mt-[54px]'> 
          <div className='flex items-center justify-between'>
          <div className=''><img src={CardIcon} alt='icon' loading='lazy' /></div>

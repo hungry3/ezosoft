@@ -12,7 +12,7 @@ import './src/middleware/passport.middleware.js'
 const app = express()
 
 app.use(cors({
-    origin: ['http://ezosoft.com', process.env.FRONTEND_URL,process.env.CLIENT_URL],
+    origin: ['http://ezosoft.com', process.env.FRONTEND_URL,process.env.CLIENT_URL,"https://ezosoft-rouge.vercel.app"],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
   }));

@@ -5,7 +5,7 @@ import { axiosConfig } from '../../utils/axiosConfig'
 import formatDate from '../../utils/dateFormat'
 import BlogLoader from '../Loaders/BlogLoader'
 import { NavLink } from 'react-router-dom'
-
+import {truncateContent} from '/src/utils/TextLimmit'
 const fetchBlogs = async () => {
   const { data } = await axiosConfig.get('/blog/all'); 
   return data;
@@ -32,8 +32,6 @@ const BodyContent = () => {
 
   console.log(categories);
   
-
-
 
   if (error) {
     console.log(error);
@@ -68,7 +66,7 @@ const BodyContent = () => {
                         <p className='text-[14px] font-[Poppins] font-[400] text-darkGrey text-nowrap mr-3'>{formatDate(blog.createdAt)}</p>  
                     </div>
                     <p className='mt-[16px] max-w-[293px] w-full text-[20px] font-[Poppins] leading-[28px] font-bold '>{blog.title}</p>
-                    <p className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] leading-[24px] font-[400]'>{blog.content.slice(0,130)}{blog.content.length > 130 ? '...' : ''}</p>
+                    <div className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] leading-[24px] font-[400]'  dangerouslySetInnerHTML={{__html:truncateContent(blog.content)}}/>
                
                 </NavLink>
             ))}  
