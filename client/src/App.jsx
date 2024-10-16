@@ -63,11 +63,11 @@ function App() {
                     }
                   />
                   <Route path="/software" element={<Software />} />
-                  <Route path="/enterprise" element={<Blog />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:id" element={<BlogInner />} />
                   {/* <Route path="/template" element={<InnerTemplate/>} /> */}
                   <Route path="/resources" element={<TemplatePage />} />
                   <Route path="/knowledge" element={<Knowledge/>} />
-                  <Route path="/blog/:id" element={<BlogInner />} />
                   <Route
                     path="/blog/category/:category"
                     element={<CategoryPage />}
