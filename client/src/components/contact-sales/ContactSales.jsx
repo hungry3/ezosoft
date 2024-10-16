@@ -2,19 +2,23 @@
 import { NavLink } from 'react-router-dom'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useForkRef } from '@mui/material';
 import { useForm } from 'react-hook-form';
- const {register ,formState: { errors },handleSubmit} = useForm()
 
-  const onSubmit=(data)=>{
-       console.log(data);
-       
-  }
+const onSubmit=(data)=>{
+  console.log(data);
+  
+}
 function ContactSales() {
   AOS.init({
     duration: 1000, 
     delay: 300,     
   });
+
+
+
+  const {register ,formState: { errors },handleSubmit} = useForm()
+
+
   return (
     <>
      <div
