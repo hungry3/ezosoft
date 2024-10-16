@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies for server
         run: |
           cd server
-          npm ci  # Install in 'server' directory
+          npm i  # Install in 'server' directory
 
       # Step 5: Run backend deployment script
       - name: Run deployment script for backend
@@ -73,7 +73,7 @@ jobs:
       - name: Install dependencies for client
         run: |
           cd client
-          npm ci  # Install in 'client' directory
+          npm i  # Install in 'client' directory
 
       # Step 5: Build client-side project
       - name: Build client
@@ -117,7 +117,7 @@ jobs:
       - name: Install dependencies for admin
         run: |
           cd admin
-          npm ci  # Install in 'admin' directory
+          npm i  # Install in 'admin' directory
 
       # Step 5: Build admin-side project
       - name: Build admin
