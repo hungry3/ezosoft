@@ -3,11 +3,9 @@ import { NavLink } from 'react-router-dom'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useForm } from 'react-hook-form';
+import { axiosConfig } from '../../utils/axiosConfig';
+import { ToastContainer,toast } from 'react-toastify';
 
-const onSubmit=(data)=>{
-  console.log(data);
-  
-}
 function ContactSales() {
   AOS.init({
     duration: 1000, 
@@ -16,11 +14,37 @@ function ContactSales() {
 
 
 
-  const {register ,formState: { errors },handleSubmit} = useForm()
+  const {register ,formState: { errors },handleSubmit,reset} = useForm()
 
+
+  const onSubmit= async(data)=>{
+    // console.log(data);
+    try {
+      const response = await axiosConfig.post('/user/contect-us',data)
+
+      if(response.status===200){
+        toast.success(response.data.message)
+      }
+      else{
+        toast.error(response.data.message)
+      }
+      
+   
+    console.log(response);
+    
+    reset()
+      
+    } catch (error) {
+      toast.error("Somethign worng please try again later.")
+    }
+
+    
+    
+  }
 
   return (
     <>
+    <ToastContainer/>
      <div
         className="relative w-full -mt-[100px]  bg-cover h-[150vh]  bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center"
       
@@ -51,28 +75,42 @@ function ContactSales() {
         </div>
       </div>
       
-      <div className='m-o w-[580px]  bg-white py-[50px] md:px-[50px] px-[20px] rounded-lg shadow-custom flex flex-col gap-6' data-aos="" data-aos-delay="500">
+      <div className='m-o w-[580px]  bg-white py-[50px] lg:px-[50px] px-[20px] rounded-lg shadow-custom flex flex-col gap-6' data-aos="" data-aos-delay="500">
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
             <input type='text'
               {...register('FirstName')}
-             placeholder=' First Name*' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+             placeholder=' First Name*' className='pl-[24px] py-[15px]  text-[16px] w-full font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
 
              
             <input type='text'
             {...register("LastName")}
-             placeholder=' Last Name*' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+             placeholder=' Last Name*' className='pl-[24px] py-[15px]  w-full text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
              
             <input type='email'
-              {...register('email',{required:true})}
-              // aria-invalid{errors.email ? "true": "false"}
-             placeholder=' Work Email' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+              {...register('email',{required:true,
+              pattern:{
+                value : /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Invalid email format"
+              }
+              
+              })}
+              aria-invalid={errors.email ? "true": "false"}
+             placeholder=' Work Email' className='pl-[24px] py-[15px] w-full text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+            {errors.email && <div role='alert' className='text-red-500'> Email is required</div>}
+
             
-            <input type='text' placeholder=' Company Name' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+            <input type='text' 
+            {...register("companyName")}
             
-            <input type='text' placeholder=' How many people are on your team' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+            placeholder=' Company Name' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black w-full rounded-md focus:border-lightBlue'/>
             
-            <button className="w-full py-[15px] text-white bg-blue transition rounded-md  hover:bg-gradient text-[18px] font-[500] font-[Poppins] text-center leading-[20px]">
+            <input
+            {...register('message', {required:true})}
+             type='text' placeholder=' Write your message' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border w-full border-black rounded-md focus:border-lightBlue'/>
+             {errors.message && <div role='alert' className='text-red-500'> Message is required</div>}
+            
+            <button type='submit' className="w-full py-[15px] text-white bg-blue transition rounded-md  hover:bg-gradient text-[18px] font-[500] font-[Poppins] text-center leading-[20px]">
             Submit
           </button>
           </form>

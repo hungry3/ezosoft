@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Sales Meeting Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+
+        .email-header {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .email-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .email-body {
+            padding: 20px;
+        }
+
+        .email-body p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .email-body p strong {
+            color: #000000;
+        }
+
+        .email-body p span {
+            color: #495057;
+        }
+
+        .email-footer {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f1f1f1;
+            text-align: center;
+            border-radius: 0 0 8px 8px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h2>New Sales Meeting Request</h2>
+        </div>
+        <div class="email-body">
+            <p><strong>First Name:</strong> <span><%= FirstName %></span></p>
+            <p><strong>Last Name:</strong> <span><%= LastName %></span></p>
+            <p><strong>Email:</strong> <span><%= email %></span></p>
+            <p><strong>Company Name:</strong> <span><%= companyName %></span></p>
+            <p><strong>Message:</strong> <span><%= message %></span></p>
+        </div>
+        <div class="email-footer">
+            <p>This is an automated notification of a new sales meeting request. Please follow up as needed.</p>
+        </div>
+    </div>
+</body>
+</html>
