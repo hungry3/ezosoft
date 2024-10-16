@@ -3,7 +3,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useForm } from 'react-hook-form';
 import { axiosConfig } from '../../../utils/axiosConfig';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,NavLink } from 'react-router-dom';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -85,6 +85,7 @@ function SignUp() {
           </button>
           <p className='text-[16px] font-[400] font-[Poppins] max-w-[450px]'>We take security and privacy seriously. By taking a free trial, you agree to our <span className='font-[500]'>terms of use </span>and privacy policy</p>
         </div>
+        <div className='flex justify-end p-6 -mt-16 '>If you already have an account. <span className=" text-gray font-[Poppins] text-blue hover:text-red-500 cursor-pointer underline font-[600]"> <NavLink to="/login"> Please login </NavLink></span> </div>
         </form>
       </div>
      </div>

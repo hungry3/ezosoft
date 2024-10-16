@@ -25,12 +25,12 @@ const Faq = ({ faqItems, faqItems2 }) => {
   {faqItems?.map((faq, i) => (
     <div
       key={i}
-      className={`mb-5  rounded-md border-none shadow-none transition-all duration-300 ${
+      className={`mb-5  rounded-md  shadow-none transition-all duration-300 border-none ${
         expanded1 === `panel1-${i}` ? 'bg-cyanDark text-white shadow-lg' : 'bg-gray-200'
       }`}
     >
       <div
-        className="flex justify-between p-4 cursor-pointer "
+        className="flex justify-between p-4 shadow-lg cursor-pointer "
         onClick={handleChange(`panel1-${i}`, setExpanded1)}
       >
         <h2 className="font-semibold">{faq.category}</h2>
@@ -39,7 +39,7 @@ const Faq = ({ faqItems, faqItems2 }) => {
         </span>
       </div>
       {expanded1 === `panel1-${i}` && (
-        <div className="p-4 text-gray-800 bg-white border-none shadow-none">
+        <div className="p-4 text-gray-800 border-none shadow-none bg-lightBlue">
           <p>{faq.description}</p>
         </div>
       )}
@@ -53,12 +53,12 @@ const Faq = ({ faqItems, faqItems2 }) => {
           {faqItems2?.map((faq, i) => (
             <div
               key={i}
-              className={`mb-5  rounded-md border-none shadow-none transition-all duration-300 ${
-                expanded2 === `panel2-${i}` ? 'bg-cyanDark text-white shadow-lg' : 'bg-gray-200'
+              className={`mb-5  rounded-md border-none  transition-all duration-300 ${
+                expanded2 === `panel2-${i}` ? 'bg-cyanDark text-white  c ' : 'bg-gray-200'
               }`}
             >
               <div
-                className="flex justify-between p-4 cursor-pointer"
+                className="flex justify-between p-4 shadow-lg cursor-pointer"
                 onClick={handleChange(`panel2-${i}`, setExpanded2)}
               >
                 <h2 className="font-semibold">{faq.category}</h2>
@@ -67,7 +67,7 @@ const Faq = ({ faqItems, faqItems2 }) => {
                 </span>
               </div>
               {expanded2 === `panel2-${i}` && (
-                <div className="p-4 text-gray-800 bg-white">
+                <div className="p-4 text-gray-800 border-none shadow-none bg-lightBlue">
                   <p>{faq.description}</p>
                 </div>
               )}

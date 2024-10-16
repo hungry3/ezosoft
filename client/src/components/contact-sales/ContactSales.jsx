@@ -2,6 +2,14 @@
 import { NavLink } from 'react-router-dom'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { useForkRef } from '@mui/material';
+import { useForm } from 'react-hook-form';
+ const {register ,formState: { errors },handleSubmit} = useForm()
+
+  const onSubmit=(data)=>{
+       console.log(data);
+       
+  }
 function ContactSales() {
   AOS.init({
     duration: 1000, 
@@ -38,15 +46,32 @@ function ContactSales() {
 
         </div>
       </div>
+      
       <div className='m-o w-[580px]  bg-white py-[50px] md:px-[50px] px-[20px] rounded-lg shadow-custom flex flex-col gap-6' data-aos="" data-aos-delay="500">
-            <input type='text' placeholder=' First Name*' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
-            <input type='text' placeholder=' Last Name*' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
-            <input type='email' placeholder=' Work Email' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+            <input type='text'
+              {...register('FirstName')}
+             placeholder=' First Name*' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+
+             
+            <input type='text'
+            {...register("LastName")}
+             placeholder=' Last Name*' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+             
+            <input type='email'
+              {...register('email',{required:true})}
+              // aria-invalid{errors.email ? "true": "false"}
+             placeholder=' Work Email' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+            
             <input type='text' placeholder=' Company Name' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+            
             <input type='text' placeholder=' How many people are on your team' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border border-black rounded-md focus:border-lightBlue'/>
+            
             <button className="w-full py-[15px] text-white bg-blue transition rounded-md  hover:bg-gradient text-[18px] font-[500] font-[Poppins] text-center leading-[20px]">
             Submit
           </button>
+          </form>
         </div>
       </div>
 

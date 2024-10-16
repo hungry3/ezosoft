@@ -112,8 +112,8 @@ const getAllUsers = asyncHandler(async(req,res,next)=>{
  })
 
  const createTemplate = asyncHandler(async (req, res, next) => {
-  console.log('Files:', req.files); 
-  console.log('Body:', req.body);
+  // console.log('Files:', req.files); 
+  // console.log('Body:', req.body);
 
   const { name, description, templates, category } = req.body;
 
@@ -368,8 +368,8 @@ catch(error){
 
    const CreateSubscriptionPlan = asyncHandler(async(req,res,next)=>{
     const {planName, duration,price , customTeamOptions,details, description} = req.body
-    console.log(req.body);
-    console.log(req.files)
+    // console.log(req.body);
+    // console.log(req.files)
 
 try{
   if (!planName || !duration || (planName === 'Single User' && !price)) {

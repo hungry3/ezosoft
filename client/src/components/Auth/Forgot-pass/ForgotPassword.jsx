@@ -35,10 +35,10 @@ function ForgotPassword() {
   return (
     <>
       <ToastContainer />
-      <div className="relative w-full -mt-[200px] xs:-mt-[400px] bg-cover h-[136vh] bg-[url('/src/assets/images/mainBg.svg')] bg-no-repeat bg-center">
+      <div className="relative w-full -mt-[200px] xs:-mt-[200px] bg-cover h-[120vh]  bg-[url('/src/assets/images/mainBg.svg')] bg-no-repeat bg-center">
       </div>
 
-      <div className='relative flex items-center justify-center -mt-[600px] mb-[100px] mx-[30px]' data-aos="zoom-out" data-aos-delay="500">
+      <div className='relative flex items-center justify-center -mt-[400px] mb-[100px] mx-[30px]' >
         <div className='bg-white rounded-md shadow-lg max-w-[700px] w-full'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className='lg:m-[60px] xl:m-[60px] m-[30px] flex flex-col gap-6'>

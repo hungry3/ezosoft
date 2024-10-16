@@ -6,8 +6,8 @@ import { ErrorHandler } from "../utils/ErrorHandler.js";
 
 
 const createBlog = asyncHandler(async (req, res, next) => {
-    console.log('Files:', req.files); 
-    console.log('Body:', req.body);
+    // console.log('Files:', req.files); 
+    // console.log('Body:', req.body);
 
     const { title, content, details, category, author } = req.body;
 
@@ -43,12 +43,12 @@ const createBlog = asyncHandler(async (req, res, next) => {
          
             
             const detailImageFile = req.files?.find(file => file.fieldname === `details[${index}][image]`);
-            console.log("detailsImagesFile", detailImageFile)
+            // console.log("detailsImagesFile", detailImageFile)
             if (detailImageFile) {
                 const detailUploadResult = await uploadOnCloudinary(detailImageFile.path, 'detail_images');
                 if (detailUploadResult) {
                     detailImageUrl = detailUploadResult.url;
-                    console.log("Details image URL uploaded successfully:", detailImageUrl);
+                    ("Details image URL uploaded successfully:", detailImageUrl);
                 }
             }
             return {
@@ -76,7 +76,7 @@ const createBlog = asyncHandler(async (req, res, next) => {
         if (error instanceof ErrorHandler) {
             return next(error);
         } else {
-          console.log(error);
+          (error);
           
             return next(new ErrorHandler("Something went wrong", 500));
         }
@@ -86,8 +86,8 @@ const createBlog = asyncHandler(async (req, res, next) => {
 
   const editBlog = asyncHandler(async (req, res, next) => {
     const blogId = req.params.blogId; 
-    console.log('Files:', req.files);
-    console.log('Body:', req.body);
+    // console.log('Files:', req.files);
+    // console.log('Body:', req.body);
 
     const { title, content, details, category, author } = req.body;
 
@@ -125,12 +125,12 @@ const createBlog = asyncHandler(async (req, res, next) => {
       let detailImageUrl = '';
 
       const detailImageFile = req.files.find(file => file.fieldname === `details[${index}][image]`);
-      console.log("detailsImagesFile", detailImageFile);
+      // console.log("detailsImagesFile", detailImageFile);
       if (detailImageFile) {
           const detailUploadResult = await uploadOnCloudinary(detailImageFile.path, 'detail_images');
           if (detailUploadResult) {
               detailImageUrl = detailUploadResult.url;
-              console.log("Details image URL uploaded successfully:", detailImageUrl);
+              // console.log("Details image URL uploaded successfully:", detailImageUrl);
           }
       }
 
@@ -157,7 +157,7 @@ const createBlog = asyncHandler(async (req, res, next) => {
 const deleteBlog = asyncHandler(async (req, res, next) => {
   const {id} = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
   
 
   
