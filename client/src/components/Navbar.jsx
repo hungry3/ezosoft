@@ -41,7 +41,7 @@ const Navbar = () => {
             Resources
           </NavLink>
           <NavLink
-            to="/enterprise"
+            to="/blog"
             className={({ isActive }) =>
                isActive ? "text-cyanDark  font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
