@@ -75,7 +75,7 @@ function ContactSales() {
         </div>
       </div>
       
-      <div className='m-o w-[580px]  bg-white py-[50px] lg:px-[50px] px-[20px] rounded-lg shadow-custom flex flex-col gap-6' data-aos="" data-aos-delay="500">
+      <div className='m-o max-w-[580px] w-full  bg-white py-[50px] lg:px-[50px] px-[20px] rounded-lg shadow-custom flex flex-col gap-6' data-aos="" data-aos-delay="500">
 
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
             <input type='text'
