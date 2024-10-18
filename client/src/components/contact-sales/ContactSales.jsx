@@ -46,12 +46,12 @@ function ContactSales() {
     <>
     <ToastContainer/>
      <div
-        className="relative w-full -mt-[100px]  bg-cover h-[150vh]  bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center"
-      
-      >
+        className="relative w-full -mt-[100px]  bg-cover lg:h-[106vh] xl:h-[126vh] md:h-[100vh] h-[90vh] bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center">
+
+        
         
       </div>
-       <div className='relative xl:mx-[100px] lg:mx-[100px] md:mx-[50px] lg:-mt-[950px] xl:-mt-[1100px] -mt-[1000px]  mx-[30px]  py-[400px] flex md:flex-nowrap flex-wrap items-center justify-between  gap-[100px]'  >
+      <div className='relative flex lg:flex-row xl:flex-row flex-col lg:-mt-[700px]  lg:mb-[200px]  xl:-mt-[600px] xl:mb-[200px] md:-mt-[700px] md:mb-[300px] sm:-mt-[700px] sm:mb-[200px] -mt-[700px] mb-[100px] items-center justify-between gap-[70px] lg:px-[100px] md:px-[70px] px-[50px]'>
         <div className='flex flex-col items-start gap-[15px]' data-aos="fade-up-right" data-aos-delay="500">
         <p className='text-[40px] leading-[50px] font-[600] text-[white]'>Request a meeting with sales</p>
         <p className='max-w-[500px] text-[16px] leading-[24px] font-[Poppins] text-[white]'>Request a meeting to learn about Ezosoft’s advanced features, how we support large teams or get a custom quote for an Enterprise plan.</p>
@@ -75,7 +75,7 @@ function ContactSales() {
         </div>
       </div>
       
-      <div className='m-o w-[580px]  bg-white py-[50px] lg:px-[50px] px-[20px] rounded-lg shadow-custom flex flex-col gap-6' data-aos="" data-aos-delay="500">
+      <div className='m-o max-w-[580px] w-full  bg-white py-[50px] lg:px-[50px] px-[20px] rounded-lg shadow-custom flex flex-col gap-6' data-aos="" data-aos-delay="500">
 
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
             <input type='text'
@@ -116,6 +116,7 @@ function ContactSales() {
           </form>
         </div>
       </div>
+      
 
        
       

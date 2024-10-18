@@ -80,13 +80,7 @@ const Navbar = () => {
           </NavLink>
         </div>
 
-        <NavLink to="/signup">
-        <div className=" sm:flex-shrink-0">
-          <button className="bg-grey  hover:bg-gradient hover:border border-white text-white px-4 py-2 font-[600] rounded-md hover:bg- font-[Poppins]">
-          Start Free Trial
-          </button>
-        </div>
-        </NavLink>
+        
 
         
 
@@ -113,7 +107,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden flex flex-col space-y-2 w-[200px] bg-gradient  rounded-md right-3 top-18 shadow-2xl p-4 absolute">
+        <div className="absolute flex flex-col w-full p-4 space-y-3 pl-[50px] rounded-md shadow-2xl lg:hidden bg-gradient right-3 top-18">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -164,6 +158,13 @@ const Navbar = () => {
           >
             Login
           </NavLink>
+          <NavLink to="/signup">
+        <div className=" sm:flex-shrink-0">
+          <button className="bg-grey  hover:bg-gradient hover:border border-white text-white px-4 py-2 font-[600] rounded-md hover:bg- font-[Poppins]">
+          Start Free Trial
+          </button>
+        </div>
+        </NavLink>
         </div>
       )}
     </nav>

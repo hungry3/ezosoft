@@ -13,14 +13,13 @@ const Hero = () => {
   return (
     <div>
     <div
-      className="relative w-full -mt-[100px] lg:h-[126vh] xl:[110vh]  bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
+      className="relative w-full -mt-[100px]   lg:pt-[100px] md:pt-[100px] sm:pt-[100px] xl:pt-[100px] lg:h-[126vh] xl:h-[126vh] md:h-[100vh] sm:h-[90vh] h-[80vh]  bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
     {/* bg-[url("/src/assets/images/bgTrail.svg")]  */}
     
-      <div className="relative z-10 flex flex-col items-center justify-center h-full "
-      >
-      <div className='mt-[130px]'>
-      <div className='max-w-[870.33px] w-full justify-center text-center items-center  lg:pt-[300px]'>
-        <h2 className="text-4xl text-white lg:text-6xl xl:text-6xl md:text-4xl sm:text-3xl expo-medium lg:leading-70 xl:leading-70 leading-[50px]">Project Management <span className='font-bold text-[]'>Software </span> for Business Excellence</h2>
+      <div className="relative z-10 flex flex-col items-center justify-center h-full ">
+      <div className=''>
+      <div className='max-w-[870.33px] w-full justify-center text-center items-center  lg:pt-[300px] xl:pt-[300px] md:pt-[400px] pt-[400px]'>
+        <h2 className="lg:text-[70px] xl:text-[70px] md:text-[50px] sm:text-[40px] text-[30px] text-white expo-medium lg:leading-70 xl:leading-70 leading-[50px]">Project Management <span className='expo-bold'>Software </span> for Business Excellence</h2>
 
         <div className='flex flex-col items-center justify-center mt-8 '>
         <div className='font-[Poppins] max-w-[540px] text-center  text-white leading-24 mx-[20px]'>
@@ -28,13 +27,12 @@ const Hero = () => {
         </div>
 
      {/* //! input field section is here */}
-      <div className='flex items-center sm:w-[85%] gap-2 mt-8 lg:w-1/2 xl:w-1/2 '>
+      <div className='flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row items-center sm:w-[85%] md:w-[70%] lg:w-[70%] xl:w-[70%] w-[90%] gap-2 mt-8 lg:w-1/2 xl:w-1/2 '>
         <input type="text" className=' outline-none  px-4 py-2 w-full rounded-md font-[Poppins]' placeholder='Enter your email address' />
-        <NavLink to="/signup">
-        <button className=' bg-cyanDark hover:bg-gradient hover:border border-white text-white  py-2  px-8 rounded text-nowrap font-[Poppins]'>Sign Up</button>
+        <NavLink to="/signup" className='bg-cyanDark hover:bg-gradient hover:border border-white sm:w-auto lg:w-auto md:w-auto xl:w-auto w-[100%] '>
+        <button className='  text-white  py-2  px-8 rounded text-nowrap font-[Poppins]'>Sign Up</button>
         </NavLink>
        
-      
        
         </div>
       </div>
