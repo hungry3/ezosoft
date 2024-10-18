@@ -10,9 +10,9 @@ function Streamline() {
   }); 
   return (
     <>
-     <div className='w-full h-full lg:p-[100px] xl:p-[120px] p-[20px]'>
+     <div className='w-full h-full lg:p-[100px] xl:p-[120px] p-[10px]'>
      <div className='flex items-center justify-center '>
-       <h2 className='max-w-[897px] expo-medium  text-[25px] md:text-[30px] lg:text-[40px] xl:text-[45px] leading-[50px] text-center'>Streamline Your Project Management with Secure, Efficient, and Accessible Tools </h2>
+       <h2 className='max-w-[897px] expo-medium  text-[30px] md:text-[35px] lg:text-[40px] xl:text-[40px] leading-[50px] text-center'>Streamline Your Project Management with Secure, Efficient, and Accessible Tools </h2>
      </div>
      <div className='flex pt-[40px] flex-wrap items-center w-full px-[20px]'>
 

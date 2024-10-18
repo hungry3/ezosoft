@@ -35,11 +35,11 @@ function SignUp() {
   return (
     <>
       <ToastContainer />
-      <div  className="relative w-full -mt-[200px] xs:-mt-[400px] bg-cover h-[136vh] bg-[url('/src/assets/images/mainBg.svg')] bg-no-repeat bg-center"
+      <div  className="relative w-full -mt-[200px] xs:-mt-[400px] bg-cover h-[126vh] bg-[url('/src/assets/images/mainBg.svg')] bg-no-repeat bg-center"
     >
     </div>
      
-     <div className='relative flex items-center justify-center -mt-[600px] mb-[100px] mx-[30px]' data-aos="zoom-out" data-aos-delay="500">
+     <div className='relative flex items-center justify-center lg:-mt-[400px] lg:mb-[100px] xl:-mt-[500px] md:-mt-[700px] md:mb-[200px] -mt-[600px] mb-[200px] mx-[30px]' data-aos="zoom-out" data-aos-delay="500">
      <div className='bg-white rounded-md shadow-lg  max-w-[700px] w-full'>
      <form onSubmit={handleSubmit(onSubmit)} >
         <div className='lg:m-[60px] xl:m-[60px] m-[30px] flex flex-col gap-3'>

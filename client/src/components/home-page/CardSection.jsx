@@ -10,7 +10,7 @@ function CardSection() {
   }); 
   return (
     <>
-      <div className="w-full h-full py-[100px] flex-wrap flex items-center justify-center gap-[50px]">
+      <div className="w-full h-full lg:py-[100px] xl:py-[100px] md:py-[70px] py-[50px] flex-wrap flex items-center justify-center gap-[50px]">
         <div className="w-[272px] h-[323px] bg-gradient rounded-md flex flex-col items-center justify-center">
           {/* 1st card */}
 

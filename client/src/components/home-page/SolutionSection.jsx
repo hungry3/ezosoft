@@ -10,7 +10,7 @@ function SolutionSection() {
   const [ active, setActive] = useState(1)
   return (
     <>
-      <div className='py-[100px] lg:pl:[100px] xl:pl-[100px] bg-lightBlue mt-[86px]  overflow-hidden'>
+      <div className='py-[100px] lg:pl:[100px] xl:pl-[100px] bg-lightBlue lg:mt-[86px] xl:mt-[86px]  overflow-hidden'>
        <div className='flex items-center justify-center '>
        <p className='max-w-[887px] expo-medium  text-[25px] md:text-[30px] lg:text-[40px] xl:text-[45px] leading-[50px] text-center'>One solution for all your client operations challenges </p>
        </div>

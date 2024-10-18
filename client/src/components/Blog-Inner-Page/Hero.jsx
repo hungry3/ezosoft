@@ -4,11 +4,11 @@ const  Hero =({tittle,subtittle}) => {
   return (
     <>
        <div className='bg-blue -mt-[100px]'>
-    <div className='mx-[100px] flex flex-wrap items-center justify-center pt-[100px] lg:gap-[200px]'>
+    <div className='lg:mx-[100px] xl:mx-[100px] md:mx-[70px] sm:mx-[50px] mx-[30px] flex flex-wrap items-center justify-center pt-[100px] lg:gap-[200px]'>
 
     <div className='pb-[100px]'>
    <div className='flex items-center justify-center'>
-    <p className='text-white text-[40px] leading-[70px] mt-[120px] '>{tittle}</p>
+    <p className='text-white lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] lg:leading-[70px] xl:leading-[70px] leading-[50px] lg:mt-[120px] xl:mt-[120px] md:mt-[100px] sm:mt-[70px] mt-[50px] '>{tittle}</p>
     </div>
     <p className=' max-w-[450px] text-center text-white text-[16px] leading-[26px] font-[Poppins] font-[400] mt-[20px]'>{subtittle}</p>
      {/*<div className="flex items-center justify-start ">

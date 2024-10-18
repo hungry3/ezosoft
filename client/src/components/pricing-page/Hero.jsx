@@ -186,7 +186,7 @@ const fetchSubscriptionPlans = async () => {
       <div className="relative w-full -mt-[100px]  lg:h-[120vh] xl:[110vh] bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
         <div className="lg:px-[100px] xl:px-[100px] px-[40px] pb-[100px]">
           <div className="pt-[200px] flex items-center justify-center">
-            <p className="max-w-[857px] w-full text-[40px] leading-[50px] font-[500] text-white lg:text-center xl:text-center">
+            <p className="max-w-[857px] w-full lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] leading-[50px] font-[500] text-white lg:text-center xl:text-center">
               Plan projects and manage resources on one platform.Start free.
             </p>
           </div>
