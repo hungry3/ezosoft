@@ -1,8 +1,9 @@
 import { LinkAuthenticationElement, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useNavigate } from "react-router-dom";
 
-
+import { ToastContainer,toast } from 'react-toastify';
 
 
 
@@ -12,6 +13,8 @@ const CheckOutForm = ({ planId, customTeamOptionId, plans }) => {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const privateAxios = useAxiosPrivate();
+
+  const navigate = useNavigate()
 
 
 
@@ -45,18 +48,22 @@ const CheckOutForm = ({ planId, customTeamOptionId, plans }) => {
       }
 
       if (paymentIntent.status === "succeeded") {
-        setMessage("Payment successful!");
+        toast.success("Payment successful!")
+        navigate('/dashboard')
+        // setMessage("Payment successful!");
         await privateAxios.post("/user/get-subscription", {
           planId,
           customTeamOptionId,
           payment_info: paymentIntent,
         });
       } else if (paymentIntent.status === "requires_action") {
+        
         setMessage("Please complete additional authentication.");
       } else {
         setMessage("Payment failed. Please try again.");
       }
     } catch (err) {
+      toast.error("An unexpected error occurred.")
       setMessage(err.message || "An unexpected error occurred.");
     } finally {
       setIsLoading(false);
@@ -66,7 +73,7 @@ const CheckOutForm = ({ planId, customTeamOptionId, plans }) => {
  
   return (
     <>
-   
+    <ToastContainer />
           <form id="payment-form" onSubmit={handleSubmit}>
             <LinkAuthenticationElement id="link-authentication-element" />
             <PaymentElement id="payment-element" onReady={() => console.log("Payment element mounted")} />

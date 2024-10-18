@@ -8,21 +8,24 @@ import AddNewBlogs from './Pages/Blogs-page/AddNewBlogs'
 import User from './Pages/User-page/User'
 import EditedBlog from './Pages/Blogs-page/EditedBlog'
 import SingleBlogPage from './Pages/Blogs-page/Single-blog'
-
+import BlogCategory from './Pages/Blogs-page/BlogCategoryPage'
 import ViewSingleTemplate from './Pages/Templates-page/ViewSingleTemplate'
 import SingleUserPage from './Pages/User-page/SingleUserPage'
-
+import Login from './Pages/Login/Login'
 import EditSingleUserPage from './Pages/User-page/EditSingleUserPage'
 function App() {
   return (
     <>
     <BrowserRouter>
     <Routes>
+    <Route  path='/login' element={<Login/>} />
+    
       <Route exact path='/' element={<User/>} />
       <Route exact path='/allTemplates' element={<AllTemplates/>} />
       <Route path='/view-template/:id' element={<ViewSingleTemplate />} />
       <Route exact path='/addnewblogs' element={<AddNewBlogs/>} />
       <Route exact path='/allblogs' element={<AllBlogs/>} />
+      <Route path='/blogs-category' element={<BlogCategory/>} />
       <Route exact path='/pricing' element={<Pricing/>} />
       <Route exact path='/user' element={<User/>} />
     

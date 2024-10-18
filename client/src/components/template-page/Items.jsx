@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { axiosConfig } from '../../utils/axiosConfig';
 import CardSkeleton from '../../utils/CardSkeleton';
 import { useCallback } from 'react';
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -54,14 +55,14 @@ const fetchCards = useCallback(async (currentPage, searchQuery) => {
   return (
     <>
       <div className="lg:mx-[100px] xl:mx-[100px] mx-[50px]">
-        {/* Search Bar */}
-        <div className="py-[50px] flex items-center justify-center">
-          <div className="flex pl-[10px] bg-lightBlue gap-2 rounded-lg">
+    
+        <div className="py-[50px] flex items-center justify-center w-full">
+          <div className="flex pl-[10px] bg-lightBlue gap-2 rounded-lg w-full lg:w-1/2">
             <img src={Search} alt="search" />
             <input
               type="text"
               placeholder="Search"
-              className="bg-lightBlue w-[519px] h-[54px] outline-none rounded-md"
+              className="bg-lightBlue max-w-[519px] w-full  h-[54px] outline-none rounded-md"
               value={searchQuery}
               onChange={handleSearch}
             />
@@ -71,7 +72,7 @@ const fetchCards = useCallback(async (currentPage, searchQuery) => {
         {/* Cards Section */}
        
         <div className="flex-wrap flex pb-[24px]">
-          <div className="flex flex-wrap justify-between gap-4">
+          <div className="flex flex-wrap justify-center gap-4 sm:justify-center lg:justify-start">
            
             {isLoading
               ? 
@@ -98,9 +99,11 @@ const fetchCards = useCallback(async (currentPage, searchQuery) => {
                         <p className="max-w-[180px] font-[Poppins] text-[16px] leading-[26px] font-[400] text-center mt-[12px]">
                           {card.description}
                         </p>
+                        <NavLink to={''}>
                         <p className="font-[Poppins] text-[16px] leading-[26px] font-[400] text-center mt-[15px] text-[#6DC2ED] underline">
                           Learn More
                         </p>
+                        </NavLink>
                       </div>
                     </div>
                   </div>

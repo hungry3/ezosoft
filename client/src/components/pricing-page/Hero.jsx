@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import RightIcon from "/src/assets/images/correct-icon.svg";
 import CrossIcon from "/src/assets/images/cross-icon.svg";
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +10,7 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
+import { ToastContainer,toast } from 'react-toastify';
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import CheckOutForm from "../checkout/CeckoutForm";
@@ -21,6 +22,7 @@ import fb from '/src/assets/images/fb-icon.svg'
 import email from '/src/assets/images/email-icon.svg'
 import building from '/src/assets/images/building-icon.svg'
 import Google from '/src/assets/images/google.svg'
+import GlobalLoader from "../../utils/GlobalLoader";
 const stripePromise = loadStripe("pk_test_51PpoZ0JAqu9i4Tpd9eQshFnir4xKLoCn6D54SyChw3yJbHzgwokgmPa20jG4r6njoky3gWQgKyoKfYzFvc9OzKjs00iUUo7Dh5");
 
 
@@ -35,6 +37,7 @@ const [selectedCustomTeamOptionId, setSelectedCustomTeamOptionId] = useState(nul
 const [showLoginPopup, setShowLoginPopup] = useState(false);
 const [clientSecret, setClientSecret] = useState("");
  
+const navigate = useNavigate()
   const axiosprivate = useAxiosPrivate()
 
   const { auth } = useAuth();
@@ -119,22 +122,6 @@ const fetchSubscriptionPlans = async () => {
   }, [selectedPlanId, plan, selectedCustomTeamOptionId]);
 
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: {error.message}</div>;
-  }
-
-
-
-
-
-
-
-
-
 
 
   const handleGetStarted = async (plan) => {
@@ -158,6 +145,16 @@ const fetchSubscriptionPlans = async () => {
     
      
   };
+
+  const handleTrail =()=>{
+    if(!auth){
+      navigate('/login')
+      
+    }
+    else(
+      toast.warning("Already availed this offer.")
+    )
+  }
 
   const handleCustomOptionChange = (option) => {
     setSelectedCustomOption(option);
@@ -183,6 +180,7 @@ const fetchSubscriptionPlans = async () => {
       
   return (
     <>
+    <ToastContainer/>
       <div className="relative w-full -mt-[100px]  lg:h-[120vh] xl:[110vh] bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
         <div className="lg:px-[100px] xl:px-[100px] px-[40px] pb-[100px]">
           <div className="pt-[200px] flex items-center justify-center">
@@ -201,7 +199,11 @@ const fetchSubscriptionPlans = async () => {
           {/* cards */}
 
           {/* first card */}
-          <div className="justify-between flex items-center flex-wrap mt-[65px] gap-[50px]">
+          {isLoading ? (<div><GlobalLoader/></div>):(
+
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px] mt-[65px] mb-20">
+           
             <div className="border-none rounded-tr-[48px] rounded-md rounded-bl-[48px] max-w-[293px] w-[100%] pb-[23px] bg-white shadow-custom">
               <div className="mx-[30px] mt-[43px]">
                 <p className="pt-[43] text-[18px] leading-[26px] font-[Poppins] text-cyanDark ">
@@ -213,6 +215,7 @@ const fetchSubscriptionPlans = async () => {
                     {" "}
                     / 14 Days
                   </span>
+               
                 </p>
                 <p className="max-w-[200px] mt-[8px] font-[Poppins] text-[16px] leading-[26px]">
                   Lorem Ipsum has been the {"industry's"} standard dummy text
@@ -258,11 +261,11 @@ const fetchSubscriptionPlans = async () => {
                   {/*trial button */}
 
                   <div className="mt-[47px] flex items-center justify-center flex-shrink-0">
-                    <NavLink to="/signup">
-                      <button className="bg-cyanDark hover:bg-gradient border border-white text-white px-[46px] py-4 rounded-md font-[Poppins] transition-all duration-300 ease-in-out hover:translate-2 hover:scale-105">
+                  
+                      <button className="bg-cyanDark text-nowrap hover:bg-gradient border border-white text-white px-[46px] py-4 rounded-md font-[Poppins] transition-all duration-300 ease-in-out hover:translate-2 hover:scale-105" onClick={handleTrail}>
                         Start Free Trial
                       </button>
-                    </NavLink>
+                   
                   </div>
                 </div>
               </div>
@@ -314,7 +317,7 @@ const fetchSubscriptionPlans = async () => {
                       ) : (
                         <button
                           onClick={() => handleGetStarted(plan)}
-                          className="bg-gradient hover:bg-gradient border border-white text-white px-[58px] py-4 rounded-md font-[Poppins] hover:scale-105 transition-all duration-300 ease-in-out"
+                          className="bg-gradient hover:bg-gradient  border border-white text-white px-[58px] py-4 rounded-md font-[Poppins] hover:scale-105 transition-all duration-300 ease-in-out"
                         >
                           Get Started
                         </button>
@@ -325,6 +328,8 @@ const fetchSubscriptionPlans = async () => {
               </div>
             ))}
           </div>
+          )}
+         
         </div>
 
       </div>

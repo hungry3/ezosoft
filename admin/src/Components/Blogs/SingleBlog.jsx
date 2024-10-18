@@ -37,7 +37,7 @@ const ViewBlog = () => {
         
 
         {blog.image && (
-          <div className='mt-[20px]'>
+          <div className='mt-[20px] w-[500px] h-[300px]'>
             <img src={blog.image} alt='Cover' className='object-cover w-full h-[300px]' />
           </div>
         )}
@@ -57,7 +57,10 @@ const ViewBlog = () => {
                 <h4 className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>{detail.title}</h4>
                 <div className='mt-[10px]' dangerouslySetInnerHTML={{ __html: detail.description }} />
                 {detail.image && (
-                  <img src={detail.image} alt={`Detail ${index}`} className='object-cover w-full h-[200px] mt-[10px]' />
+                  <div className='w-[600px] h-[300px]'>
+                  <img src={detail.image} alt={`Detail ${index}`} className='object-cover w-full h-full mt-[10px]' />
+
+                  </div>
                 )}
               </div>
             ))}

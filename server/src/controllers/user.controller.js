@@ -27,7 +27,7 @@ const UserSubscriptionPlan = asyncHandler(async(req,res,next)=>{
       }
     }
 
-    console.log("userid>>>>>>>>>>>>>",userId);
+    // console.log("userid>>>>>>>>>>>>>",userId);
     
 
     const Plan = await SubscriptionPlan.findById(planId)
@@ -35,7 +35,7 @@ const UserSubscriptionPlan = asyncHandler(async(req,res,next)=>{
       return next(new ErrorHandler('Subscription Plan not found', 404));
     }
     const user = await User.findById(userId);
-    console.log("userasdlkjfkjahsfk",user)
+    // console.log("userasdlkjfkjahsfk",user)
 
     if (!user) {
       return next(new ErrorHandler('User not found', 404));
@@ -132,7 +132,7 @@ user.subscriptionPlan = Plan._id;
         },
       },
     });
-console.log("myPayment.client_secret",myPayment);
+// console.log("myPayment.client_secret",myPayment);
 
     res.status(200).json({
       success: true,
@@ -162,7 +162,7 @@ const AddnewMember = asyncHandler(async (req, res, next) => {
       if (!user) {
         return next(new ErrorHandler("User not found", 404));
       }
-console.log(user.subscriptionPlan);
+// console.log(user.subscriptionPlan);
 
       if (user.subscriptionPlan.planName !== "Custom Team") {
         return next(new ErrorHandler("User does not have the required plan", 403));
@@ -237,8 +237,8 @@ console.log(user.subscriptionPlan);
       const { inviteToken } = req.params;
       const { newPassword } = req.body; 
   
-      console.log("inviteToken>>>>>>>>>>>>>",inviteToken);
-      console.log("newPassword>>>>>>>>>",newPassword);
+      // console.log("inviteToken>>>>>>>>>>>>>",inviteToken);
+      // console.log("newPassword>>>>>>>>>",newPassword);
       const hashedToken = crypto.createHash('sha256').update(inviteToken).digest('hex');
       
       

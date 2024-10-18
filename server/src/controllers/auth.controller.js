@@ -198,7 +198,7 @@ const resetPassword = asyncHandler(async(req,res,next)=>{
 const updatePassword = asyncHandler(async (req, res, next) => {
     try {
         const { password, newPassword } = req.body;
-   console.log("req.user>>>>>>>>>>>", req.user);
+//    console.log("req.user>>>>>>>>>>>", req.user);
    
         if (!password) {
             return next(new ErrorHandler("Please enter your current password", 400));
@@ -208,7 +208,7 @@ const updatePassword = asyncHandler(async (req, res, next) => {
         }
 
         const userId = req.user?.id;
-        console.log("user id", userId);
+        // console.log("user id", userId);
         
         const user = await User.findById(userId).select("+password");
 
@@ -235,6 +235,8 @@ const updatePassword = asyncHandler(async (req, res, next) => {
 const googleLogin = asyncHandler(async (req, res, next) => {
   
     const user = req.user;
+    console.log('new user login',user);
+    
 
     const accessToken = user.SignAccessToken();
     const refreshToken = user.SignRefreshToken();

@@ -37,7 +37,8 @@ const templateStorage = multer.diskStorage({
     const allowedTypes = [
       'image/jpeg',            // JPEG images
       'image/png',             // PNG images
-      'image/gif',             // GIF images
+      'image/gif',
+      'image/avif'   ,          // GIF images
       'image/webp',            // WebP images
       'image/svg+xml',         // SVG images
       'application/pdf',       // PDF documents

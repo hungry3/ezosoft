@@ -1,7 +1,8 @@
 import  express from 'express';
-import { createBlog,getBlogCountByCategory,getBlogsByCategory,getSingleBlog,getAllBlogs,editBlog,deleteBlog } from '../controllers/blog.controller.js';
+import { createBlog,getBlogCountByCategory,getBlogsByCategory,getSingleBlog,getAllBlogs,editBlog,deleteBlog,} from '../controllers/blog.controller.js';
 import { isAdmin, isAuthenticated } from '../middleware/auth.middleware.js';
 import { templateUpload } from '../middleware/multer.middleware.js';
+import { allCategories, createCategory } from '../controllers/admin.controller.js';
 
 const router  =  express.Router()
 
@@ -19,6 +20,7 @@ router.get('/category-count',getBlogCountByCategory)
 router.get('/category/:category',getBlogsByCategory)
 router.get('/all',getAllBlogs)
 router.get('/:id',getSingleBlog)
+
 
 
 

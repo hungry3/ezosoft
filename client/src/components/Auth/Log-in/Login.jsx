@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 
 import { NavLink } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { axiosConfig } from '../../../utils/axiosConfig';
 import useAuth from '../../../hooks/useAuth';
-import useGoogleLoginHandler from '../../../hooks/useGoogleLogin';
+
 
 
 
@@ -24,6 +24,7 @@ const LoginPage = () => {
   });
 
  const navigate = useNavigate()
+ const locaiton = useLocation()
 //  const axiosPrivate = useAxiosPrivate()
   // const login = useGoogleLoginHandler();
 const {setAuth} = useAuth()
@@ -44,7 +45,9 @@ try {
   setAuth({ accessToken });
   toast.success("Login Successful");
   reset()
-  navigate('/dashboard')
+
+  const from = locaiton.state?.from || '/dashboard'
+  navigate(from)
   
   
 } catch (error) {
@@ -67,7 +70,7 @@ try {
       <div className='items-center justify-center lg:-mt-[800px] xl:-mt-[300px] md:-mt-[240px] sm:-mt-[300px] -mt-[300px] mb-[100px]'   data-aos="zoom-out" data-aos-delay="400">
     <div className='flex items-center justify-center'>
       {/* Login Card */}
-      <div className="relative z-10 bg-white  rounded-lg p-8   max-w-[550px] w-[100%] shadow-custom ">
+      <div className="relative z-10 bg-white  rounded-lg p-8 -mt-[130px]  max-w-[550px] w-[100%] shadow-custom ">
         {/* Logo */}
         <div className="mt-[71px] text-center flex flex-col justify-center items-center">
           <img src={Logo} alt="Logo" className="mx-auto" />

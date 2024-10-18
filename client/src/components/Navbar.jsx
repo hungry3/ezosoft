@@ -1,8 +1,12 @@
 import  { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/images/Logo.svg'
+import useAuth from '../hooks/useAuth';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {auth} = useAuth()
+  console.log(("auth", auth));
+  
 
   return (
     <nav className="bg-none px-4 lg:px-[100px] xl:px-[100px] md:px-[10px] pt-12 relative z-[20] w-[100%] ">
@@ -19,7 +23,7 @@ const Navbar = () => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
+              isActive ? "text-cyanDark font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
           >
            Home
@@ -27,7 +31,7 @@ const Navbar = () => {
           <NavLink
             to="/about"
             className={({ isActive }) =>
-               isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
+               isActive ? "text-cyanDark  font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
           >
           About Us
@@ -35,15 +39,15 @@ const Navbar = () => {
           <NavLink
             to="/resources"
             className={({ isActive }) =>
-               isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
+               isActive ? "text-cyanDark  font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
           >
             Resources
           </NavLink>
           <NavLink
-            to="/enterprise"
+            to="/blog"
             className={({ isActive }) =>
-               isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
+               isActive ? "text-cyanDark  font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
           >
             Blogs
@@ -53,7 +57,7 @@ const Navbar = () => {
           <NavLink
             to="/pricing"
             className={({ isActive }) =>
-                isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
+                isActive ? "text-cyanDark  font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
           >
             Pricing
@@ -61,7 +65,7 @@ const Navbar = () => {
           <NavLink
             to="/contact"
             className={({ isActive }) =>
-               isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
+               isActive ? "text-cyanDark  font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
           >
             Contact Sales
@@ -69,7 +73,7 @@ const Navbar = () => {
           <NavLink
             to="/login"
             className={({ isActive }) =>
-               isActive ? "text-cyanDark , font-[Poppins], font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
+               isActive ? "text-cyanDark  font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
             }
           >
            Login

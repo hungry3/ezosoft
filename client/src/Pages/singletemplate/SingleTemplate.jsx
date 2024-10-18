@@ -24,6 +24,7 @@ const SingleTemplate = () => {
   const { auth } = useAuth();
  
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showPackagePopup, setShowPackagePopup] = useState(false)
    console.log("auth>>>>>>>>>>>>>>>>", auth?.accessToken?.user)
 
    const user = auth?.accessToken?.user
@@ -93,7 +94,7 @@ const handleDownload = async()=>{
 
       console.log("ajhfdkljwe");
       
-      setShowLoginPopup(true)
+      setShowPackagePopup(true)
     
     
   }
@@ -255,12 +256,12 @@ const handleDownload = async()=>{
             <span className='text-[16px] leading-[20px] font-[Poppins]  font-semibold'> Continue with Facebook</span>
           </button>
         </div>
-        <div>
+        <NavLink to='/login'>
         <button className="flex items-start justify-start w-full gap-4 py-3 transition border border-gray-300 rounded-md hover:bg-gray-100 cursor" >
             <img src={email} alt="Google" loading='lazy' className="w-5 h-5 ml-4 mr-2" />
             <span className='text-[16px] leading-[20px] font-[Poppins]  font-semibold'> Continue with Email</span>
           </button>
-        </div>
+        </NavLink>
         <div>By continuing, you agree to ezosoft's Terms of Use. Read our <Link to='/privacy' className='underline'> Privacy Policy.</Link></div>
         <div className='flex items-center justify-start gap-4'> <div><img src={building} alt='terms'/></div> <div>Sign up with you</div></div>
         </div>
@@ -288,7 +289,7 @@ const handleDownload = async()=>{
 
 
 
-<Dialog open={showLoginPopup} onClose={() => setShowLoginPopup(false)}
+<Dialog open={showPackagePopup} onClose={() => setShowLoginPopup(false)}
   PaperProps={{
     style: {
       width: '80%', 
