@@ -31,7 +31,7 @@ const EditBlog = () => {
         console.log("blogdata>>>>>>>>>",blogData)
         setBlog({
           title: blogData.title,
-          content: blogData.content,
+          content: blogData?.content,
           details: blogData.details || [{ title: '', description: '', image: null }],
           image: blogData.image || null,
           author: blogData.author,

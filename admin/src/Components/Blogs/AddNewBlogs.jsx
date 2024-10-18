@@ -21,7 +21,7 @@ const AddNewBlogs = () => {
 
   const fileInputRef = useRef(null);
   const detailImageRefs = useRef([]); 
-  const { register, handleSubmit, setValue, formState: { errors }, refresh } = useForm();
+  const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm();
 
 
 
@@ -129,7 +129,7 @@ const AddNewBlogs = () => {
 
       if (response.status === 201) {
         console.log('Blog created successfully:', response.data);
-        // refresh()
+        reset()
       } else {
         console.error('Error creating blog:', response.statusText);
       }

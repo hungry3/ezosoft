@@ -55,8 +55,10 @@ const BodyContent = () => {
             { blogs.slice(0,1).map((blog)=>(
 
               <NavLink to={`/blog/${blog._id}`} key={blog._id} className='flex flex-col p-[31px]'>
-           
-                    <img src={blog.image} alt='image' className='relative rounded-tr-md rounded-tl-md'/>
+           <div className='w-[343px] h-[233px]'>
+           <img src={blog.image} alt='image' className='relative object-cover w-full h-full rounded-tr-md rounded-tl-md '/>
+
+           </div>
                     <div className='absolute mt-[20px] ml-[13px]  py-[2px] px-[12px] rounded-full bg-blue text-center text-white capitalize text-nowrap'>{blog.category}</div>
 
                     <div className='flex gap-[8px] mt-[24px] items-center'>
@@ -77,7 +79,7 @@ const BodyContent = () => {
                <NavLink to={`/blog/${blog._id}`} key={blog._id}  className='flex flex-col pb-[20px] mx-[13px]'>
                 
                 <div className='flex gap-[20px]'>
-                    <img src={blog.image} alt={blog.title} className='max-w-[110px] max-h-[80px] rounded-lg'/>
+                    <img src={blog.image} alt={blog.title} className='max-w-[110px] max-h-[80px] rounded-lg '/>
                     <div className='flex flex-col gap-2'>
                         <p className='max-w-[162px] w-full text-[15px] leading-[21px] font-[Poppins] font-bold  '>{blog.title}</p>
                         <p className='max-w-[162px] w-full text-[16px] leading-[25px] text-[#58595B] font-[Poppins] font-normal'>{formatDate(blog.createdAt)}</p>
@@ -97,7 +99,10 @@ const BodyContent = () => {
                   <BlogLoader key={index} />
                 )) :  blogs.slice(4).map((blog)=>
                 <NavLink to={`/blog/${blog._id}`} key={blog._id} className='flex flex-col mt-[31px] max-w-[396px] w-full border border-[#EBEBEB] rounded-xl'>
-                    <img src={blog.image} alt={blog.title} className='relative rounded-tr-md rounded-tl-md'/>
+                    <div className='w-[400px] h-[240px]'>
+                    <img src={blog.image} alt={blog.title} className='relative w-full h-full rounded-tr-md rounded-tl-md obj '/>
+
+                    </div>
                     <div className='absolute  ml-[22px] mt-[20px] py-[2px] px-[12px] rounded-full bg-blue text-center text-white'>{blog.category}</div>
 
                     <div className='ml-[31px] pb-[20px]'>
@@ -108,7 +113,7 @@ const BodyContent = () => {
                         <p className='text-[14px] font-[Poppins] font-[400] text-darkGrey'>{formatDate(blog.createdAt)}</p>  
                     </div>
                     <p className='mt-[16px] max-w-[293px] w-full text-[20px] font-[Poppins] leading-[28px] font-bold '>{blog.title}</p>
-                    <p className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] leading-[24px] font-[400]'>{blog.content.slice(0,130)}{blog.content.length > 130 ? '...' : ''}</p>
+                    <div className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] leading-[24px] font-[400]'  dangerouslySetInnerHTML={{__html:truncateContent(blog.content)}}/>
                     </div>
                 </NavLink>
             )}
