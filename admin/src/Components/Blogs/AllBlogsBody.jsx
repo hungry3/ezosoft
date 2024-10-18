@@ -77,8 +77,6 @@ const AllBlogsBody = () => {
       
       setData(updatedData);
       console.log(data1);
-      
-      
       alert("deleted successfully")
       handleClose();
     } catch (error) {
@@ -90,24 +88,7 @@ const AllBlogsBody = () => {
 
 
 
-  const conditionalRowStyles = [
-    {
-      when: (row, index) => {
-        console.log(`Row index: ${index}`);
-        return index % 2 !== 0;
-      },
-      style: {
-        backgroundColor: 'rgba(0, 0, 0, 0.04)',
-      },
-    },
-    {
-      when: (row, index) => index % 2 === 0,
-      style: {
-        backgroundColor: 'white',
-      },
-    },
-  ];
-  
+
   
 
   // Handle delete action
@@ -120,8 +101,6 @@ const AllBlogsBody = () => {
     setSelectedRows(state.selectedRows.map(row => row.id));
   };
   
-
-
    useEffect(() => {
     if (location.state && location.state.updatedRow) {
       const updatedRow = location.state.updatedRow;

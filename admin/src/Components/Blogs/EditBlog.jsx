@@ -23,6 +23,23 @@ const EditBlog = () => {
     category: ''
   });
 
+  const [categories,setCategories] = useState([])
+  const [loading,setLoading] = useState(false)
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoading(true)
+      try {
+        const { data } = await axiosConfig.get('/admin/blog-categories');
+        setCategories(data?.data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+      setLoading(false)
+    };
+
+    fetchCategories();
+  }, []);
+
   useEffect(() => {
     const fetchBlog = async () => {
       try {
@@ -31,7 +48,7 @@ const EditBlog = () => {
         console.log("blogdata>>>>>>>>>",blogData)
         setBlog({
           title: blogData.title,
-          content: blogData?.content,
+          content: blogData.content,
           details: blogData.details || [{ title: '', description: '', image: null }],
           image: blogData.image || null,
           author: blogData.author,
@@ -110,7 +127,10 @@ const EditBlog = () => {
         formData.append(`details[${index}][image]`, detail.image);
       }
     });
-
+    
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
     try {
       const response = await axiosConfig.post(`/blog/edit/${blogId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
@@ -140,18 +160,21 @@ const EditBlog = () => {
               <div className='flex flex-col md:flex-row lg:flex-row xl:flex-row mt-[30px] w-[100%] gap-[30px] xl:items-center lg:items-center md:items-center items-start'>
                 <div className='flex flex-col lg:w-[40%] xl:w-[40%] md:w-[40%] w-[100%]'>
                   <p className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>Category</p>
-                  <select className='mt-[4px] px-[10px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins]' {...register('category', { required: true })} value={blog.category} onChange={(e) => handleBlogChange(e, 'category')}>
+                  <select className='mt-[4px] px-[10px] py-[10px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins]' {...register('category', )} value={blog.category} onChange={(e) => handleBlogChange(e, 'category')}>
                     <option value='' disabled>Please select</option>
-                    <option value='template'>Template</option>
-                    <option value='free template'>Free Template</option>
-                    <option value='lifestyle'>Lifestyle</option>
+                    {categories.map((category)=>(
+
+                      <option key={category._id} value={category.name}>{category.name}</option>
+                    ))}
+                  
+                   
                   </select>
                   {errors.category && <span className='text-red-400'>Please select a category</span>}
                 </div>
 
                 <div className='flex flex-col w-[100%]'>
                   <p className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>Author</p>
-                  <input type='text' placeholder='Author Name' className='mt-[4px] pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' {...register('author', { required: true })} value={blog.author} onChange={(e) => handleBlogChange(e, 'author')} />
+                  <input type='text' placeholder='Author Name' className='mt-[4px] pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' {...register('author',)} defaultValue={blog.author} onChange={(e) => handleBlogChange(e, 'author')} />
                   {errors.author && <span className='text-red-400'>Author is required</span>}
                 </div>
               </div>
@@ -159,53 +182,73 @@ const EditBlog = () => {
               {/* Blog Title */}
               <div className='flex flex-col'>
                 <p className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>Title</p>
-                <input type='text' placeholder='Blog Title' className='mt-[4px] pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' {...register('title', { required: true })} value={blog.title} onChange={(e) => handleBlogChange(e, 'title')} />
-                {errors.title && <span className='text-red-400'>Title is required</span>}
+                <input type='text' placeholder='Blog Title' className='mt-[4px] pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' {...register('title', )} defaultValue={blog.title} onChange={(e) => handleBlogChange(e, 'title')} />
+              
               </div>
 
               {/* Blog Content */}
               <div className='flex flex-col mt-[30px]'>
                 <p className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>Content</p>
-                <ReactQuill theme="snow" value={blog.content} onChange={handleContentChange} placeholder='Blog content' className='h-full' />
+                <ReactQuill theme="snow" value={blog?.content} onChange={handleContentChange} placeholder='Blog content' className='h-[230px]' />
               </div>
               
               {/* Cover Image */}
               <div className='mt-[30px]'>
                 <p className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>Cover Image</p>
-                <div onClick={() => fileInputRef.current.click()} className='w-full flex flex-col items-center justify-center border border-[#D9D9D9] bg-[#FAFAFA] cursor-pointer rounded-md h-[300px] mt-[4px]'>
-                  {blog.image ? <img src={typeof blog.image === 'string' ? blog.image : URL.createObjectURL(blog.image)} alt='Cover' className='object-cover w-full h-full' /> : <img src={Image} alt="Placeholder" />}
+                <div onClick={() => fileInputRef.current.click()} className='w-[500px] flex flex-col items-center justify-center border border-[#D9D9D9] bg-[#FAFAFA] cursor-pointer rounded-md h-[300px] mt-[4px]'>
+                <div className='w-[500px] h-[300px]'>
+                {blog.image ? <img src={typeof blog.image === 'string' ? blog.image : URL.createObjectURL(blog.image)} alt='Cover' className='object-cover w-full h-full' /> : <img src={Image} alt="Placeholder" className='object-cover w-full h-full' />}
+                </div>
+                 
                 </div>
                 <input type='file' accept='image/*' ref={fileInputRef} onChange={handleCoverImageChange} style={{ display: 'none' }} />
               </div>
               
               {/* Blog Details */}
               <div className='flex flex-col'>
-                <p className='text-[14px] leading-[21px] font-[Poppins] font-[400] mt-[30px]'>Details</p>
+                <p className='text-[24px] leading-[21px] font-[Poppins] font-[600] mt-[30px]'>Details</p>
                 {blog.details.map((detail, index) => (
   <div key={index} className='flex flex-col border border-[#D9D9D9] bg-[#FAFAFA] rounded-md p-[20px] mt-[10px] gap-[10px]'>
-    <input
+ <div className='flex items-center justify-start gap-4'><div className='text-[18px]  '>Title:</div>
+ <input
       type='text'
       placeholder='Detail Title'
       className='mt-[4px] px-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full'
       value={detail.title}
       onChange={(e) => handleDetailsChange(e.target.value, index, 'title')}
     />
-    <ReactQuill
+ 
+
+
+ </div>
+
+ <div className='flex items-start justify-start gap-4 mt-4'>
+<div className='text-[18px]'> Description</div>
+<ReactQuill
       theme="snow"
       value={detail.description}
       onChange={(value) => handleDetailsChange(value, index, 'description')}
       className='h-[200px] w-full'
     />
+</div>
+   
+   
 
     {/* Display image if exists */}
     <div className='mt-[10px]'>
       {detail.image && (
-        <div className='w-full flex flex-col items-center justify-center border border-[#D9D9D9] bg-[#FAFAFA] cursor-pointer rounded-md h-[200px]'>
+        <div className=' flex flex-col items-center justify-center border border-[#D9D9D9] bg-[#FAFAFA] cursor-pointer mt-10 rounded-md h-[300px] w-[500px]'>
           {/* Check if it's a File or URL */}
           {typeof detail.image === 'string' ? (
+            <div className='w-[500px] h-[300px]'>
             <img src={detail.image} alt='Detail' className='object-cover w-full h-full' />
+
+            </div>
           ) : (
+            <div className='w-[500px] h-[300px]'>
             <img src={URL.createObjectURL(detail.image)} alt='Detail' className='object-cover w-full h-full' />
+
+            </div>
           )}
         </div>
       )}
@@ -216,7 +259,7 @@ const EditBlog = () => {
       accept='image/*'
       ref={(el) => (detailImageRefs.current[index] = el)}
       onChange={(e) => handleDetailImageChange(e, index)}
-      className='mt-[10px]'
+      className='mt-[10px] w'
     />
     {blog.details.length > 1 && (
       <button
@@ -228,13 +271,15 @@ const EditBlog = () => {
       </button>
     )}
   </div>
-))}
-
-                <button type='button' className='bg-blue-500 text-black px-[20px] py-[10px] rounded-md mt-[10px]' onClick={addNewDetail}>Add New Detail</button>
+))}<div className='flex justify-start'>
+  
+<button type='button' className='bg-blue text-white px-[20px] py-[10px] rounded-md mt-[10px]' onClick={addNewDetail}>Add New Detail</button>
+</div>
               </div>
 
               {/* Update Blog Button */}
-              <button type='submit' className='bg-green-500 text-red px-[20px] py-[10px] rounded-md mt-[30px]'>Update Blog</button>
+              <div className='flex justify-end'> <button type='submit' className=' bg-lime-500 text-white px-[20px] py-[10px] rounded-md mt-[30px]'>Update Blog</button></div>
+              
             </div>
           </div>
         </div>

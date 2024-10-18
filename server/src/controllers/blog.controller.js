@@ -83,34 +83,105 @@ const createBlog = asyncHandler(async (req, res, next) => {
 });
 
 
-  const editBlog = asyncHandler(async (req, res, next) => {
-    const blogId = req.params.blogId; 
-    // console.log('Files:', req.files);
-    // console.log('Body:', req.body);
-
-    const { title, content, details, category, author } = req.body;
+//   const editBlog = asyncHandler(async (req, res, next) => {
+//     const blogId = req.params.blogId; 
+    
+//     const { title, content, details, category, author } = req.body;
 
   
-    const existingBlog = await BlogModel.findById(blogId);
-    if (!existingBlog) {
-        return next(new ErrorHandler("Blog not found", 404));
-    }
+//    const existingBlog = await BlogModel.findById(blogId);
+//     if (!existingBlog) {
+//         return next(new ErrorHandler("Blog not found", 404));
+//     }
 
   
+//   if (!title || !content || !category || !author) {
+//       return next(new ErrorHandler("All fields are required", 400));
+//   }
+
+//   let imageUrl = existingBlog.image; 
+
+
+//   const imageFile = req.files.find(file => file.fieldname === 'image');
+//   if (imageFile) {
+//       const uploadResult = await uploadOnCloudinary(imageFile.path, 'blog_images');
+//       if (!uploadResult) {
+//           return next(new ErrorHandler("Failed to upload blog image", 500));
+//       }
+//       imageUrl = uploadResult.url; 
+//   }
+
+
+//   const processedDetails = await Promise.all(details.map(async (detail, index) => {
+//       const { title: detailTitle, description } = detail;
+
+//       if (!detailTitle || !description) {
+//           throw new ErrorHandler("Detail title and description are required", 400);
+//       }
+
+//       let detailImageUrl = '';
+
+//       const detailImageFile = req.files.find(file => file.fieldname === `details[${index}][image]`);
+    
+//       if (detailImageFile) {
+//           const detailUploadResult = await uploadOnCloudinary(detailImageFile.path, 'detail_images');
+//           if (detailUploadResult) {
+//               detailImageUrl = detailUploadResult.url;
+            
+//           }
+//       }
+
+//       return {
+//           title: detailTitle,
+//           description,
+//           image: detailImageUrl || undefined
+//       };
+//   }));
+
+//   existingBlog.title = title;
+//   existingBlog.content = content;
+//   existingBlog.details = processedDetails;
+//   existingBlog.image = imageUrl;
+//   existingBlog.author = author;
+//   existingBlog.category = category;
+
+//   await existingBlog.save();
+
+//   res.status(200).json(
+//       new ApiResponse(200, existingBlog, 'Blog updated successfully')
+//   );
+// });
+
+const editBlog = asyncHandler(async (req, res, next) => {
+  const blogId = req.params.blogId;
+  
+  // Extract the necessary fields from the request body
+  const { title, content, details, category, author } = req.body;
+
+  // Fetch the existing blog from the database
+  const existingBlog = await BlogModel.findById(blogId);
+  if (!existingBlog) {
+      return next(new ErrorHandler("Blog not found", 404));
+  }
+
+  // Check if all required fields are provided
   if (!title || !content || !category || !author) {
       return next(new ErrorHandler("All fields are required", 400));
   }
 
-  let imageUrl = existingBlog.image; 
+  
+  let imageUrl = existingBlog.image;
 
-
-  const imageFile = req.files.find(file => file.fieldname === 'image');
+ 
+  const imageFile = req.files?.find(file => file.fieldname === 'image');
   if (imageFile) {
-      const uploadResult = await uploadOnCloudinary(imageFile.path, 'blog_images');
-      if (!uploadResult) {
+  
+      try {
+          const uploadResult = await uploadOnCloudinary(imageFile.path, 'blog_images');
+          imageUrl = uploadResult.url; 
+      } catch (error) {
           return next(new ErrorHandler("Failed to upload blog image", 500));
       }
-      imageUrl = uploadResult.url; 
   }
 
 
@@ -121,15 +192,16 @@ const createBlog = asyncHandler(async (req, res, next) => {
           throw new ErrorHandler("Detail title and description are required", 400);
       }
 
-      let detailImageUrl = '';
+      let detailImageUrl = detail.image || ''; 
 
-      const detailImageFile = req.files.find(file => file.fieldname === `details[${index}][image]`);
-      // console.log("detailsImagesFile", detailImageFile);
+      const detailImageFile = req.files?.find(file => file.fieldname === `details[${index}][image]`);
       if (detailImageFile) {
-          const detailUploadResult = await uploadOnCloudinary(detailImageFile.path, 'detail_images');
-          if (detailUploadResult) {
+          // Upload new detail image if provided
+          try {
+              const detailUploadResult = await uploadOnCloudinary(detailImageFile.path, 'detail_images');
               detailImageUrl = detailUploadResult.url;
-              // console.log("Details image URL uploaded successfully:", detailImageUrl);
+          } catch (error) {
+              return next(new ErrorHandler(`Failed to upload detail image for detail ${index + 1}`, 500));
           }
       }
 
@@ -143,16 +215,20 @@ const createBlog = asyncHandler(async (req, res, next) => {
   existingBlog.title = title;
   existingBlog.content = content;
   existingBlog.details = processedDetails;
-  existingBlog.image = imageUrl;
+  existingBlog.image = imageUrl; 
   existingBlog.author = author;
   existingBlog.category = category;
 
+  // Save the updated blog
   await existingBlog.save();
 
+  // Send the success response
   res.status(200).json(
       new ApiResponse(200, existingBlog, 'Blog updated successfully')
   );
 });
+
+
 const deleteBlog = asyncHandler(async (req, res, next) => {
   const {id} = req.body;
 
