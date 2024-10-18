@@ -32,7 +32,7 @@ const createBlog = asyncHandler(async (req, res, next) => {
         const imageUrl = uploadResult.url;
 
         // Process details if provided
-        const processedDetails = await Promise.all(details.map(async (detail, index) => {
+        const processedDetails = await Promise.all(details?.map(async (detail, index) => {
             const { title, description } = detail;
 
             if ( !description) {
@@ -40,8 +40,7 @@ const createBlog = asyncHandler(async (req, res, next) => {
             }
 
             let detailImageUrl = '';
-         
-            
+    
             const detailImageFile = req.files?.find(file => file.fieldname === `details[${index}][image]`);
             // console.log("detailsImagesFile", detailImageFile)
             if (detailImageFile) {
