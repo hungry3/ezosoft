@@ -129,8 +129,26 @@
     font-weight: 900;
     font-style: italic;
   }
+  .custom-data-table table tbody tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  
+  .custom-data-table table tbody tr:nth-child(even) {
+    background-color: white; 
+  }
 
-  /* .dataTableContainer{
-    width: 100%;
-    overflow-x: auto;
-  } */
+  .active_tab{
+    fill: #000000;
+  }
+
+  .ql-toolbar .ql-snow{
+   border-radius: 6px 6px 0px 0px !important;
+  }
+  .ql-toolbar.ql-snow{
+    border-radius: 6px 6px 0px 0px !important;
+    border-color: gray;
+  }
+  .ql-container.ql-snow{
+    border-radius: 0px 0px 6px 6px !important;
+    border-color: gray;
+  }

@@ -1,26 +1,10 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import Arrow from "/src/assets/images/dashboard-back-arrow.svg";
 import DocumentIcon from "/src/assets/images/dashboard-doc-icon-body.svg";
 import Saved from "/src/assets/images/dash-body-save-icon.svg";
 import MenuIcon from "/src/assets/images/dash-body-menu-icon.svg";
-import Initiation from "/src/assets/images/Dashboard-project-initiataion.svg";
-import Planing from "/src/assets/images/planing-icon.svg";
-import Execution from "/src/assets/images/execution-icon.svg";
-import Tracking from "/src/assets/images/tracking-icon.svg";
-import Comunication from "/src/assets/images/comunication-icon.svg";
-import Management from "/src/assets/images/change-managment.svg";
-import Risk from "/src/assets/images/risk-icon.svg";
-import Procurement from "/src/assets/images/procurment.svg";
-import Costing from "/src/assets/images/costing-icon.svg";
-import Essentials from "/src/assets/images/essentials.svg";
-import TaskManagement from "/src/assets/images/taskManagment-icon.svg";
-import Qualitymanagement from "/src/assets/images/quality-management.svg";
-import SatffManagement from "/src/assets/images/staff managment-icon.svg";
-import Stakeholder from "/src/assets/images/stakeholder.svg";
-import Wbs from "/src/assets/images/wbs.svg";
-import Scheduling from "/src/assets/images/scheduling.svg";
-import Timeline from "/src/assets/images/timeline.svg";
-import Wordfile from "/src/assets/images/word-file-img.svg";
+
 import WordIcon from "/src/assets/images/word-icon.svg";
 import ExitIcon from "/src/assets/images/Exit Top Right.svg";
 import { axiosConfig } from "../../utils/axiosConfig";
@@ -28,14 +12,10 @@ import { useQuery } from "@tanstack/react-query";
 import { NavLink } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-
-
 const BodyContent = ({ activeContent }) => {
-
-  const axiosPrivate = useAxiosPrivate()
+  const axiosPrivate = useAxiosPrivate();
   
-  const [activeTab, setActiveTab] = useState(1);
-
+  const [activeTab, setActiveTab] = useState(null); 
 
   const fetchTemplates = async () => {
     const response = await axiosPrivate.get("/user/templates-with-auth");
@@ -44,8 +24,11 @@ const BodyContent = ({ activeContent }) => {
     return response?.data?.data.templates || [];
   };
 
-  
 
+
+
+
+  
   const {
     data: templates,
     isLoading,
@@ -53,26 +36,41 @@ const BodyContent = ({ activeContent }) => {
   } = useQuery({
     queryKey: ["templates"],
     queryFn: fetchTemplates,
+ 
+ 
   });
 
+  useEffect(()=>{
+
+    if(templates){
+      const filteredTemplates= templates.filter((template)=> template.category === activeContent)
+   
+
+    if(filteredTemplates.length >0){
+        setActiveTab(filteredTemplates[0]._id)
+    }
+  }
+  },[templates,activeContent]
+)
+
+
+  
+
   if (isLoading) return <div>Loading...</div>;
-
-
-
-
 
   console.log("templates>>>>>>>>>>>>lkjshdf", templates);
   if (error) {
     console.error(error);
-    return <div>Error fetching templates :{error.message}</div>;
+    return <div>Error fetching templates: {error.message}</div>;
   }
   console.log("active content>>>>>>>kkjhk", activeContent);
 
   const filteredTemplates = templates?.filter(
-    (template) => template.category === activeContent
+    (template) => template.category === activeContent,
+   
   );
 
-
+ 
 
   return (
     <div className="bg-[#F9F9F9] full">
@@ -108,9 +106,7 @@ const BodyContent = ({ activeContent }) => {
           {/* Categories */}
           <div className="flex justify-between w-full h-full">
             <div className="flex flex-col mx-[24px] w-[30%]">
-              <select className="border-none outline-none mt-[13px]">
-                <option selected>Categories</option>
-              </select>
+              <div className="mt-3 mb-3">Categories</div>
 
               {/* Category Items */}
               {filteredTemplates?.map((template) => (
@@ -154,9 +150,9 @@ const BodyContent = ({ activeContent }) => {
                             {item.templateTitle}
                           </p>
                           <NavLink
-  to={`/templates/${item._id}`}
-  state={{ someProp: activeContent }}
->
+                            to={`/templates/${item._id}`}
+                            state={{ someProp: activeContent }}
+                          >
                             <img
                               src={ExitIcon}
                               alt="Download"

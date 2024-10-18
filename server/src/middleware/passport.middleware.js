@@ -19,7 +19,7 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/api/auth/google/callback'
+    callbackURL: 'http://localhost:5173'
 }, async (accessToken, refreshToken, profile, done) => {
     const existingUser = await User.findOne({ email: profile.emails[0].value });
     if (existingUser) {
@@ -40,7 +40,7 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: '/api/auth/facebook/callback',
+    callbackURL: 'http://localhost:8000/api/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'emails']
 }, async (accessToken, refreshToken, profile, done) => {
     const existingUser = await User.findOne({ email: profile.emails[0].value });

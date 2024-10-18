@@ -16,6 +16,7 @@ router.get('/templates/:id',getSingleTemplate)
 router.get('/templates-with-auth',TemplatesWithAuth)
 router.get('/templateUrl/:id',isAuthenticated,getSingleTemplateUrl)
 router.post('/payment',isAuthenticated,newPayment)
+router.post('/user-info',isAuthenticated)
 
 router.post('/contect-us',ClientForm)
 

@@ -88,6 +88,28 @@ const AllBlogsBody = () => {
   };
 
 
+
+
+  const conditionalRowStyles = [
+    {
+      when: (row, index) => {
+        console.log(`Row index: ${index}`);
+        return index % 2 !== 0;
+      },
+      style: {
+        backgroundColor: 'rgba(0, 0, 0, 0.04)',
+      },
+    },
+    {
+      when: (row, index) => index % 2 === 0,
+      style: {
+        backgroundColor: 'white',
+      },
+    },
+  ];
+  
+  
+
   // Handle delete action
   const handleDeleteMultiple = () => {
     const updatedData = data1.filter(item => !selectedRows.includes(item.id));
@@ -130,10 +152,11 @@ const AllBlogsBody = () => {
       sortable: false,
       width: '6%',
     },
-  
+
+
     {
       name: (
-        <div className='w-full font-bold text-center'>Title</div>
+        <div className='w-full font-bold text-start'></div>
       ),
       selector: (row) =>
        
@@ -143,14 +166,31 @@ const AllBlogsBody = () => {
             <img
               src={row.image}
               alt='Table Item'
-              style={{ width: '100px', height: '50px', marginRight: '10px' }} 
+              style={{ width: '56px', height: '26px', marginRight: '10px',borderRadius:"5px" }} 
             />
-            <div className='flex items-center'>{row.title}</div>
+          
+          </div>
+            </NavLink>
+        ,
+        width: '100px',
+    },
+  
+    {
+      name: (
+        <div className='w-full font-bold text-start'>Title</div>
+      ),
+      selector: (row) =>
+       
+         
+          <NavLink to={`/blog/single/${row._id}`}>
+          <div className='flex' >
+            
+            <div className='flex items-start'>{row.title}</div>
           </div>
             </NavLink>
         ,
       sortable: true,
-      width: '50%',
+      width: '400px',
       
     },
     
@@ -169,7 +209,7 @@ const AllBlogsBody = () => {
           row.category
         ),
       sortable: true,
-      width: '15%',
+      width: '200px',
     },
 
     {
@@ -187,7 +227,7 @@ const AllBlogsBody = () => {
           row.author
         ),
       sortable: true,
-      width: '15%',
+      width: '200px',
     },
     {
       name: (<div className='font-bold'>Actions</div>),
@@ -208,32 +248,32 @@ const AllBlogsBody = () => {
           />
         </div>
       ),
-      width: '6%',
+      width: '100px',
     },
   ];
   
 
 
     // Conditional Row Styles
-    const conditionalRowStyles = [
-      {
-        when: (row, index) => {
-          // console.log(`Row: ${row}, Index: ${index}`);
-          return index % 2 === 0; 
-        },
-        style: {
-          backgroundColor: 'black',
-          color: '#000',
-        },
-      },
-    ];
+    // const conditionalRowStyles = [
+    //   {
+    //     when: (row, index) => {
+    //       // console.log(`Row: ${row}, Index: ${index}`);
+    //       return index % 2 === 0; 
+    //     },
+    //     style: {
+    //       backgroundColor: 'black',
+    //       color: '#000',
+    //     },
+    //   },
+    // ];
     
     
   return (
     <>
       <div className=''>
       <div className='bg-[#F9F9F9] w-full'>
-        <div className='lg:mx-[70px] xl:mx-[70px] mx-[10px] mt-[53px] flex lg:flex-row xl:flex-row md:flex-row flex-col justify-between'>
+        <div className='lg:px-[70px] xl:px-[70px] px-[10px] pt-[53px] flex lg:flex-row xl:flex-row md:flex-row flex-col justify-between'>
           <p className='text-[25px] leading-[27px] font-semibold font-[Poppins]'>All  Blogs </p>
           <NavLink
             to='/addnewblogs'
@@ -278,8 +318,7 @@ const AllBlogsBody = () => {
             </div>
           </div>
 
-          <div className='mt-[33px] lg:mx-[50px] xl:mx-[50px] md:mx-[30px] lg:px-[47px] xl:px-[47px]  pt-[25px] pb-[41px] border border-[#D9D9D9] bg-[#F9F9F9] rounded-lg flex flex-col gap-[30px] '>
-         
+          {/*  delete multiple  */}
           <Modal
         open={open}
         onClose={handleClose}
@@ -300,9 +339,14 @@ const AllBlogsBody = () => {
         </Box>
       </Modal>
 
-         <div className='flex items-end justify-end'><button onClick={handleDeleteMultiple}>Delete Multiple</button></div>
-         <div className='max-w-full'>
+         <div className='flex items-end justify-end mr-[20px]  lg:mr-[50px] mt-[20px]'><button onClick={handleDeleteMultiple}>Delete Multiple</button></div>
+
+          <div className='mt-[10px] lg:mx-[50px] xl:mx-[50px] md:mx-[30px]   border border-[#D9D9D9] bg-[#F9F9F9] rounded-xl flex flex-col gap-[30px] '>
+         
+        
+         <div className='max-w-full rounded-xl'>
           <DataTable
+          //  className="custom-data-table"
            columns={columns} 
            data={data1} 
            selectableRows 
@@ -312,7 +356,9 @@ const AllBlogsBody = () => {
            selectableRowsHighlight
            highlightOnHover
            onSelectedRowsChange={handleSelectedRows}
-            conditionalRowStyles={ conditionalRowStyles}  />
+            // conditionalRowStyles={ conditionalRowStyles}
+           
+             />
             {isError !=='' && <p>{isError}</p>}
           </div>
             

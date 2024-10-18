@@ -1,8 +1,12 @@
 import  { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/images/Logo.svg'
+import useAuth from '../hooks/useAuth';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {auth} = useAuth()
+  console.log(("auth", auth));
+  
 
   return (
     <nav className="bg-none px-4 lg:px-[100px] xl:px-[100px] md:px-[10px] pt-12 relative z-[20] w-[100%] ">

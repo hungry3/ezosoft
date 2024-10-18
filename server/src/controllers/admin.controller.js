@@ -1,38 +1,7 @@
 
 
-// const getAllUsers = asyncHandler(async(req,res,next)=>{
-//     try{
-//         const users = await User.find().sort({createAt:-1})
-
-//         res.status(200).json({
-//             success:true,
-//             users
-//         })
-//     }
-
-//     catch(err){
-//         return next (new ErrorHandler(err.message,500))
-//     }
-// })
-
-// const deleteById = asyncHandler(async(req,res,next)=>{
-//     try{
-//         const {id}= req.params
-//         const user = await User.findById(id)
-//         if(!user){
-//             return next (new ErrorHandler("User not found",404))
-//         }
-
-//         await user.deleteOne({id})
-
-//         res.json(new ApiResponse(201,user,"user Deleted successfuly"))
-//     }
-//     catch(error){
-//         return  next(new ErrorHandler(error.message,500))
-//     }
-// })
-
-
+import { assign } from 'nodemailer/lib/shared/index.js';
+import BlogCategory from '../models/BlogCategory.model.js';
 import SubscriptionPlan from '../models/subscription.model.js';
 import Template from '../models/template.model.js';
 import User from '../models/user.model.js'
@@ -40,7 +9,6 @@ import { ApiResponse } from '../utils/ApiResponse.js';
 import { asyncHandler } from '../utils/AsyncHandler.js'
 import { uploadOnCloudinary } from '../utils/cloudinary.js';
 import { ErrorHandler } from '../utils/ErrorHandler.js';
-
 
 
 const getAllUsers = asyncHandler(async(req,res,next)=>{
@@ -540,6 +508,62 @@ catch(error){
    })
 
 
+
+
+   const createCategory = asyncHandler(async(req,res,next)=>{
+    try{
+      const {name} = req.body
+      if(!name){
+        return next(new ErrorHandler("Name is required",400))
+
+      }
+      const existingCategory = await BlogCategory.findOne({ name });
+      if (existingCategory) {
+          return next(new ErrorHandler("Category already exists", 400));
+      }
+        const category = await BlogCategory({name})
+        await category.save() 
+        res.status(201).json(new ApiResponse(category,201,"Category created successfully"))
+    }
+    catch(error){
+      console.warn(error)
+      return next(new ErrorHandler("Something went wrong",500))
+    }
+  })
+
+const allCategories = asyncHandler(async(req,res,next)=>{
+try {
+  const Blogcategories = await BlogCategory.find().select('name').sort({createdAt:-1})
+
+  res.status(200).json(new ApiResponse(Blogcategories,200,"Categories fetched successfully"))
+  
+} catch (error) {
+  console.warn(error)
+  return next(new ErrorHandler("Something went wrong,Please try again later",500))
+}
+  })
+  const deleteCategory = asyncHandler(async(req,res,next)=>{
+
+    try{
+      const {id} = req.params;
+      const category = await BlogCategory.findById(id)
+      if(!category){
+        return next(new ErrorHandler("Category not found",404))
+      }
+    
+      await BlogCategory.deleteOne({_id:id})
+
+      res.status(200).json(new ApiResponse({},200,"Category deleted successfully"))
+    
+
+    }catch(error){
+      console.warn(error)
+      return next(new ErrorHandler("Something went wrong,Please try again later",500))
+    }
+ 
+    
+  })
+
    
 
- export { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan,getTemplateById}
+ export { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan,getTemplateById,createCategory,allCategories , deleteCategory}

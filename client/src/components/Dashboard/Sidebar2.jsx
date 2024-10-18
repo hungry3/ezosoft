@@ -10,6 +10,7 @@ import FreeTemplate from '/src/assets/images/dashboard-free-template-icon.svg'
 import RecentlyAdded  from '/src/assets/images/dashboard-recenety-added-icon.svg'
 import sun from '/src/assets/images/light-on-sun-black-outline-21617.svg'
 import moon from '/src/assets/images/moon-6686.svg'
+import useAuth from '../../hooks/useAuth'
 function Sidebar2({setActiveContent,toggleDarkMode,isDarkMode}) {
   // const [activeTab, setActiveTab] = useState(null)
     const Data =[
@@ -22,25 +23,30 @@ function Sidebar2({setActiveContent,toggleDarkMode,isDarkMode}) {
        
     ]
 
+
+    const {auth} =useAuth()
+
+    console.log("console auth>>>>>>>>>>>", auth.accessToken.user);
+
+     const user =  auth?.accessToken?.user
+    
+
     const handleToggleDarkMode = () => {
-      toggleDarkMode(); // call the toggleDarkMode function passed as a prop
+      toggleDarkMode();
     };  
   return (
     <>
       <div className='relative max-w-[281px] w-full  min-h-screen bg-grey flex flex-col justify-between'>
-
             <div className='mx-[22px] flex flex-col'>
-            <img src={Logo} alt='EZOSOFT' className='mt-[26px] w-[157px] h-[30px]'/>
+            <img src={user.avatar ||Logo} alt='EZOSOFT' className='mt-[26px] w-[157px] h-[30px]'/>
             <div className='mt-[16px] w-full border border-[#A3A3A3] '></div>
             <div className='flex mt-[21px] gap-[13px]'>
                     <div className='w-[56px] h-[56px] border-[4px] border-[white] rounded-full '>
                    <img src={Profile} alt='profile' className='h-[50px] w-[50px] object-cover'/>
                     </div>
-
                     <div className='flex flex-col'>
                         <h2 className='font-[Poppins] text-[16px] leading-[24px] font-normal text-white'>Welcome!</h2>
-                        <h2 className='font-[Poppins] text-[16px] leading-[24px] font-normal text-white'>Sarah Alley</h2>
-                        
+                        <h2 className='font-[Poppins] text-[16px] leading-[24px] font-normal text-white'>{`${user.firstName}`|| "Sarah Alley"}</h2>
                     </div>
 
             </div>
@@ -48,7 +54,7 @@ function Sidebar2({setActiveContent,toggleDarkMode,isDarkMode}) {
             <div className='mt-[14px] font-[Poppins] text-[20px] leading-[30px] font-semibold text-white'>Dashboard</div>
             <div className='mt-[13px] w-full border border-[#A3A3A3] '></div>
 
-           {/* computer div haha */}
+         
            <div className='mx-[4px] mt-[16px] flex flex-col gap-[11px]'>
            {Data.map((Items) => 
            <div key={Items.id} className='flex justify-start items-center gap-[28px]'>
@@ -61,7 +67,6 @@ function Sidebar2({setActiveContent,toggleDarkMode,isDarkMode}) {
            </div>
 
 
-       {/* resourcesss */}
 
             <div className='mt-[25px] font-[Poppins] text-[20px] leading-[30px] font-semibold text-white'>Resources</div>
             <div className='mt-[13px] w-full border border-[#A3A3A3] '></div>
@@ -88,15 +93,12 @@ function Sidebar2({setActiveContent,toggleDarkMode,isDarkMode}) {
             <img src={Icon} alt='forward icon' className='ml-[53px]'/>
             
          </div>
-
-
          <div className='flex  mt-[11px] items-center justify-start cursor-pointer' onClick={()=>setActiveContent('free')}>
             <img src={ FreeTemplate} alt='document'/>
             <h2 className='ml-[28px] font-[Poppins] text-[16px] leading-[24px] font-[500] text-white text-nowrap'>Free Templates</h2>
             <img src={Icon} alt='forward icon' className='ml-[20px]'/>
             <div className='ml-[15px] px-2 py-1 rounded bg-[#34C759] text-white text-center font-[Poppins]  text-[9px]'>New</div>
          </div>
-
          <div className='flex mt-[16px] items-center justify-start cursor-pointer'>
             <img src={ RecentlyAdded} alt='document'/>
             <h2 className='ml-[28px] font-[Poppins] text-[16px] leading-[24px] font-[500] text-white text-nowrap'>Recently Added</h2>
@@ -106,9 +108,6 @@ function Sidebar2({setActiveContent,toggleDarkMode,isDarkMode}) {
 
          </div>
             </div>
-
-
-            
 
             {/* light and Dark mode */}
             <div className='flex justify-center my-[43px]'>

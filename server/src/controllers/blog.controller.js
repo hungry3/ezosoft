@@ -178,18 +178,23 @@ const deleteBlog = asyncHandler(async (req, res, next) => {
 
  const getBlogCountByCategory = asyncHandler(async (req, res, next) => {
     try {
-      const blogCounts = await BlogModel.aggregate([
-        {
-          $group: {
-            _id: "$category",
-            count: { $sum: 1 }
-          }
-        },
-        {
-          $sort: { count: -1 } 
-        }
-      ]);
+      // const blogCounts = await BlogModel.aggregate([
+      //   {
+      //     $group: {
+      //        _id: "$category", 
+      //       count: { $sum: 1 }
+      //     }
+      //   },
+      //   {
+      //     $sort: { count: -1 } 
+      //   }
+      // ]);
   
+
+      const blogCounts = await BlogModel.aggregate([
+        { $group: { _id: "$category", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+    ]);
       res.status(200).json({
         success: true,
         message: "Blog count per category fetched successfully",
@@ -247,5 +252,7 @@ const deleteBlog = asyncHandler(async (req, res, next) => {
     }
   })
   
+  
+ 
 
 export { createBlog ,getBlogCountByCategory ,getBlogsByCategory,getAllBlogs,getSingleBlog ,editBlog,deleteBlog};

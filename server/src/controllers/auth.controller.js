@@ -235,6 +235,8 @@ const updatePassword = asyncHandler(async (req, res, next) => {
 const googleLogin = asyncHandler(async (req, res, next) => {
   
     const user = req.user;
+    console.log('new user login',user);
+    
 
     const accessToken = user.SignAccessToken();
     const refreshToken = user.SignRefreshToken();

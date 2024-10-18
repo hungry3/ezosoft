@@ -5,12 +5,16 @@ import Bell from '/src/assets/images/dashbaoard-bell-icon.svg';
 import Search from '/src/assets/images/dashboard-search-icon.svg';
 import Flag from '/src/assets/images/yahodi-flag.svg';
 import Profile from '/src/assets/images/dashbaord-profile-image-navbar.svg';
+import useAuth from '../../hooks/useAuth';
 
 const DashboardNavbar = ({ toggleSidebar }) => {
   // State for showing dropdown and selected category
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
+ const {auth} =  useAuth();
+ const user =  auth?.accessToken?.user
+  
   // Handle category selection
   const handleCategorySelect = (event) => {
     const selected = event.target.value;
@@ -72,7 +76,7 @@ const DashboardNavbar = ({ toggleSidebar }) => {
         <div className='ml-[34px] flex items-center justify-center'>
           <p className='font-[Poppins] text-[14px] leading-[21px] font-[500]'>Select Language</p>
           <img src={Flag} alt='flag' className='ml-[7px]' />
-          <img src={Profile} alt='profile' className='mx-[17px]' />
+          <img src={user.avatar ||Profile} alt='profile' className='mx-[17px]' />
         </div>
       </div>
     </div>

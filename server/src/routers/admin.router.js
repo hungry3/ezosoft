@@ -1,6 +1,6 @@
 import express from "express";
 import { templateUpload, upload } from "../middleware/multer.middleware.js";
-import { getAllUsers, getUserById,getTemplateById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan,} from "../controllers/admin.controller.js";
+import { getAllUsers, getUserById,getTemplateById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan, createCategory, allCategories, deleteCategory,} from "../controllers/admin.controller.js";
 
 import { isAuthenticated, isAdmin } from "../middleware/auth.middleware.js";
 const router = express.Router()
@@ -39,6 +39,12 @@ router.put('/update-user/:id', updateUser);
 
 // router.delete('/delete-user/:id',isAuthenticated, isAdmin, deleteUser);
 router.delete('/delete-user/:id', deleteUser);
+
+
+
+router.post('/create-category',createCategory)
+router.get('/blog-categories',allCategories)
+router.delete('/delete-category/:id',deleteCategory)
 
 
 export default router;
