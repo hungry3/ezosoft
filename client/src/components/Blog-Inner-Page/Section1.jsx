@@ -52,12 +52,13 @@ console.log("similarBlogs",similarBlogs);
 
   <div className='mx-[100px]'>
         <div className='flex flex-col justify-start'>
+  
             <div className='flex flex-col items-start'> <p className='text-[40px] leading-[54px] font-[600] mt-[100px] items-start'>{blog.title}</p>
             <div className='mt-[6px]  text-[16px] leading-[26px] font-[400] font-[Poppins]' dangerouslySetInnerHTML={{ __html: blog.content }} />
            
             </div>
-            <div className='w-full max-w-[500px]'>
-            <img src={blog.image} alt='image' loading='lazy' className='mt-[40px] object-cover w-full   '/>  
+            <div className='w-full max-w-[500px h-[300px] mb-10'>
+            <img src={blog.image} alt='image' loading='lazy' className='mt-[40px] object-cover w-full h-full   '/>  
             </div>
 
 
@@ -69,7 +70,11 @@ console.log("similarBlogs",similarBlogs);
         <p className='mt-[20px] text-[24px] font-[Poppins] font-[500]'>{detail?.title}</p>
         <div className='mt-[6px]  text-[16px] leading-[26px] font-[400] font-[Poppins]' dangerouslySetInnerHTML={{ __html:detail?.description}} />
      </div>
-     {detail?.image && <img src={detail?.image} alt='image' loading='lazy' className='mt-[27px]' />}
+     <div className='w-full max-w-[500px] h-[300px] mt-[27px]'>
+
+     {detail?.image && <img src={detail?.image} alt='image' loading='lazy' className='object-cover w-full h-full ' />}
+
+     </div>
    </div>
 ))}
           

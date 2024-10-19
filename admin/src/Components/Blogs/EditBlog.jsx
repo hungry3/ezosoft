@@ -5,12 +5,13 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { axiosConfig } from '../../utils/axiosConfig';
 import Image from '/src/assets/images/admin-dashboard-image-icon.svg';
-
+import { ToastContainer,toast } from 'react-toastify';
 const EditBlog = () => {
   const { blogId } = useParams();
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const detailImageRefs = useRef([]);
+  const [submit,setSubmit] =  useState(false)
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -104,20 +105,17 @@ const EditBlog = () => {
     setBlog({ ...blog, details: updatedDetails });
     detailImageRefs.current.splice(index, 1);
   };
-
   const onSubmit = async () => {
     const formData = new FormData();
     formData.append('category', blog.category);
     formData.append('author', blog.author);
     formData.append('title', blog.title);
     formData.append('content', blog.content);
-
     if (blog.image instanceof File) {
       formData.append('image', blog.image);
     } else {
       formData.append('image', blog.image);
     }
-
     blog.details.forEach((detail, index) => {
       formData.append(`details[${index}][title]`, detail.title);
       formData.append(`details[${index}][description]`, detail.description);
@@ -132,22 +130,30 @@ const EditBlog = () => {
       console.log(`${key}:`, value);
     }
     try {
+      setSubmit(true)
       const response = await axiosConfig.post(`/blog/edit/${blogId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       
       });
 
       if (response.status === 200) {
+        toast.success('Blog updated successfully!');
         navigate('/allblogs');
       } else {
+        toast.error('Something went Wrong Please try again later')
         console.error('Error updating blog:', response.statusText);
       }
+      setSubmit(false)
     } catch (error) {
+      toast.error('Something went Wrong Please try again later')
       console.error('Error updating blog:', error);
     }
   };
 
   return (
+    <>
+      <ToastContainer/>
+   
     <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
       <div className='flex flex-col w-full bg-[#F9F9F9]'>
         <div className='lg:m-[40px] xl:m-[40px] md:m-[20px] bg-white border rounded-md px-[10px] py-[30px] lg:px-[40px] xl:px-[40px] md:px-[40px] flex flex-col'>
@@ -217,9 +223,6 @@ const EditBlog = () => {
       value={detail.title}
       onChange={(e) => handleDetailsChange(e.target.value, index, 'title')}
     />
- 
-
-
  </div>
 
  <div className='flex items-start justify-start gap-4 mt-4'>
@@ -232,8 +235,6 @@ const EditBlog = () => {
     />
 </div>
    
-   
-
     {/* Display image if exists */}
     <div className='mt-[10px]'>
       {detail.image && (
@@ -278,13 +279,19 @@ const EditBlog = () => {
               </div>
 
               {/* Update Blog Button */}
-              <div className='flex justify-end'> <button type='submit' className=' bg-lime-500 text-white px-[20px] py-[10px] rounded-md mt-[30px]'>Update Blog</button></div>
+              {submit ? (
+                <div className='flex justify-end'><button  className=' cursor-not-allowed bg-lime-500 text-white px-[20px] py-[10px] rounded-md mt-[30px]'>Uploading...</button></div>
+              ):(
+                  <div className='flex justify-end'> <button type='submit' className=' bg-lime-500 text-white px-[20px] py-[10px] rounded-md mt-[30px]'>Update Blog</button></div>
+              )}
+            
               
             </div>
           </div>
         </div>
       </div>
     </form>
+    </>
   );
 };
 
