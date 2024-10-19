@@ -57,8 +57,8 @@ console.log("similarBlogs",similarBlogs);
             <div className='mt-[6px]  text-[16px] leading-[26px] font-[400] font-[Poppins]' dangerouslySetInnerHTML={{ __html: blog.content }} />
            
             </div>
-            <div className='w-full max-w-[500px h-[300px] mb-10'>
-            <img src={blog.image} alt='image' loading='lazy' className='mt-[40px] object-cover w-full h-full   '/>  
+            <div className= 'w-full lg:w-1/2 m-h-[60vh]   h-[80dvh] mb-10'>
+            <img src={blog.image} alt='image' loading='lazy' className='mt-[40px] object-cover w-full  h-full   '/>  
             </div>
 
 
