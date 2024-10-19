@@ -10,9 +10,9 @@ function Trial() {
        <p className='max-w-[693px] mt-[13px] text-white  text-center text-[16px] font-[Poppins] leadind-[26px]'>Deliver faster, collaborate better and innovate more effectively without the high price tag or months-long implementation required by other products.</p>
      
          {/* //! input field section is here */}
-         <div className='flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row items-center sm:w-[85%] md:w-[70%] lg:w-[70%] xl:w-[70%] w-[100%] gap-2 mt-8 lg:w-1/2 xl:w-1/2 '>
-        <input type="text" className=' outline-none  px-4 py-2 w-full rounded-md font-[Poppins]' placeholder='Enter your email address' />
-        <NavLink to="/signup" className='bg-cyanDark hover:bg-gradient hover:border border-white sm:w-auto lg:w-auto md:w-auto xl:w-auto w-[100%] '>
+         <div className='flex flex-col justify-center sm:flex-row md:flex-row lg:flex-row xl:flex-row items-center  sm:w-[85%] gap-2 mt-8  lg:w-1/2 '>
+        <input type="text" className=' outline-none  px-4 py-2 w-full max-w-[500px] rounded-md font-[Poppins]' placeholder='Enter your email address' />
+        <NavLink to="/signup" className='bg-cyanDark justify-center flex hover:bg-gradient hover:border border-white sm:w-auto lg:w-auto md:w-auto xl:w-auto w-[100%] '>
         <button className='  text-white  py-2  px-8 rounded text-nowrap font-[Poppins]'>Sign Up</button>
         </NavLink>
        

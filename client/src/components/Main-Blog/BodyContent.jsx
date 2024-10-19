@@ -68,7 +68,7 @@ const BodyContent = () => {
                         <p className='text-[14px] font-[Poppins] font-[400] text-darkGrey text-nowrap mr-3'>{formatDate(blog.createdAt)}</p>  
                     </div>
                     <p className='mt-[16px] max-w-[293px] w-full text-[20px] font-[Poppins] leading-[28px] font-bold '>{blog.title}</p>
-                    <div className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] leading-[24px] font-[400]'  dangerouslySetInnerHTML={{__html:truncateContent(blog.content)}}/>
+                    <div className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] leading-[24px] pb-[30px] font-[400]'  dangerouslySetInnerHTML={{__html:truncateContent(blog.content)}}/>
                
                 </NavLink>
             ))}  
@@ -113,7 +113,7 @@ const BodyContent = () => {
                         <p className='text-[14px] font-[Poppins] font-[400] text-darkGrey'>{formatDate(blog.createdAt)}</p>  
                     </div>
                     <p className='mt-[16px] max-w-[293px] w-full text-[20px] font-[Poppins] leading-[28px] font-bold '>{blog.title}</p>
-                    <div className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] leading-[24px] font-[400]'  dangerouslySetInnerHTML={{__html:truncateContent(blog.content)}}/>
+                    <div className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] leading-[24px] pb-[30px] font-[400]'  dangerouslySetInnerHTML={{__html:truncateContent(blog.content)}}/>
                     </div>
                 </NavLink>
             )}

@@ -306,6 +306,7 @@ const deleteMultipleBlogs = asyncHandler(async (req, res, next) => {
   
 
       const blogCounts = await BlogModel.aggregate([
+        { $match: { status: 'active' } },
         { $group: { _id: "$category", count: { $sum: 1 } } },
         { $sort: { count: -1 } },
     ]);
@@ -323,7 +324,7 @@ const deleteMultipleBlogs = asyncHandler(async (req, res, next) => {
  const getBlogsByCategory = asyncHandler(async (req, res, next) => {
     try {
       const { category } = req.params;
-      const blogs = await BlogModel.find({ category });
+      const blogs = await BlogModel.find({ category ,status: 'active' });
   
       if (blogs.length === 0) {
         return next(new ErrorHandler(`No blogs found in category ${category}`, 404));

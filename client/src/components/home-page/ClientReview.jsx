@@ -47,7 +47,7 @@ function ClientReview() {
           {testimonials.map((testimonial, index) => (
             <div key={index} className='flex items-center justify-center w-full'>
               <div className='w-full '>
-                <div className='flex flex-col justify-between w-full  h-full bg-[url("/src/assets/images/bg-slider.svg")] bg-cover bg-center rounded-md'>
+                <div className='flex flex-col justify-between  w-full  h-auto bg-[url("/src/assets/images/bg-slider.svg")] bg-cover bg-center rounded-md'>
                  <div className='w-full'>
                  <p className='pl-[20px] md:pl-[20px] lg:pl-[50px] xl:pl-[50px] py-[20px] md:py-[30px] lg:py-[50px] xl:py-[50px] max-w-[343px] font-[Poppins] text-[16px] leading-[26px]'>
                     {testimonial.text}
@@ -63,7 +63,7 @@ function ClientReview() {
                       <h4 className='text-[18px] font-[Poppins] font-[400]'>{testimonial.name}</h4>
                       <p className='text-[14px] font-[Poppins]'>{testimonial.role}</p>
                     </div>
-                    <div className='lg:ml-[109px] w-[143px] h-[200px]'></div>
+                 
                   </div>
                 </div>
               </div>
