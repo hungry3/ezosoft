@@ -11,7 +11,6 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
   import Typography from '@mui/material/Typography';
   import Modal from '@mui/material/Modal';
   import { axiosConfig } from '../../utils/axiosConfig';
-
   import GlobalLoader from '../../utils/GlobalLoader';
   const style = {
     position: 'absolute',
@@ -21,7 +20,6 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
     width: 500,
     height: 200,
     bgcolor: 'background.paper',
-    // border: '2px solid #000',
     boxShadow: 24,
     p: 4,
   };
@@ -32,34 +30,6 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
     const [isError, seterror] =useState('')
     const [data1, setData] = useState([]);
     const [loading,setLoading] = useState(false)
-
-    const getApiData =  async () => {
-      setLoading(true)
-      try {
-        const response = await axiosConfig.get('/blog/all');
-        
-      console.log(response.data.data,"response");
-      
-      
-      
-        setData(response.data.data);
-      } catch (error) {
-        setLoading(false)
-        console.error('Error fetching data:', error);
-        seterror(error.message)
-        toast.error('Something went Wrong.Please Try again later')
-      }
-      setLoading(false)
-    
-    }
-
-    useEffect(()=>{
-    getApiData()
-    },[])
-
-    const navigate =useNavigate()
-    const location = useLocation();
-
     const [editId, setEditId] = useState(null); 
     const [editData, setEditData] = useState({ id: '', category: '', title: '' }); 
     const [statusAction, setStatusAction] = useState('');
@@ -68,7 +38,83 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
     const [statusPopupOpen, setStatusPopupOpen] = useState(false);
     const [selectedStatusId, setSelectedStatusId] = useState(null);
     const [selectedDeleteId, setSelectedDeleteId] = useState(null);
-    console.log(selectedDeleteId,"selectedDeleteId")
+    const [categories,setCategories] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [searchTitle, setSearchTitle] = useState('');
+    const [filteredData,setFilteredData] = useState([]);
+    const [openDeleteMultipleModal, setOpenDeleteMultipleModal] = useState(false);
+    const getApiData =  async () => {
+      setLoading(true)
+      try {
+        const response = await axiosConfig.get('/blog/admin-all');
+        
+      console.log(response.data.data,"response");
+        setData(response?.data?.data || []);
+        setFilteredData(response?.data?.data || []);
+      } catch (error) {
+        setLoading(false)
+        console.error('Error fetching data:', error);
+        seterror(error.message)
+        toast.error('Something went Wrong.Please Try again later')
+      }
+      setLoading(false)
+    }
+    
+    useEffect(()=>{
+    getApiData()
+    },[statusAction])
+
+    const navigate =useNavigate()
+    const location = useLocation();
+
+
+    useEffect(() => {
+      const fetchCategories = async () => {
+      
+        try {
+          const { data } = await axiosConfig.get('/admin/blog-categories');
+          setCategories(data?.data);
+        } catch (error) {
+          console.error('Error fetching categories:', error);
+        }
+     
+      };
+  
+      fetchCategories();
+    }, []);
+   
+
+
+    const handleCategoryChange = (e) => {
+      const selectedValue = e.target.value;
+      if (selectedValue === "Search here") {
+        setSelectedCategory('');
+        setFilteredData(data1);  
+      } else {
+        setSelectedCategory(selectedValue);
+      }
+    };
+  
+    const handleTitleChange = (e) => {
+      setSearchTitle(e.target.value);
+    };
+  
+    const handleSearch = () => {
+      if (!selectedCategory==='' && !searchTitle) {
+       
+        setFilteredData(data1);
+        return;
+      }
+  
+      const filteredData = data1.filter((item) => {
+        const isCategoryMatch = selectedCategory ? item.category === selectedCategory : true;
+        const isTitleMatch = searchTitle ? item.title.toLowerCase().includes(searchTitle.toLowerCase()) : true;
+        return isCategoryMatch && isTitleMatch;
+      });
+  
+      setFilteredData(filteredData);
+    };
+    
 
     const handleOpen = (id) => {
       setSelectedDeleteId(id); 
@@ -95,16 +141,12 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
       }
     };
     
-    // Handle delete action
-    const handleDeleteMultiple = () => {
-      const updatedData = data1.filter(item => !selectedRows.includes(item.id));
-      setData(updatedData);
-      setSelectedRows([]);
-    };
+
     const handleSelectedRows = (state) => {
-      setSelectedRows(state.selectedRows.map(row => row.id));
+      setSelectedRows(state.selectedRows.map(row => row._id));
     };
     
+  console.log(selectedRows,"selected rows")
     useEffect(() => {
       if (location.state && location.state.updatedRow) {
         const updatedRow = location.state.updatedRow;
@@ -117,6 +159,37 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 
 
+    const handleOpenDeleteMultipleModal = () => {
+      if (selectedRows.length === 0) {
+        toast.warn("No blogs selected.");
+        return;
+      }
+      setOpenDeleteMultipleModal(true); 
+    };
+    const handleCloseDeleteMultipleModal = () => {
+      setOpenDeleteMultipleModal(false);
+    };
+
+    const handleDeleteMultiple = async () => {
+      try {
+        await axiosConfig.delete('/blog/delete-multiple', {
+          data: { ids: selectedRows },
+        });
+        
+        
+        const updatedData = data1.filter(item => !selectedRows.includes(item._id));
+        setData(updatedData);
+        setFilteredData(updatedData); 
+        setSelectedRows([]); 
+        toast.success("Selected blogs deleted successfully.");
+        
+        handleCloseDeleteMultipleModal(); 
+      } catch (error) {
+        console.error("Error deleting blogs:", error);
+        toast.error("Failed to delete selected blogs.");
+      }
+    };
+
 
     const handleInputChange = (e) => {
       const { name, value } = e.target;
@@ -124,11 +197,20 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
     };
 
 
-    const handleOpenStatusPopup = (id, action) => {
-      setSelectedStatusId(id);
-      setStatusAction(action);
+    const handleOpenStatusPopup = (row) => {
+      
+      
+      const status = row.status === 'active' ? 'inactive' :'active';
+      console.log("status>>>>>>>>>",status);
+      setSelectedStatusId(row._id);
+      setStatusAction(status);
+      console.log("statusAction");
+      
       setStatusPopupOpen(true);
     };
+
+
+    
   
     const handleCloseStatusPopup = () => {
       setSelectedStatusId(null);
@@ -142,13 +224,17 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
     const handleStatusChange = async () => {
       try {
-        const url = `/blog/${statusAction === 'active' ? 'activate' : 'deactivate'}`;
-        await axiosConfig.post(url, { id: selectedStatusId });
+        const url = `/blog/${selectedStatusId}/status`;
+        const status = statusAction
+
+        console.log("statussdfjk;",status);
         
-        const updatedData = data1.map((item) => 
-          item._id === selectedStatusId ? { ...item, isActive: statusAction === 'active' } : item
-        );
-        setData(updatedData);
+      const response =   await axiosConfig.patch(url,{status:status});
+      console.log(response)
+    
+        console.log("statusAction>>>>>>", statusAction);
+        
+      
         
         toast.success(`Blog ${statusAction === 'active' ? 'Activated' : 'Deactivated'} Successfully`);
         handleCloseStatusPopup();
@@ -172,8 +258,6 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
           <div className='w-full font-bold text-start'></div>
         ),
         selector: (row) =>
-        
-          
             <NavLink to={`/blog/single/${row._id}`}>
             <div className='flex' >
               <img
@@ -244,38 +328,45 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
       },
       {
         name: (<div className='font-bold'>Actions</div>),
-        cell: (row) => (
-          <div className='flex gap-2'>
-          <NavLink to={`/blog/edit/${row._id}`}>
-            <img
-              src={EditIcon}
-              alt='edit'
-              className='cursor-pointer'
-            />
-          </NavLink>
-            <img
-              src={DeleteIcon}
-              alt='delete'
-              className='cursor-pointer'
-              onClick={() => handleOpen(row._id)}
-            />
+        cell: (row) => {
 
-<button
-            className='flex items-center gap-1 text-blue-500 hover:text-blue-700'
-            onClick={() => handleOpenStatusPopup(row._id, row.isActive ? 'inactive' : 'active')}
-          >
-            {row.isActive ? (
-              <>
-                <RemoveCircleIcon /> 
-              </>
-            ) : (
-              <>
-                <CheckCircleIcon fontSize="small" /> 
-              </>
-            )}
-          </button> 
-          </div>
-        ),
+         
+          // console.log(row.status);
+          
+          return(
+            <div className='flex gap-2'>
+            <NavLink to={`/blog/edit/${row._id}`}>
+              <img
+                src={EditIcon}
+                alt='edit'
+                className='cursor-pointer'
+              />
+            </NavLink>
+              <img
+                src={DeleteIcon}
+                alt='delete'
+                className='cursor-pointer'
+                onClick={() => handleOpen(row._id)}
+              />
+  
+              <button
+              className='flex items-center gap-1 text-blue-500 hover:text-blue-700'
+              onClick={() => handleOpenStatusPopup(row )}
+            >
+              {statusAction ==="inactive" || row.status  === 'inactive' ? (
+                <>
+                  <RemoveCircleIcon fontSize='small' /> 
+                </>
+              ) : (
+                <>
+                  <CheckCircleIcon fontSize="small" /> 
+                </>
+              )}
+            </button> 
+            </div>
+          )
+         
+        },
         width: '100px',
       },
     ];
@@ -308,44 +399,49 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
               to='/addnewblogs'
               className='text-[18px] font-semibold text-white bg-grey px-[20px] py-[10px] rounded-xl hover:bg-blue ease-out duration-300 transition-all'
             >
-              Add New Blogs
+              Add New Blog
             </NavLink>
           </div>
 
           <div className='bg-white mx-[10px] lg:ml-[17px] xl:ml-[17px] mt-[33px] border border-[#D9D9D9] rounded-lg'>
-            <div className='mt-[33px] lg:mx-[50px] xl:mx-[50px] mx-[10px] lg:px-[47px] xl:px-[47px] px-[10px] pt-[25px] pb-[41px] border border-[#D9D9D9] bg-[#F9F9F9] rounded-lg flex lg:flex-row xl:flex-row md:flex-row flex-col gap-[30px] justify-between items-center'>
-              <div className='flex flex-col max-w-[357px] w-full'>
-                <label htmlFor='category' className='text-[16px] font-[Poppins] leading-[24px] font-[400]'>
-                  Search by category
-                </label>
-                <select className='pl-[10px] pr-[15px] py-[10px] bg-white rounded-lg border border-[#D9D9D9]'>
-                  <option selected disabled>Search here</option>
-                  <option value='template'>Template</option>
-                  <option value='documentation'>Document</option>
-                  <option value='presentation'>Presentation</option>
-                  <option value='freeTemplate'>Free Template</option>
-                </select>
-              </div>
+                <div className='mt-[33px] lg:mx-[50px] xl:mx-[50px] mx-[10px] lg:px-[47px] xl:px-[47px] px-[10px] pt-[25px] pb-[41px] border border-[#D9D9D9] bg-[#F9F9F9] rounded-lg flex lg:flex-row xl:flex-row md:flex-row flex-col gap-[30px] justify-between items-center'>
+                  <div className='flex flex-col max-w-[357px] w-full'>
+                    <label htmlFor='category' className='text-[16px] font-[Poppins] leading-[24px] font-[400]'>
+                      Search by category
+                    </label>
+                    <select
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                     className='pl-[10px] pr-[15px] py-[10px] bg-white rounded-lg border border-[#D9D9D9]'>
+                      <option selected >Search here</option>
+                      {categories && categories.map((category)=>(
+                        <option key={category._id} value={category.name}>{category.name}</option>
+                      ))}
+                      
+                    
+                    </select>
+                  </div>
 
-              <div className='flex flex-col max-w-[357px] w-full'>
-                <label htmlFor='title' className='text-[16px] font-[Poppins] leading-[24px] font-[400]'>
-                  Search by Title
-                </label>
-                <select className='pl-[10px] pr-[15px] py-[10px] bg-white rounded-lg border border-[#D9D9D9]'>
-                  <option disabled selected>Search here</option>
-                  <option value='template'>Template</option>
-                  <option value='documentation'>Document</option>
-                  <option value='presentation'>Presentation</option>
-                  <option value='freeTemplate'>Free Template</option>
-                </select>
-              </div>
+                  <div className='flex flex-col max-w-[357px] w-full'>
+                    <label htmlFor='title' className='text-[16px] font-[Poppins] leading-[24px] font-[400]'>
+                      Search by Title
+                    </label>
+                    <input
+                     value={searchTitle}
+                     onChange={handleTitleChange}
+                     type='text' className='pl-[10px] pr-[15px] py-[10px] bg-white rounded-lg border border-[#D9D9D9]'/>
+                    
+                    
+                  </div>
 
-              <div className='mt-[15px]'>
-                <button className='text-[18px] font-[500] font-[Poppins] leading-[27px] px-[44px] py-[9px] bg-grey hover:bg-blue text-white rounded-lg text-center'>
-                  Search
-                </button>
-              </div>
-            </div>
+                  <div className='mt-[15px]'>
+                    <button
+                    onClick={handleSearch} 
+                    className='text-[18px] font-[500] font-[Poppins] leading-[27px] px-[44px] py-[9px] bg-grey hover:bg-blue text-white rounded-lg text-center'>
+                      Search
+                    </button>
+                  </div>
+                </div>
 
             {/*  delete multiple  */}
             <Modal
@@ -368,7 +464,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
           </Box>
         </Modal>
 
-          <div className='flex items-end justify-end mr-[20px]  lg:mr-[50px] mt-[20px]'><button onClick={handleDeleteMultiple}>Delete Multiple</button></div>
+          <div className='flex items-end justify-end mr-[20px]  lg:mr-[50px] mt-[20px]'><button onClick={handleOpenDeleteMultipleModal}>Delete Multiple</button></div>
 
             <div className='mt-[10px] lg:mx-[50px] xl:mx-[50px] md:mx-[30px]   border border-[#D9D9D9] bg-[#F9F9F9] rounded-xl flex flex-col gap-[30px] '>
           
@@ -378,7 +474,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
             <DataTable
             className="custom-data-table"
             columns={columns} 
-            data={data1} 
+            data={filteredData} 
             selectableRows 
             fixedHeader 
             pagination
@@ -411,6 +507,32 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
           </div>
         </Box>
       </Modal>
+
+       {/* Modal for deleting multiple blogs */}
+       <Modal
+  open={openDeleteMultipleModal} // Ensure this is hooked to the correct state
+  onClose={handleCloseDeleteMultipleModal}
+  aria-labelledby="modal-title"
+  aria-describedby="modal-description"
+>
+  <Box sx={style}>
+    <Typography id="modal-title" variant="h6">
+      Confirm Deletion
+    </Typography>
+    <Typography id="modal-description" sx={{ mt: 2 }}>
+      Are you sure you want to delete the selected blogs?
+    </Typography>
+    <div className='flex justify-end gap-4 mt-4'>
+      <button className='px-4 py-2 text-white rounded-md bg-grey hover:bg-blue' onClick={handleCloseDeleteMultipleModal}>
+        Cancel
+      </button>
+      <button className='px-4 py-2 text-white rounded-md bg-grey hover:bg-blue' onClick={handleDeleteMultiple}>
+        Yes, Delete
+      </button>
+    </div>
+  </Box>
+</Modal>
+
        
       </>
     );

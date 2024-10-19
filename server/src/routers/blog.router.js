@@ -1,5 +1,5 @@
 import  express from 'express';
-import { createBlog,getBlogCountByCategory,getBlogsByCategory,getSingleBlog,getAllBlogs,editBlog,deleteBlog,} from '../controllers/blog.controller.js';
+import { createBlog,getBlogCountByCategory,getBlogsByCategory,getSingleBlog,getAllBlogs,editBlog,deleteBlog, setBlogStatus, AdminGetAllBlogs, deleteMultipleBlogs,} from '../controllers/blog.controller.js';
 import { isAdmin, isAuthenticated } from '../middleware/auth.middleware.js';
 import { templateUpload } from '../middleware/multer.middleware.js';
 import { allCategories, createCategory } from '../controllers/admin.controller.js';
@@ -19,7 +19,13 @@ router.delete("/delete",deleteBlog)
 router.get('/category-count',getBlogCountByCategory)
 router.get('/category/:category',getBlogsByCategory)
 router.get('/all',getAllBlogs)
+router.get('/admin-all',AdminGetAllBlogs)
+router.delete('/delete-multiple', deleteMultipleBlogs);
+
 router.get('/:id',getSingleBlog)
+
+router.patch('/:id/status',setBlogStatus)
+
 
 
 

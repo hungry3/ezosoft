@@ -228,6 +228,31 @@ const editBlog = asyncHandler(async (req, res, next) => {
   );
 });
 
+const setBlogStatus = asyncHandler(async(req,res,next)=>{
+    const {id} = req.params;
+     const {status} = req.body
+     console.log(req.body);
+     
+   
+     const validStatuses =['active','inactive']
+
+     if(!validStatuses.includes(status)){
+         return next(new ErrorHandler('Invalid status',400))
+     }
+     try{
+        const updatedBlog = await BlogModel.findByIdAndUpdate(id,{status},{new:true,runValidators:true})
+
+        if(!updatedBlog){
+            return next(new ErrorHandler('Blog not found',404))
+        }
+
+        res.status(200).json(new ApiResponse(updatedBlog,200,'Blog status updated successfully'))
+     }catch(error){
+        return next(new ErrorHandler("Failed to update blog status", 500));
+        
+     }
+})
+
 
 const deleteBlog = asyncHandler(async (req, res, next) => {
   const {id} = req.body;
@@ -249,7 +274,21 @@ const deleteBlog = asyncHandler(async (req, res, next) => {
   );
 });
 
-
+const deleteMultipleBlogs = asyncHandler(async (req, res, next) => {
+    const { ids } = req.body;  // Expecting an array of IDs
+  
+    if (!ids || ids.length === 0) {
+      return next(new ErrorHandler("No blog IDs provided", 400));
+    }
+  
+    const result = await BlogModel.deleteMany({ _id: { $in: ids } });
+  
+    if (result.deletedCount === 0) {
+      return next(new ErrorHandler("No blogs found for deletion", 404));
+    }
+  
+    res.status(200).json(new ApiResponse(200, null, 'Blogs deleted successfully'));
+  });
 
  const getBlogCountByCategory = asyncHandler(async (req, res, next) => {
     try {
@@ -302,6 +341,17 @@ const deleteBlog = asyncHandler(async (req, res, next) => {
 
   const getAllBlogs = asyncHandler(async(req,res,next)=>{
     try{
+        const blogs = await BlogModel.find({ status: "active" }).select('-details').sort({createdAt:-1});
+        res.status(200).json(new ApiResponse(blogs,200,"Blogs fetched successfully"))
+    }
+    catch(error){
+        console.error(error)
+        return next (new ErrorHandler("something wrong please try again later",500))
+    }
+  })
+
+  const AdminGetAllBlogs = asyncHandler(async(req,res,next)=>{
+    try{
         const blogs = await BlogModel.find().select('-details').sort({createdAt:-1});
         res.status(200).json(new ApiResponse(blogs,200,"Blogs fetched successfully"))
     }
@@ -330,4 +380,4 @@ const deleteBlog = asyncHandler(async (req, res, next) => {
   
  
 
-export { createBlog ,getBlogCountByCategory ,getBlogsByCategory,getAllBlogs,getSingleBlog ,editBlog,deleteBlog};
+export { createBlog ,getBlogCountByCategory ,getBlogsByCategory,getAllBlogs,getSingleBlog ,editBlog,deleteBlog,setBlogStatus,AdminGetAllBlogs,deleteMultipleBlogs};
