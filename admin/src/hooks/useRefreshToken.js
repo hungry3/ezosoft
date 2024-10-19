@@ -23,6 +23,7 @@ const useRefreshToken = () => {
 
             return response.data.accessToken; 
         } catch (error) {
+            navigate('/login')
             console.error("Failed to refresh token:", error);
 
           
