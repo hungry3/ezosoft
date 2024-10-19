@@ -78,6 +78,13 @@ const Navbar = () => {
           >
            Login
           </NavLink>
+          <NavLink to="/signup">
+        <div className=" sm:flex-shrink-0">
+          <button className="bg-grey  hover:bg-gradient hover:border border-white text-white px-4 py-2 font-[600] rounded-md hover:bg- font-[Poppins]">
+          Start Free Trial
+          </button>
+        </div>
+        </NavLink>
         </div>
 
         
