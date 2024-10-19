@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 import { axiosConfig } from '../../utils/axiosConfig';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const style = {
   position: 'absolute',
@@ -34,11 +35,11 @@ const AllTemplates = () => {
 
   console.log(data1,"data1");
   
-
+  const axiosPrivate = useAxiosPrivate()
 
    const getApiData =  async () => {
      try {
-       const response = await axiosConfig.get('/admin/all-users');
+       const response = await axiosPrivate.get('/admin/all-users');
       console.log("response>>>>>>>>",response);
       
        setData(response.data?.data);
@@ -82,7 +83,7 @@ const AllTemplates = () => {
     
    
       const id = selectedDeleteId
-       const response = await axiosConfig.delete(`/admin/delete-user/${id}`)
+       const response = await axiosPrivate.delete(`/admin/delete-user/${id}`)
        console.log(response);
        const updatedData = data1.filter((item) => item._id !== selectedDeleteId);
        setData(updatedData);

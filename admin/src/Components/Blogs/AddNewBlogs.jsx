@@ -5,7 +5,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { axiosConfig } from '../../utils/axiosConfig';
 import TextEditor from '../../utils/TextEditor';
-
+import { ToastContainer,toast } from 'react-toastify';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const AddNewBlogs = () => {
   const [blog, setBlog] = useState({
@@ -16,6 +17,7 @@ const AddNewBlogs = () => {
     author: '',
     category: ''
   });
+  const axiosPrivate = useAxiosPrivate()
   const [loading,setLoading] = useState(false)
   const [categories,setCategories] = useState([])
 
@@ -23,13 +25,13 @@ const AddNewBlogs = () => {
   const detailImageRefs = useRef([]); 
   const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm();
 
-
+   
 
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true)
       try {
-        const { data } = await axiosConfig.get('/admin/blog-categories');
+        const { data } = await axiosPrivate.get('/admin/blog-categories');
         setCategories(data?.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -123,18 +125,37 @@ const AddNewBlogs = () => {
   }
 
     try {
-      const response = await axiosConfig.post('/blog/create', formData, {
+      
+      const response = await axiosPrivate.post('/blog/create', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       if (response.status === 201) {
+       
         console.log('Blog created successfully:', response.data);
-        reset()
+        reset({
+          category: '',
+          author: '',
+          title: '',
+          content: '',
+          details: [{ title: '', description: '', image: null }],
+        });
+        setBlog({
+          title: '',
+          content: '',
+          details: [{ title: '', description: '', image: null }],
+          image: null,
+          author: '',
+          category: ''
+        });
+        toast.success("Blog is Created Successfuly")
       } else {
+        // toast.error("Something went wrong.Please try again later")
         console.error('Error creating blog:', response.statusText);
       }
     } catch (error) {
-      console.error('Error uploading blog:', error);
+      toast.error(error.response.data.message)
+      console.error('Error uploading blog:', error.response.data.message);
       if (error.response) {
         console.error('Server responded with:', error.response.data);
       } else if (error.request) {
@@ -147,6 +168,7 @@ const AddNewBlogs = () => {
 
   return (
     <>
+    <ToastContainer/>
       <form onSubmit={handleSubmit(handleUpload)} encType="multipart/form-data">
         <div className='flex flex-col w-full bg-[#F9F9F9]'>
           <div className='lg:m-[40px] xl:m-[40px] md:m-[20px] bg-white border rounded-md px-[10px] py-[30px] lg:px-[40px] xl:px-[40px] md:px-[40px] flex flex-col'>
@@ -248,8 +270,6 @@ const AddNewBlogs = () => {
                       </div>
                       </div>
                     </div>
-
-                  
                     <div className='flex gap-20'>
                       <p className='text-[14px] leading-[21px] font-[Poppins] font-[400]'>Title</p>
                       <input type='text' placeholder='Detail Title' className='mt-[4px] pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' value={detail.title} onChange={(e) => handleDetailsChange(e, detailIndex, 'title')} />
@@ -259,8 +279,6 @@ const AddNewBlogs = () => {
                       <p className='text-[14px] leading-[21px] font-[Poppins] font-[400] mb-1'>Description</p>
                       <ReactQuill theme="snow" value={detail.description} onChange={(value) => handleDetailDescriptionChange(value, detailIndex)} placeholder='Detail description' className='h-[280px] mb-3 w-full ' />
                     </div>
-
-                   
                   </div>
                 </div>
               ))}

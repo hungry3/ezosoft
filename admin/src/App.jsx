@@ -13,13 +13,17 @@ import ViewSingleTemplate from './Pages/Templates-page/ViewSingleTemplate'
 import SingleUserPage from './Pages/User-page/SingleUserPage'
 import Login from './Pages/Login/Login'
 import EditSingleUserPage from './Pages/User-page/EditSingleUserPage'
+import { AuthProvider } from './utils/authContext'
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
 function App() {
   return (
     <>
+    <AuthProvider>
     <BrowserRouter>
+
     <Routes>
     <Route  path='/login' element={<Login/>} />
-    
+  
       <Route exact path='/' element={<User/>} />
       <Route exact path='/allTemplates' element={<AllTemplates/>} />
       <Route path='/view-template/:id' element={<ViewSingleTemplate />} />
@@ -37,8 +41,10 @@ function App() {
       <Route path="/edit/:id" element={<EditTemplates/>} />
       <Route path='/blog/edit/:blogId' element={<EditedBlog/>}/>
       <Route path='/blog/single/:blogId' element={<SingleBlogPage />} />  
+     
     </Routes>
     </BrowserRouter>
+    </AuthProvider>
     </>
   )
 }

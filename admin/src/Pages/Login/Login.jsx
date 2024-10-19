@@ -4,6 +4,9 @@ import logo from '/src/assets/images/ES-logo-login.svg'
 import { ToastContainer, toast } from 'react-toastify';
 import { axiosConfig } from '../../utils/axiosConfig';
 import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+
 const Login = () => {
   const {
     register,
@@ -11,21 +14,31 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-
+const navigate = useNavigate()
   const {setAuth} =  useAuth()
 
-  const onSubmit =async (data) => {
-    const response =  await axiosConfig.post('/auth/login',data)
-    
-    console.log(response);
-    const user = response?.data
-    setAuth({user})
-    
-  
-    // console.log(data);
-    
+  const onSubmit = async (data) => {
+    try {
+      const response = await axiosConfig.post('/auth/login', data);
+      console.log(response.data);
+      const user = response?.data.user;
+      if (user && user.role === 'admin') {
+        setAuth({ user });
+        toast.success("Login Successful");
+        navigate('/');
+      } else {
+        toast.error("Access denied: Admins only");
+      }
+    } catch (error) {
+      if (error.response) {
+        const errorMessage = error.response.data?.message || "Login failed. Please try again.";
+        toast.error(errorMessage); 
+      } else {
+        console.log(error);
+        toast.error("An error occurred. Please try again."); 
+      }
+    }
   };
-
   return (
     <>
         <ToastContainer />

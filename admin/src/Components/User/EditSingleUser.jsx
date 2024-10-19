@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { axiosConfig } from '../../utils/axiosConfig'; 
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const EditSingleUser = () => {
   const { id } = useParams(); 
@@ -18,12 +19,13 @@ const EditSingleUser = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+   const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
     const fetchUserData = async () => {
       try { setLoading(true);
 
-        const response = await axiosConfig.get(`/admin/user/${id}`);
+        const response = await axiosPrivate.get(`/admin/user/${id}`);
         setUserData(response?.data?.data);
         setLoading(false);
       } catch (error) {
@@ -52,7 +54,7 @@ const EditSingleUser = () => {
     e.preventDefault();
 
     try {
-      const response = await axiosConfig.put(`/admin/update-user/${id}`, userData);
+      const response = await axiosPrivate.put(`/admin/update-user/${id}`, userData);
       console.log('User updated:', response.data);
       navigate('/user'); 
     } catch (error) {

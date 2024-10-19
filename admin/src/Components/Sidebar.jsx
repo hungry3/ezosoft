@@ -49,7 +49,7 @@ const Sidebar = ({isCollapsed}) => {
    }
   return (
     <>
- <div className={`relative  min-h-[100vh] bg-grey flex flex-col ${isCollapsed? 'w-[100px]':'w-[281px]'}`}>
+ <div className={`relative min-w-[100px]  min-h-[100vh] bg-grey flex flex-col ${isCollapsed? 'w-[100px]':'w-[281px]'}`}>
 <div className='flex flex-col items-center '>
 <img src={Logo} alt='EZOSOFT' className={`mt-[28px] h-[30px] ${isCollapsed? 'w-[80px]': 'w-[157px]'}`}/>
 <div className='mt-[13px] max-w-[238px] w-full border border-[#A3A3A3] '></div>
@@ -91,7 +91,7 @@ const Sidebar = ({isCollapsed}) => {
        <NavLink to='/allTemplates' className={`mt-[20px] py-[6px] pl-[16px] pr-[30px] text-white cursor-pointer ${activeTab ==='allTemplates'? 'text-grey bg-lightBlue  rounded-md': ''} `} onClick={() => handleActiveTab('All Templates')}> <h2 className='text-[16px] leading-[24px] font-[600] font-[Poppins]'>All Template</h2></NavLink>
 
 
-       <NavLink to='/addtemplates' className={`mt-[15px] py-[6px] pl-[16px] pr-[30px] text-white cursor-pointer ${activeTab==='free-template' ? 'bg-lightBlue text-grey  rounded-md':''}`} onClick={() =>{handleActiveTab('free-template')}}> <h2 className='text-[16px] leading-[24px] font-[600] font-[Poppins]'>Add New Templates</h2></NavLink>
+       <NavLink to='/addtemplates' className={`mt-[15px] py-[6px] pl-[16px] pr-[30px] text-white cursor-pointer ${activeTab==='free-template' ? 'bg-lightBlue text-grey  rounded-md':''}`} onClick={() =>{handleActiveTab('free-template')}}> <h2 className='text-[16px] leading-[24px] font-[600] font-[Poppins]'>Add New Template</h2></NavLink>
     </div>
     </div>)}
    {/* pricing */}

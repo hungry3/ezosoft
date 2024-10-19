@@ -11,8 +11,8 @@ router.post('/create-template', templateUpload.any(), createTemplate);
 // router.put('/update-template/:id',isAuthenticated, isAdmin, templateUpload.any(), updateTemplate);
 router.put('/update-template/:id', templateUpload.any(), updateTemplate);
 
-router.delete('/delete-template/',isAuthenticated, isAdmin,deleteTemplate)
-// router.get('/all-templates',isAuthenticated, isAdmin, getAllTemplates);
+// router.delete('/delete-template/',isAuthenticated, isAdmin,deleteTemplate)
+router.get('/all-templates',isAuthenticated, isAdmin, getAllTemplates);
 
 router.get('/template/:id', getTemplateById);
 router.get('/all-templates', getAllTemplates);

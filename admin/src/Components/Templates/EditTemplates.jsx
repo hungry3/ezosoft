@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { axiosConfig } from '../../utils/axiosConfig';
 import Image from '/src/assets/images/admin-dashboard-image-icon.svg';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const EditTemplate = () => {
   const { id } = useParams();
@@ -21,10 +22,11 @@ const EditTemplate = () => {
     templates: [{ templateTitle: '', templateContent: '', templateImage: null, templatePageImage: [], templateUrl: '' }]
   });
 
+   const axiosPrivate= useAxiosPrivate()
   useEffect(() => {
     const fetchTemplateData = async () => {
       try {
-        const { data } = await axiosConfig.get(`/admin/template/${id}`);
+        const { data } = await axiosPrivate.get(`/admin/template/${id}`);
         const fetchedTemplate = data.data;
 
         setTemplateData({
@@ -140,7 +142,7 @@ const EditTemplate = () => {
     }
 
     try {
-      const response = await axiosConfig.put(`/admin/update-template/${id}`, formData, {
+      const response = await axiosPrivate.put(`/admin/update-template/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 

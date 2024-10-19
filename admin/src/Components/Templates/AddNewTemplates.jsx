@@ -5,13 +5,14 @@ import Image from '/src/assets/images/admin-dashboard-image-icon.svg';
 
 import { axiosConfig } from '../../utils/axiosConfig';
 import { useNavigate } from 'react-router-dom';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const AddNewTemplates = () => {
   const [templates, setTemplates] = useState([{ templateImage: '', templatePageImage: [], templateUrl: '', title: '', description: '' }]);
   const [mainCoverImage, setMainCoverImage] = useState('');
   const fileInputRef = useRef(null);
   const { register, handleSubmit, watch, formState: { errors }, } = useForm();
-  
+  const axiosPrivate= useAxiosPrivate()
   // Handle image click for file input
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -116,7 +117,7 @@ const AddNewTemplates = () => {
     
 
     try {
-      const response = await axiosConfig.post('/admin/create-template', formData, {
+      const response = await axiosPrivate.post('/admin/create-template', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
