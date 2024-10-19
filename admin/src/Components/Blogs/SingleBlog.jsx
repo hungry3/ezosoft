@@ -2,17 +2,18 @@ import  { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { axiosConfig } from '../../utils/axiosConfig';
 import GlobalLoader from '../../utils/GlobalLoader';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 
 const ViewBlog = () => {
   const { blogId } = useParams();
   const navigate = useNavigate();
   const [blog, setBlog] = useState(null);
-  
+   const axiosPrivate = useAxiosPrivate()
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const { data } = await axiosConfig.get(`/blog/${blogId}`);
+        const { data } = await axiosPrivate.get(`/blog/${blogId}`);
         const blogData = data?.data;
         console.log(blogData);
         

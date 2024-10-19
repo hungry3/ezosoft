@@ -8,7 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 const BlogCategory = () => {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState('');
@@ -16,12 +16,13 @@ const BlogCategory = () => {
   const [id, setId] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading , setLoading] =useState(false)
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true)
       try {
-        const { data } = await axiosConfig.get('/admin/blog-categories');
+        const { data } = await axiosPrivate.get('/admin/blog-categories');
         setCategories(data?.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -39,7 +40,7 @@ const BlogCategory = () => {
     }
     setLoading(true)
     try {
-      const { data } = await axiosConfig.post('/admin/create-category', { name: newCategory });
+      const { data } = await axiosPrivate.post('/admin/create-category', { name: newCategory });
       setCategories((prevCategories) => [...prevCategories, data?.data]);
       setNewCategory('');
       setError('');
@@ -62,7 +63,7 @@ const BlogCategory = () => {
   const handleConfirmDelete = async () => {
     setLoading(true)
     try {
-      await axiosConfig.delete(`/admin/delete-category/${id}`);
+      await axiosPrivate.delete(`/admin/delete-category/${id}`);
       setCategories(categories.filter(category => category._id !== id));
       setId(null);
       setOpen(false);

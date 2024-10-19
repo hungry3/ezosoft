@@ -12,6 +12,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
   import Modal from '@mui/material/Modal';
   import { axiosConfig } from '../../utils/axiosConfig';
   import GlobalLoader from '../../utils/GlobalLoader';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
   const style = {
     position: 'absolute',
     top: '50%',
@@ -43,10 +44,11 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
     const [searchTitle, setSearchTitle] = useState('');
     const [filteredData,setFilteredData] = useState([]);
     const [openDeleteMultipleModal, setOpenDeleteMultipleModal] = useState(false);
+    const axiosPrivate = useAxiosPrivate()
     const getApiData =  async () => {
       setLoading(true)
       try {
-        const response = await axiosConfig.get('/blog/admin-all');
+        const response = await axiosPrivate.get('/blog/admin-all');
         
       console.log(response.data.data,"response");
         setData(response?.data?.data || []);
@@ -72,7 +74,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
       const fetchCategories = async () => {
       
         try {
-          const { data } = await axiosConfig.get('/admin/blog-categories');
+          const { data } = await axiosPrivate.get('/admin/blog-categories');
           setCategories(data?.data);
         } catch (error) {
           console.error('Error fetching categories:', error);
@@ -128,7 +130,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
     const handleDelete = async () => {
       try {
-        await axiosConfig.delete(`/blog/delete`, { data: { id: selectedDeleteId } });
+        await axiosPrivate.delete(`/blog/delete`, { data: { id: selectedDeleteId } });
         const updatedData = data1.filter((item) => item._id !== selectedDeleteId);
        
         setData(updatedData);
@@ -172,7 +174,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
     const handleDeleteMultiple = async () => {
       try {
-        await axiosConfig.delete('/blog/delete-multiple', {
+        await axiosPrivate.delete('/blog/delete-multiple', {
           data: { ids: selectedRows },
         });
         
@@ -229,7 +231,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
         console.log("statussdfjk;",status);
         
-      const response =   await axiosConfig.patch(url,{status:status});
+      const response =   await axiosPrivate.patch(url,{status:status});
       console.log(response)
     
         console.log("statusAction>>>>>>", statusAction);

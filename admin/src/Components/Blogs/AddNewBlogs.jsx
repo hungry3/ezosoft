@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { axiosConfig } from '../../utils/axiosConfig';
 import TextEditor from '../../utils/TextEditor';
 import { ToastContainer,toast } from 'react-toastify';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const AddNewBlogs = () => {
   const [blog, setBlog] = useState({
@@ -16,6 +17,7 @@ const AddNewBlogs = () => {
     author: '',
     category: ''
   });
+  const axiosPrivate = useAxiosPrivate()
   const [loading,setLoading] = useState(false)
   const [categories,setCategories] = useState([])
 
@@ -23,13 +25,13 @@ const AddNewBlogs = () => {
   const detailImageRefs = useRef([]); 
   const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm();
 
-
+   
 
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true)
       try {
-        const { data } = await axiosConfig.get('/admin/blog-categories');
+        const { data } = await axiosPrivate.get('/admin/blog-categories');
         setCategories(data?.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -124,7 +126,7 @@ const AddNewBlogs = () => {
 
     try {
       
-      const response = await axiosConfig.post('/blog/create', formData, {
+      const response = await axiosPrivate.post('/blog/create', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

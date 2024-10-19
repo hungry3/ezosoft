@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { axiosConfig } from '../../utils/axiosConfig'; 
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const SingleUser = () => {
   const { id } = useParams(); 
   const [user, setUser] = useState(null); 
   const navigate = useNavigate();
-
+  const axiosPrivate = useAxiosPrivate()
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axiosConfig.get(`/admin/user/${id}`);
+        const response = await axiosPrivate.get(`/admin/user/${id}`);
         console.log("Response>>>>>>>>>", response);
         setUser(response?.data?.data); 
       } catch (error) {

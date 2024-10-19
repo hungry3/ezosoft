@@ -1,13 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import { axiosConfig } from "../utils/axiosConfig";
 import useAuth from "./useAuth";
 import useRefreshToken from "./useRefreshToken";
 import { useEffect } from "react";
 
 const useAxiosPrivate = () => {
+
+
+     const navigate = useNavigate()
     const refresh = useRefreshToken();
     const { auth } = useAuth();
+    console.log(auth,"auth is jsdo cnvp ");
+    
     useEffect(() => {
-        if (!auth?.accessToken) {
+      
+        if (!auth) {
             console.log("No valid access token, attempting to refresh...");
             refresh()
                 .then((newToken) => {
@@ -15,6 +22,7 @@ const useAxiosPrivate = () => {
                 })
                 .catch((err) => {
                     console.error("Token refresh failed:", err);
+                    navigate('/login')
                 });
             return;
         }
@@ -30,6 +38,7 @@ const useAxiosPrivate = () => {
             },
             (error) => {
                 console.error("Request Interceptor Error:", error);
+                navigate('/login')
                 return Promise.reject(error);
             }
         );
@@ -54,6 +63,7 @@ const useAxiosPrivate = () => {
                         return axiosConfig(prevRequest);
                     } catch (refreshError) {
                         console.error("Failed to Refresh Token: ", refreshError);
+                        navigate('/login')
                         return Promise.reject(refreshError);
                     }
                 }

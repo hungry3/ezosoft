@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { axiosConfig } from '../../utils/axiosConfig';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const SingleTemplate = () => {
   const { id } = useParams(); 
   const [template, setTemplate] = useState(null);
   const navigate = useNavigate();
-
+ const axiosPrivate = useAxiosPrivate()
   useEffect(() => {
     const fetchTemplate = async () => {
       try {
-        const response = await axiosConfig.get(`/admin/template/${id}`);
+        const response = await axiosPrivate.get(`/admin/template/${id}`);
         console.log("response:>>>>>>>>>>",response?.data?.data)
         setTemplate(response?.data?.data); 
       } catch (error) {

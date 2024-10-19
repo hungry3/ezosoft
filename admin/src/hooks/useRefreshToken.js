@@ -1,9 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { axiosConfig } from '../utils/axiosConfig';
 import useAuth from './useAuth';
 
 const useRefreshToken = () => {
     const { setAuth } = useAuth();
-
+   const navigate = useNavigate()
     const refresh = async () => {
         try {
             const response = await axiosConfig.post('/auth/refresh-token', {}, {
@@ -26,6 +27,7 @@ const useRefreshToken = () => {
 
           
             if (error?.response?.status === 401) {
+                navigate('/login')
                 console.log("Refresh token invalid or expired, logging out...");
                 setAuth(null);
             }

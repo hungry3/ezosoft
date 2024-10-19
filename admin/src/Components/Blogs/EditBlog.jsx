@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { axiosConfig } from '../../utils/axiosConfig';
 import Image from '/src/assets/images/admin-dashboard-image-icon.svg';
 import { ToastContainer,toast } from 'react-toastify';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 const EditBlog = () => {
   const { blogId } = useParams();
   const navigate = useNavigate();
@@ -26,11 +27,13 @@ const EditBlog = () => {
 
   const [categories,setCategories] = useState([])
   const [loading,setLoading] = useState(false)
+   const axiosPrivate = useAxiosPrivate()
+  
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true)
       try {
-        const { data } = await axiosConfig.get('/admin/blog-categories');
+        const { data } = await axiosPrivate.get('/admin/blog-categories');
         setCategories(data?.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -44,7 +47,7 @@ const EditBlog = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const { data } = await axiosConfig.get(`/blog/${blogId}`);
+        const { data } = await axiosPrivate.get(`/blog/${blogId}`);
         const blogData = data?.data;
         console.log("blogdata>>>>>>>>>",blogData)
         setBlog({
@@ -131,7 +134,7 @@ const EditBlog = () => {
     }
     try {
       setSubmit(true)
-      const response = await axiosConfig.post(`/blog/edit/${blogId}`, formData, {
+      const response = await axiosPrivate.post(`/blog/edit/${blogId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       
       });

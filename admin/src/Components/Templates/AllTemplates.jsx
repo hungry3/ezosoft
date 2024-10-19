@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 import { axiosConfig } from '../../utils/axiosConfig';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const style = {
   position: 'absolute',
@@ -36,11 +37,11 @@ const AllTemplates = () => {
 
   console.log(data1,"data1");
   
-
+ const axiosPrivate = useAxiosPrivate()
 
    const getApiData =  async () => {
      try {
-       const response = await axiosConfig.get('/admin/all-templates');
+       const response = await axiosPrivate.get('/admin/all-templates');
       
        setData(response.data?.data);
      } catch (error) {
