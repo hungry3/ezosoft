@@ -15,8 +15,8 @@ const useAxiosPrivate = () => {
     useEffect(() => {
       
         if (!auth) {
-            console.log("No valid access token, attempting to refresh...")
-            
+            console.log("No valid access token, attempting to refresh...");
+            refresh()
                 .then((newToken) => {
                     console.log("Token refreshed successfully:", newToken);
                 })
