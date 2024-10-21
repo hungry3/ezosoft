@@ -6,7 +6,8 @@ import { axiosConfig } from '../../utils/axiosConfig';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import { useLoginMutation } from '../../Redux/Auth/authApi';
+import { useLoginMutation } from '../../Redux/Auth/AuthApi';
+
 
 
 const Login = () => {
