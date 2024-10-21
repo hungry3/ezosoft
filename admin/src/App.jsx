@@ -30,7 +30,7 @@ function App() {
       {/* <Route exact path='/' element={<User/>} />
       <Route exact path='/allTemplates' element={<AllTemplates/>} />
       <Route path='/view-template/:id' element={<ViewSingleTemplate />} />
-      <Route exact path='/addnewblogs' element={<AddNewBlogs/>} />
+     
       <Route exact path='/pricing' element={<Pricing/>} />
       <Route exact path='/user' element={<User/>} />
       <Route exact path='/ViewSingleUser/:id' element={<SingleUserPage/>} />
@@ -40,6 +40,7 @@ function App() {
       <Route exact path='/allblogs' element={<AllBlogs/>} />
       <Route path='/blogs-category' element={<BlogCategory/>} />
       <Route path="/edit/:id" element={<EditTemplates/>} />
+      <Route exact path='/addnewblogs' element={<AddNewBlogs/>} />
       <Route path='/blog/edit/:blogId' element={<EditedBlog/>}/>
       <Route path='/blog/single/:blogId' element={<SingleBlogPage />} />  
       </Route>
