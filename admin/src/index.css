@@ -129,6 +129,9 @@
     font-weight: 900;
     font-style: italic;
   }
+  .custom-data-table{
+    background-color: white;
+  }
   .custom-data-table table tbody tr:nth-child(odd) {
     background-color: rgba(0, 0, 0, 0.04);
   }
@@ -173,4 +176,15 @@
 }
 @keyframes l3 {
   0%{background-position: 100%}
+}
+
+.sun-editor{
+  border-radius: 10px;
+}
+.sun-editor .se-toolbar {
+ border-radius:  10px 10px 0px 0px;
+}
+
+.sc-dstKZu .gWjvIc .rdt_TableRow{
+  border: 1px solid black
 }

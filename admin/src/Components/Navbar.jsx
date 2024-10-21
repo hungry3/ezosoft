@@ -5,7 +5,7 @@ import MenuIcon from '/src/assets/images/menu-icon.svg'
 const Navbar = ({handleToggle}) => {
   return (
     <>
-       <div className=' h-[72px] border-b border-[#D9D9D9] flex items-center justify-between'>
+       <div className=' h-[72px] border-b border-[#D9D9D9] flex items-center justify-between relative z-10'>
       {/* first div */}
       <div className='flex items-center justify-between'>
         <div className='w-[34px] h-[34px] rounded-full bg-blue flex -ml-[18px] absolute items-center justify-center cursor-pointer' onClick={handleToggle}>

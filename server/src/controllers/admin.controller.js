@@ -531,6 +531,39 @@ catch(error){
     }
   })
 
+  const editCategory = asyncHandler(async (req, res, next) => {
+    try {
+      const { name } = req.body;
+      const { id } = req.params;
+  
+      // Validate if the name is provided
+      if (!name) {
+        return next(new ErrorHandler("Category name is required", 400));
+      }
+  
+      // Check if the category exists by ID
+      const category = await BlogCategory.findById(id);
+      if (!category) {
+        return next(new ErrorHandler("Category not found", 404));
+      }
+  
+      // Check if another category with the same name already exists
+      const existingCategory = await BlogCategory.findOne({ name });
+      if (existingCategory && existingCategory._id.toString() !== id) {
+        return next(new ErrorHandler("Category name already exists", 400));
+      }
+  
+      // Update the category name
+      category.name = name;
+      await category.save();
+  
+      res.status(200).json(new ApiResponse(category, 200, "Category updated successfully"));
+    } catch (error) {
+      console.warn(error);
+      return next(new ErrorHandler("Something went wrong", 500));
+    }
+  });
+  
 const allCategories = asyncHandler(async(req,res,next)=>{
 try {
   const Blogcategories = await BlogCategory.find().select('name').sort({createdAt:-1})
@@ -557,7 +590,7 @@ try {
     
 
     }catch(error){
-      console.warn(error)
+      console.log(error)
       return next(new ErrorHandler("Something went wrong,Please try again later",500))
     }
  
@@ -566,4 +599,4 @@ try {
 
    
 
- export { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan,getTemplateById,createCategory,allCategories , deleteCategory}
+ export { getAllUsers, getUserById, updateUser, deleteUser,createTemplate,updateTemplate,deleteTemplate,getAllTemplates,CreateSubscriptionPlan,UpdateSubscriptionPlan,GetAllsubscriptionPlans,GetSinglesubscriptionPlan,getTemplateById,createCategory,allCategories , deleteCategory,editCategory}
