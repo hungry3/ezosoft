@@ -228,7 +228,7 @@ const BlogCategory = () => {
         Blog Categories
       </h2>
       <div
-        className="text-[18px] font-semibold flex justify-end items-end text-white bg-grey px-[20px] py-[10px] rounded-xl hover:bg-blue ease-out duration-300 transition-all max-w-[200px] mt-[10px]"
+        className="text-[18px] font-semibold cursor-pointer flex justify-end items-end text-white bg-grey px-[20px] py-[10px] rounded-xl hover:bg-blue ease-out duration-300 transition-all max-w-[200px] mt-[10px]"
         onClick={() => setOpenModal(true)}
       >
         Add New Category
