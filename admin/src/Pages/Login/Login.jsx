@@ -28,6 +28,7 @@ const navigate = useNavigate()
       const { accessToken, user } = result;
       console.log("result",result)
       if (user && user.role === 'admin') {
+        localStorage.setItem('auth', JSON.stringify({ accessToken, user }));
         setAuth({  accessToken, user  });
         toast.success("Login Successful");
         navigate('/');
