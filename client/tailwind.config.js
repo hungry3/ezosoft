@@ -29,6 +29,7 @@ export default {
       boxShadow: {
         'custom': '0px 5px 35px 5px #00000026',
         'custom2': '10px 5px 10px 10px 4px #00000026',
+        'custom3': ' 0px 3px 15px 0px #0000001A' ,
       },
       fontWeight: {
         'expo-regular': '400',

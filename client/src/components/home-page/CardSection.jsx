@@ -15,7 +15,7 @@ function CardSection() {
           {/* 1st card */}
 
           <div className=" py-[100px] flex-wrap flex items-center justify-center gap-[50px]"  >
-            <div className="w-[272px] h-[323px] bg-gradient rounded-md flex flex-col items-center justify-center transition-transform transform hover:scale-105 hover:shadow-xl cursor-pointer" data-aos="fade-up-right" data-aos-delay="400" >
+            <div className="w-[272px] h-[323px] bg-gradient shadow-custom3 rounded-md flex flex-col items-center justify-center transition-transform transform hover:scale-105 hover:shadow-xl cursor-pointer" data-aos="fade-up-right" data-aos-delay="400" >
               {/* 1st card */}
               <div className="text-white text-center text-[24px] leading-[28px] font-semibold mx-[20px]">
                 A Perfect Grow on Fast Software For Your Business
@@ -24,7 +24,7 @@ function CardSection() {
           </div>
         </div>
         {/* second Card */}
-        <div className="w-[272px] h-[323px] shadow-md rounded-md flex flex-col items-start transition-transform transform hover:scale-105 hover:shadow-xl hover:bg-gradient cursor-pointer group" data-aos="fade-up-left" data-aos-delay="400" >
+        <div className="w-[272px] h-[323px] shadow-custom3 rounded-md flex flex-col items-start transition-transform transform hover:scale-105 hover:shadow-xl hover:bg-gradient cursor-pointer group" data-aos="fade-up-left" data-aos-delay="400" >
           <div className="mx-[40px] mt-[40px]">
             <img
               src={SettingsIcon}
@@ -43,7 +43,7 @@ function CardSection() {
         </div>
 
         {/* thirs Card */}
-        <div className="w-[272px] h-[323px] shadow-md rounded-md flex flex-col items-start transition-transform transform hover:scale-105 hover:shadow-xl hover:bg-gradient cursor-pointer group" data-aos="fade-down-right" data-aos-delay="400">
+        <div className="w-[272px] h-[323px] shadow-custom3 rounded-md flex flex-col items-start transition-transform transform hover:scale-105 hover:shadow-xl hover:bg-gradient cursor-pointer group" data-aos="fade-down-right" data-aos-delay="400">
           <div className="mx-[40px] mt-[40px]">
             <img
               src={ReportingIcon}
@@ -63,7 +63,7 @@ function CardSection() {
         </div>
 
         {/* fourth Card */}
-        <div className="w-[272px] h-[323px] shadow-md rounded-md flex flex-col items-start transition-transform transform hover:scale-105 hover:shadow-xl hover:bg-gradient cursor-pointer group" data-aos="fade-down-left" data-aos-delay="400">
+        <div className="w-[272px] h-[323px] shadow-custom3 rounded-md flex flex-col items-start transition-transform transform hover:scale-105 hover:shadow-xl hover:bg-gradient cursor-pointer group" data-aos="fade-down-left" data-aos-delay="400">
           <div className="mx-[40px] mt-[40px]">
             <img
               src={HelpIcon}

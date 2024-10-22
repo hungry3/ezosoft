@@ -1,5 +1,5 @@
 import React from 'react'
-import Signature from '/src/assets/images/signature.svg'
+import Signature from '/src/assets/images/signature2.svg'
 import Circle from '/src/assets/images/mobileCircle.svg'
 import SmartPhone from '/src/assets/images/smartphone_mockup_isolated_5 1.svg'
 

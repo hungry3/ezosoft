@@ -183,7 +183,7 @@ function Services() {
         </div>
 
         </div>
-        <div className='bg-[#6DC2ED] text-white h-[54px] w-[151px]  rounded-md flex items-center justify-center mt-[42px] hover:bg-[#E9F5F8] hover:border-2 border-black hover:text-black transition-all duration-200 cursor-pointer'>Learn More</div>
+        
         </div>
 
 
@@ -211,7 +211,6 @@ function Services() {
         </div>
 
         </div>
-        <div className='bg-[#6DC2ED] text-white h-[54px] w-[151px]  rounded-md flex items-center justify-center mt-[42px] hover:bg-[#E9F5F8] hover:border-2 border-black hover:text-black transition-all duration-200 cursor-pointer'>Learn More</div>
         </div>
 
 
@@ -238,7 +237,7 @@ function Services() {
         </div>
 
         </div>
-        <div className='bg-[#6DC2ED] text-white h-[54px] w-[151px]  rounded-md flex items-center justify-center mt-[42px] hover:bg-[#E9F5F8] hover:border-2 border-black hover:text-black transition-all duration-200 cursor-pointer'>Learn More</div>
+        
         </div>
 
 
@@ -265,7 +264,7 @@ function Services() {
         </div>
 
         </div>
-        <div className='bg-[#6DC2ED] text-white h-[54px] w-[151px]  rounded-md flex items-center justify-center mt-[42px] hover:bg-[#E9F5F8] hover:border-2 border-black hover:text-black transition-all duration-200 cursor-pointer'>Learn More</div>
+       
         </div>
 
 
@@ -292,7 +291,6 @@ function Services() {
         </div>
 
         </div>
-        <div className='bg-[#6DC2ED] text-white h-[54px] w-[151px]  rounded-md flex items-center justify-center mt-[42px] hover:bg-[#E9F5F8] hover:border-2 border-black hover:text-black transition-all duration-200 cursor-pointer'>Learn More</div>
         </div>
         <div className='mt-[30px]' data-aos="zoom-in-right" data-aos-delay="300" >
           <img src={HomeImage} alt='image' loading='lazy'/>

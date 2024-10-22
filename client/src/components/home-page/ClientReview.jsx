@@ -63,7 +63,7 @@ function ClientReview() {
                       <h4 className='text-[18px] font-[Poppins] font-[400]'>{testimonial.name}</h4>
                       <p className='text-[14px] font-[Poppins]'>{testimonial.role}</p>
                     </div>
-                    <div className='lg:ml-[109px] w-[143px] h-[200px]'></div>
+                    {/* <div className='lg:ml-[109px] w-[143px] h-[200px]'></div> */}
                   </div>
                 </div>
               </div>
