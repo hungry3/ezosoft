@@ -62,9 +62,12 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
       setLoading(false)
     }
     
+    // useEffect(()=>{
+    // getApiData()
+    // },[statusAction])
     useEffect(()=>{
-    getApiData()
-    },[statusAction])
+      getApiData()
+      },[])
 
     const navigate =useNavigate()
     const location = useLocation();
@@ -251,7 +254,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
         name: '#',
         selector: (row,index) => index+1,
         sortable: false,
-        width: '6%',
+        width: '50px',
       },
 
 
@@ -289,7 +292,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
               </NavLink>
           ,
         sortable: true,
-        width: '400px',
+        width: '500px',
         
       },
       
@@ -329,6 +332,12 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
         width: '200px',
       },
       {
+        name: (<div className='font-bold'>Created At</div>),
+        selector: (row) => new Date(row.createdAt).toLocaleDateString(), 
+        sortable: true,
+        width: '200px',
+      },
+      {
         name: (<div className='font-bold'>Actions</div>),
         cell: (row) => {
 
@@ -336,7 +345,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
           // console.log(row.status);
           
           return(
-            <div className='flex gap-2'>
+            <div className='flex gap-4'>
             <NavLink to={`/blog/edit/${row._id}`}>
               <img
                 src={EditIcon}
@@ -369,25 +378,12 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
           )
          
         },
-        width: '100px',
+        width: '200px',
       },
     ];
     
 
 
-      // Conditional Row Styles
-      // const conditionalRowStyles = [
-      //   {
-      //     when: (row, index) => {
-      //       // console.log(`Row: ${row}, Index: ${index}`);
-      //       return index % 2 === 0; 
-      //     },
-      //     style: {
-      //       backgroundColor: 'black',
-      //       color: '#000',
-      //     },
-      //   },
-      // ];
       
       
     return (
@@ -399,14 +395,14 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
             <p className='text-[25px] leading-[27px] font-semibold font-[Poppins]'>All  Blogs </p>
             <NavLink
               to='/addnewblogs'
-              className='text-[18px] font-semibold text-white bg-grey px-[20px] py-[10px] rounded-xl hover:bg-blue ease-out duration-300 transition-all'
+              className='text-[18px] font-semibold text-white bg-grey px-[20px] py-[10px] rounded-xl hover:bg-blue ease-out duration-300 transition-all max-w-[250px]  mt-[10px]'
             >
               Add New Blog
             </NavLink>
           </div>
 
           <div className='bg-white mx-[10px] lg:ml-[17px] xl:ml-[17px] mt-[33px] border border-[#D9D9D9] rounded-lg'>
-                <div className='mt-[33px] lg:mx-[50px] xl:mx-[50px] mx-[10px] lg:px-[47px] xl:px-[47px] px-[10px] pt-[25px] pb-[41px] border border-[#D9D9D9] bg-[#F9F9F9] rounded-lg flex lg:flex-row xl:flex-row md:flex-row flex-col gap-[30px] justify-between items-center'>
+                <div className='mt-[33px] lg:mx-[50px] xl:mx-[50px] mx-[10px] lg:px-[47px] xl:px-[47px] px-[10px] pt-[25px] pb-[41px] border border-[#D9D9D9] bg-[#F9F9F9] rounded-lg flex lg:flex-row xl:flex-row md:flex-row flex-col gap-[30px] md:justify-between items-center flex-wrap justify-center '>
                   <div className='flex flex-col max-w-[357px] w-full'>
                     <label htmlFor='category' className='text-[16px] font-[Poppins] leading-[24px] font-[400]'>
                       Search by category
@@ -471,22 +467,39 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
             <div className='mt-[10px] lg:mx-[50px] xl:mx-[50px] md:mx-[30px]   border border-[#D9D9D9] bg-[#F9F9F9] rounded-xl flex flex-col gap-[30px] '>
           
           
-          <div className='max-w-full rounded-xl'>
+          <div className='max-w-[1400px] rounded-xl'>
           {loading ? (<div><GlobalLoader/></div>) :(
+            <div className="w-full overflow-y-auto">
             <DataTable
-            className="custom-data-table"
+            className="w-full max-w-full overflow-y-auto border-b-2 custom-data-table"
             columns={columns} 
             data={filteredData} 
             selectableRows 
             fixedHeader 
-            pagination
+            pagination                                       
             responsive
             selectableRowsHighlight
             highlightOnHover
             onSelectedRowsChange={handleSelectedRows}
-            
-            
+            customStyles={{
+          rows: {
+            style: {
+              minHeight: '56px', 
+              borderBottom: '1px solid rgba(0, 0, 0, 0.1)', 
+            },
+            hover: {
+              backgroundColor: 'rgba(0, 123, 255, 0.1)', 
+            },
+          },
+          cells: {
+            style: {
+              padding: '12px 16px',
+              flex: 1, 
+            },
+          },
+        }}
               />
+              </div>
           )}
           
             

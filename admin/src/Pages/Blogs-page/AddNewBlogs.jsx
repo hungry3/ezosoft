@@ -14,14 +14,19 @@ const AddNewBlog = () => {
     }
   return (
     <>
-       <div className='flex h-full relativ'>
-       <AdminSidebar isCollapsed={isCollapsed} className='absolute'/>
-   
-     <div className='flex flex-col w-full'>
-     <Navbar handleToggle={toggleSidebar}/>
-     <AddNewBlogs/>
+       <div className='relative flex w-full min-h-screen'>
+      
+       <div className={`${isCollapsed ? 'md:w-[80px] w-[30%] h-screen min-h-full' : 'w-[250px]'} transition-all duration-300 z-10 min-h-full `}>
+        <AdminSidebar isCollapsed={isCollapsed} />
+      </div>
 
-     </div>
+
+     <div
+        className={`flex-1 ${isCollapsed ? 'md:w-[calc(100%-80px)] ' : 'md:w-[calc(100%-250px)]'} transition-all duration-300`}
+      >
+        <Navbar handleToggle={toggleSidebar} />
+        <AddNewBlogs />
+      </div>
 
      </div>
     </>

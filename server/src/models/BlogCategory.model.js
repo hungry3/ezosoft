@@ -8,9 +8,11 @@ const blogCategorySchema = new mongoose.Schema({
         unique:true,
     },
 
-},{
-    timestamps:true
-}
+},
+{timestamps:true}
+// {
+//     timestamps:true
+// }
 
 )
 

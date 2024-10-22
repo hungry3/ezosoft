@@ -6,6 +6,9 @@ import { axiosConfig } from '../../utils/axiosConfig';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { useLoginMutation } from '../../Redux/Auth/AuthApi';
+
+
 
 const Login = () => {
   const {
@@ -14,27 +17,33 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const [login, { isLoading,error }] = useLoginMutation();
 const navigate = useNavigate()
-  const {setAuth} =  useAuth()
+  const {setAuth,auth} =  useAuth()
+  console.log(auth);
+  
 
   const onSubmit = async (data) => {
     try {
-      const response = await axiosConfig.post('/auth/login', data);
-      console.log(response.data);
-      const user = response?.data.user;
+      const result = await login(data).unwrap(); 
+
+      const { accessToken, user } = result;
+      console.log("result",result)
       if (user && user.role === 'admin') {
-        setAuth({ user });
+        localStorage.setItem('auth', JSON.stringify({ accessToken, user }));
+        setAuth({  accessToken, user  });
         toast.success("Login Successful");
         navigate('/');
       } else {
         toast.error("Access denied: Admins only");
       }
     } catch (error) {
-      if (error.response) {
-        const errorMessage = error.response.data?.message || "Login failed. Please try again.";
+      //  console.log("error is ",error?.data?.message)
+      if (error.data) {
+        const errorMessage = error.data.message || "Login failed. Please try again.";
         toast.error(errorMessage); 
       } else {
-        console.log(error);
+        // console.log(error);
         toast.error("An error occurred. Please try again."); 
       }
     }
@@ -105,8 +114,10 @@ const navigate = useNavigate()
           <button
             type="submit"
             className="w-full px-4 py-2 font-bold text-white rounded bg-blue hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+            disabled={isLoading}
           >
-            Login
+           {isLoading ? "Logging in..." : "Login"}
+            {/* Login */}
           </button>
         </div>
       </form>

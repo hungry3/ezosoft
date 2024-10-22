@@ -1,8 +1,11 @@
 import { createContext, useState } from "react";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
+
+
     const [auth, setAuth] = useState(null);
 
     return (

@@ -57,24 +57,18 @@ console.log("similarBlogs",similarBlogs);
             <div className='mt-[6px]  text-[16px] leading-[26px] font-[400] font-[Poppins]' dangerouslySetInnerHTML={{ __html: blog.content }} />
            
             </div>
-            <div className='w-full max-w-[500px h-[300px] mb-10'>
-            <img src={blog.image} alt='image' loading='lazy' className='mt-[40px] object-cover w-full h-full   '/>  
-            </div>
+            
 
 
 <div>
 {blog.details && blog.details.map((detail, index) => (
    <div key={index}>
      <div className='flex flex-col items-start'>
-        {/* <p className='text-[40px] leading-[54px] font-[600] mt-[100px] items-start'>Lorem Ipsum</p> */}
-        <p className='mt-[20px] text-[24px] font-[Poppins] font-[500]'>{detail?.title}</p>
+      
+       
         <div className='mt-[6px]  text-[16px] leading-[26px] font-[400] font-[Poppins]' dangerouslySetInnerHTML={{ __html:detail?.description}} />
      </div>
-     <div className='w-full max-w-[500px] h-[300px] mt-[27px]'>
-
-     {detail?.image && <img src={detail?.image} alt='image' loading='lazy' className='object-cover w-full h-full ' />}
-
-     </div>
+    
    </div>
 ))}
           
@@ -87,7 +81,7 @@ console.log("similarBlogs",similarBlogs);
                 
 {similarBlogs.map((items)=>
   
-   <NavLink to={`/blog/${blog._id}`} key={items._id} className='flex flex-col mt-[27px] max-w-[388px] w-full border border-[#EBEBEB] rounded-xl'>
+   <NavLink to={`/blog/${items._id}`} key={items._id} className='flex flex-col mt-[27px] max-w-[388px] w-full border border-[#EBEBEB] rounded-xl'>
         <img src={items.image} alt={items.title} className='relative rounded-tr-xl rounded-tl-xl w-[400px] h-[237px]'/>
         <div className='absolute  ml-[22px] mt-[20px] py-[2px] px-[8px] rounded-full bg-blue text-center text-white'>{items.category}</div>
 

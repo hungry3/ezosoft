@@ -59,7 +59,7 @@ const CategoryPage = () => {
                <p className='text-[14px] font-[Poppins] font-[400] text-darkGrey text-nowrap mr-3'>{formatDate(blog.createdAt)}</p>  
            </div>
            <p className='mt-[16px] max-w-[293px] w-full text-[20px] font-[Poppins] leading-[28px] font-bold ml-[30px] '>{blog.title}</p>
-           <div className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] ml-[30px]  leading-[24px] font-[400]'  dangerouslySetInnerHTML={{__html:truncateContent(blog.content)}}/>
+           <div className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] ml-[30px] pb-[30px]  leading-[24px] font-[400]'  dangerouslySetInnerHTML={{__html:truncateContent(blog.content)}}/>
       
        </NavLink>
         )
