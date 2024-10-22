@@ -129,7 +129,7 @@ const Sidebar = ({isCollapsed}) => {
 
        <NavLink to='/addnewblogs' className={`mt-[15px] py-[6px] pl-[16px] pr-[30px] text-white cursor-pointer ${activeTab==='allBlogs' ? 'bg-lightBlue text-grey  rounded-md':''}`} onClick={() =>{handleActiveTab('allBlogs')}}> <h2 className='text-[16px] leading-[24px] font-[600] font-[Poppins]'>Add New Blog</h2></NavLink>
 
-       <NavLink to='/blogs-category' className={`mt-[15px] py-[6px] pl-[16px] pr-[30px] text-white cursor-pointer ${activeTab==='category' ? 'bg-lightBlue text-grey  rounded-md':''}`} onClick={() =>{handleActiveTab('category')}}> <h2 className='text-[16px] leading-[24px] font-[600] font-[Poppins]'>Add new Category</h2></NavLink>
+       <NavLink to='/blogs-category' className={`mt-[15px] py-[6px] pl-[16px] pr-[30px] text-white cursor-pointer ${activeTab==='category' ? 'bg-lightBlue text-grey  rounded-md':''}`} onClick={() =>{handleActiveTab('category')}}> <h2 className='text-[16px] leading-[24px] font-[600] font-[Poppins]'>Category</h2></NavLink>
 
     </div>
 

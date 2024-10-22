@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import TextEditor from '../../utils/TextEditor';
 import { ToastContainer,toast } from 'react-toastify';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import ReactQuill from 'react-quill';
 
 const AddNewBlogs = () => {
   const [blog, setBlog] = useState({
@@ -67,8 +68,8 @@ const AddNewBlogs = () => {
     setBlog(updatedBlog);
   };
 
-  const handleContentChange = (event) => {
-    const value = event.target.value;
+  const handleContentChange = (value) => {
+    // const value = event.target.value;
     setBlog((prevBlog) => ({ ...prevBlog, content: value }));
   };
 
@@ -209,10 +210,10 @@ const AddNewBlogs = () => {
 
                 {/* Blog Content */}
                 <div className='flex flex-col mt-[20px] '>
-                  <p className='text-[16px] leading-[21px] font-[Poppins] font-[400] mb-2'>Content</p>
+                  <p className='text-[16px] leading-[21px] font-[Poppins] font-[400] mb-2'>Description</p>
                   <div className=''>
-                  {/* <ReactQuill value={blog.content} onChange={handleContentChange} className='w-full border-none h-[260px]' />  */}
-                  <input type='text' placeholder='description' value={blog.content} onChange={handleContentChange} className='mt-[4px]  pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' />
+                  <ReactQuill value={blog.content} onChange={handleContentChange} className='w-full border-none h-[260px]' /> 
+                  {/* <input type='text' placeholder='description' value={blog.content} onChange={handleContentChange} className='mt-[4px]  pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' /> */}
                   </div>
                   {errors.content && <span className='text-red-400'>Content is required</span>}
                 </div>

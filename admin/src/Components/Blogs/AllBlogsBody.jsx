@@ -1,3 +1,6 @@
+  
+  
+  
   import React, { useState, useEffect } from 'react';
   import { NavLink, useNavigate, useLocation } from 'react-router-dom';
   import DataTable from 'react-data-table-component';
@@ -5,6 +8,7 @@
   import EditIcon from '/src/assets/images/edit-icon.svg';
   import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { DataGrid } from '@mui/x-data-grid';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
   import Box from '@mui/material/Box';
@@ -13,6 +17,8 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
   import { axiosConfig } from '../../utils/axiosConfig';
   import GlobalLoader from '../../utils/GlobalLoader';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import active from '/src/assets/images/active.svg'
+import inactive from '/src/assets/images/inactive.svg'
   const style = {
     position: 'absolute',
     top: '50%',
@@ -332,7 +338,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
         width: '200px',
       },
       {
-        name: (<div className='font-bold'>Created At</div>),
+        name: (<div className='font-bold'>Created at</div>),
         selector: (row) => new Date(row.createdAt).toLocaleDateString(), 
         sortable: true,
         width: '200px',
@@ -345,7 +351,21 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
           // console.log(row.status);
           
           return(
-            <div className='flex gap-4'>
+            <div className='flex gap-3'>
+             <button
+              className='flex items-center gap-1 text-blue-500 hover:text-blue-700'
+              onClick={() => handleOpenStatusPopup(row )}
+            >
+              {statusAction ==="inactive" || row.status  === 'inactive' ? (
+                <>
+                <img src={inactive} alt='inactive' />
+                </>
+              ) : (
+                <>
+                 <img src={active} alt='active' />
+                </>
+              )}
+            </button> 
             <NavLink to={`/blog/edit/${row._id}`}>
               <img
                 src={EditIcon}
@@ -360,20 +380,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
                 onClick={() => handleOpen(row._id)}
               />
   
-              <button
-              className='flex items-center gap-1 text-blue-500 hover:text-blue-700'
-              onClick={() => handleOpenStatusPopup(row )}
-            >
-              {statusAction ==="inactive" || row.status  === 'inactive' ? (
-                <>
-                  <RemoveCircleIcon fontSize='small' /> 
-                </>
-              ) : (
-                <>
-                  <CheckCircleIcon fontSize="small" /> 
-                </>
-              )}
-            </button> 
+              
             </div>
           )
          
@@ -499,6 +506,25 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
           },
         }}
               />
+
+              {/* <DataGrid
+            rows={filteredData}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[5, 10, 20]}
+            checkboxSelection
+            onSelectionModelChange={handleSelectedRows}
+            getRowId={(row) => row._id}
+            sx={{
+              '& .MuiDataGrid-row:hover': {
+                backgroundColor: 'rgba(0, 123, 255, 0.1)', 
+              },
+              '& .MuiDataGrid-cell': {
+                padding: '12px 16px',
+              },
+              borderBottom: '1px solid rgba(0, 0, 0, 0.1)', 
+            }}
+          /> */}
               </div>
           )}
           
@@ -554,3 +580,8 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
   };
 
   export default AllBlogsBody;
+
+
+
+
+ 
