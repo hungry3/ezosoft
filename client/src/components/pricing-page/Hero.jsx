@@ -183,7 +183,7 @@ const fetchSubscriptionPlans = async () => {
     <ToastContainer/>
       <div className="relative w-full -mt-[100px]  lg:h-[120vh] xl:[110vh] bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
         <div className="lg:px-[100px] xl:px-[100px] px-[40px] pb-[100px]">
-          <div className=" pt-[200px] md:pt-[400px] flex items-center flex-col gap-4 justify-center">
+          <div className=" pt-[200px] md:pt-[300px] flex items-center flex-col gap-4 justify-center">
             <h2 className="max-w-[857px] w-full lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] text-center leading-[40px] md:leading-[50px] font-[500] text-white lg:text-center xl:text-center ">
             Plan projects and manage resources on one platform. Start free.
             </h2>
