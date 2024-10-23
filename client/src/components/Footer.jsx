@@ -62,7 +62,7 @@ function Footer() {
             <NavLink to="/about" className='text-[16px] leading-[28px] font-[Poppins] font-[400] text-white hover:text-cyan'>About Us</NavLink>
             <NavLink to="/template" className='text-[16px] leading-[28px] font-[Poppins] font-[400] text-white hover:text-cyan'>Templates</NavLink>
             <NavLink to="/pricing" className='text-[16px] leading-[28px] font-[Poppins] font-[400] text-white hover:text-cyan'>Pricing</NavLink>
-            <NavLink to="/contact" className='text-[16px] leading-[28px] font-[Poppins] font-[400] text-white hover:text-cyan'>Contact Sales</NavLink>
+            <NavLink to="/blog" className='text-[16px] leading-[28px] font-[Poppins] font-[400] text-white hover:text-cyan'>Blogs</NavLink>
         </div>
         </div>
 
@@ -102,7 +102,7 @@ function Footer() {
         <img src={Phone} alt='phone' loading='lazy' />
          {/* Clickable Phone Number */}
         <a href='tel:+23055873407' className='max-w-[227px] text-[16px] leading-[26px] font-[Poppins] font-[400] text-white'>
-                     +2(305) 587-3407
+                     +2 (305) 587-3407
           </a>
        </div>
 
