@@ -13,13 +13,13 @@ const Hero = () => {
   return (
     <div>
     <div
-      className="relative w-full -mt-[100px]   lg:pt-[100px] md:pt-[100px] sm:pt-[100px] xl:pt-[100px] lg:h-[126vh] xl:h-[160vh] md:h-[120vh] sm:h-[90vh] h-[80vh]  bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
+      className="relative w-full -mt-[100px]   lg:pt-[100px] md:pt-[0px] sm:pt-[100px] xl:pt-[100px] lg:h-[115vh] xl:h-[115vh] md:h-[120vh] sm:h-[90vh] h-[80vh]  bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
     {/* bg-[url("/src/assets/images/bgTrail.svg")]  */}
     
       <div className="relative z-10 flex flex-col items-center justify-center h-full ">
       
-      <div className='max-w-[870.33px] w-full lg:max-w-[1000px] xl:max-w-[1000px] justify-center text-center items-center  lg:pt-[430px] xl:pt-[440px] md:pt-[400px] pt-[400px]'>
-        <h2 className="lg:text-[70px] xl:text-[70px] md:text-[50px] sm:text-[40px] text-[30px] text-white  lg:leading-70 xl:leading-70 leading-[50px] font-[500]">Project Management <span className='font-[700]'>Software </span> for Business Excellence</h2>
+      <div className='max-w-[870.33px] w-full lg:max-w-[1000px] xl:max-w-[1000px] justify-center text-center items-center  md:pt-[0px] lg:pt-[10px] pt-[400px]'>
+        <h2 className="lg:text-[70px] xl:text-[70px] md:text-[50px] sm:text-[40px] text-[30px] text-white  md:leading-70 lg:leading-70 xl:leading-70 leading-[40px] font-[500]">Project Management <span className='font-[700]'>Software </span> for Business Excellence</h2>
 
         <div className='flex flex-col items-center justify-center mt-8 '>
         <div className='font-[Poppins] max-w-[540px] text-center  text-white leading-24 mx-[20px]'>
@@ -38,7 +38,7 @@ const Hero = () => {
       </div>
     
     </div>
-<div className='mt-32 shadow-custom bouncing-image ' >
+<div className='mt-32 sm:-mb-[180px] shadow-custom bouncing-image ' >
         
 <img src={banner} alt='banner' loading='lazy'/>
 </div>

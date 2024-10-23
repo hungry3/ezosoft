@@ -6,7 +6,7 @@ import SmartPhone from '/src/assets/images/Iphone14.svg'
 function Mobile() {
   return (
     <>
-      <div className='flex lg:flex-row xl:flex-row md:flex-row flex-col lg:gap-0 xl:gap-0 gap-[150px] justify-between bg-lightBlue lg:px-[100px] xl:px-[100px] px-[30px] overflow-hidden'>
+      <div className='flex lg:flex-row xl:flex-row md:flex-row flex-col lg:gap-0 xl:gap-0 gap-[150px] justify-around bg-lightBlue lg:px-[100px] xl:px-[100px] px-[30px] overflow-hidden'>
         <div className=' py-[100px] flex flex-col items-start justify-start gap-5'>
           <h2 className='text-[40px] leading-[42px] '>Get Mobile App</h2>
           <p className='max-w-[500px] text-[16px] leading-[26px] text-[Poppins]'>Deliver faster, collaborate better and innovate more effectively  without the high price tag or months-long implementation</p>

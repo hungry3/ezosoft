@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        cyan: '#219EBC', 
+        cyan: '#006BC5', 
         cyanDark : "#293950",
         navBlue:"#293950",
         lightBlue: "#BFE4FE",

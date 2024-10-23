@@ -6,7 +6,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 function Services() {
-  const [activeTab, setActiveTab] = useState('overview'); // Default active tab
+  const [activeTab, setActiveTab] = useState('overview'); 
   const [isSmall, setIsSmall] = useState(false);
   AOS.init({
     duration: 1000, 
@@ -16,8 +16,8 @@ function Services() {
     <>
       <div className='bg-lightBlue w-full  lg:py-[100px] xl:py-[100px] md:py-[70px] py-[50px]'>
      <div className='lg:px-[100px] w-full px-[10px]'>
-     <div className='flex items-center justify-center w-full ' data-aos="zoom-in-down"  data-aos-delay="400">  
-          <h2 className='text-center max-w-[887px] text-[30px] md:text-[35px] lg:text-[40px] xl:text-[40px] leading-[50px] expo-medium'>
+     <div className='flex items-center justify-center w-full '>  
+          <h2 className='text-center max-w-[887px] text-[30px] md:text-[35px] lg:text-[40px] xl:text-[40px] md:leading-[50px] leading-[40px] expo-medium'>
             Bring agility, accuracy and insights to your project portfolios
           </h2>
         </div>
@@ -80,7 +80,7 @@ function Services() {
 
             <div
               onClick={() => setActiveTab('pro_services')}
-              className={`flex flex-col items-left border-b-[2px] border-black border-solid cursor-pointer lg:pr-[100px] md:pr-[50px] ${   activeTab === 'pro_services' && '-mt-[2px]'}`}
+              className={`flex flex-col items-left border-b-[2px] border-black border-solid cursor-pointer lg:pr-[0px] md:pr-[50px] ${   activeTab === 'pro_services' && '-mt-[2px]'}`}
             >
               <div
                 className={`text-[18px] text-nowrap lg:text-[24px] text-left font-[Poppins] expo-medium ${
@@ -95,38 +95,38 @@ function Services() {
           </div>
 
  {/*mobile  small scrren div start */}
-          <div className='flex flex-wrap items-center gap-3 md:hidden px-[20px]'>
+          <div className='flex flex-wrap justify-center items-center gap-3 md:hidden px-[20px]'>
             <div
               onClick={() => setActiveTab('overview')}
-              className={`items-center cursor-pointer px-[20px] py-[10px]  rounded-full text-black hover:bg-blue ${   activeTab === 'overview' ? 'text-black bg-lightBlue' :'bg-white'}`}
+              className={`items-center cursor-pointer px-[20px] py-[10px]  rounded-full text-black hover:bg-gradient hover:text-white ${   activeTab === 'overview' ? 'text-white bg-gradient' :'bg-white'}`}
             >
             Overview
              
             </div>
             <div
               onClick={() => setActiveTab('manufacturing')}
-              className={`items-center cursor-pointer px-[20px] py-[10px]  rounded-full text-black hover:bg-blue  ${   activeTab === 'manufacturing' ? 'text-black bg-lightBlue':'bg-white'}`}
+              className={`items-center cursor-pointer px-[20px] py-[10px]  rounded-full text-black hover:bg-gradient hover:text-white  ${   activeTab === 'manufacturing' ? 'text-white bg-gradient ':'bg-white'}`}
             >
             Manufacturing
              
             </div>
             <div
               onClick={() => setActiveTab('construction')}
-              className={`items-center cursor-pointer px-[20px] py-[10px]  rounded-full text-black hover:bg-blue ${   activeTab === 'construction' ?'text-black bg-lightBlue':'bg-white'}`}
+              className={`items-center cursor-pointer px-[20px] py-[10px]  rounded-full text-black hover:bg-gradient hover:text-white ${   activeTab === 'construction' ?'text-white bg-gradient':'bg-white'}`}
             >
             Construction
              
             </div>
             <div
               onClick={() => setActiveTab('it_teams')}
-              className={`items-center cursor-pointer px-[20px] py-[10px] rounded-full text-black hover:bg-blue ${   activeTab === 'it_teams' ? 'text-black bg-lightBlue':'bg-white'}`}
+              className={`items-center cursor-pointer px-[20px] py-[10px] rounded-full text-black hover:bg-gradient hover:text-white ${   activeTab === 'it_teams' ? 'text-white bg-gradient':'bg-white'}`}
             >
             IT Team
              
             </div>
             <div
               onClick={() => setActiveTab('pro_services')}
-              className={`items-center cursor-pointer px-[20px] py-[10px]  rounded-full text-black hover:bg-blue ${   activeTab === 'pro_services' ? 'text-black bg-lightBlue':'bg-white'}`}
+              className={`items-center cursor-pointer px-[20px] py-[10px]  rounded-full text-black hover:bg-gradient hover:text-white ${   activeTab === 'pro_services' ? 'text-white bg-gradient':'bg-white'}`}
             >
              Pro Services
              
@@ -169,7 +169,7 @@ function Services() {
  
      
 {activeTab==="overview" && (
-  <div className='lg:mt-[73px] xl:mt-[73px] md:mt-[50px] mt-[30px] flex flex-col lg:flex-row xl:flex-row justify-center items-center gap-[100px]'>
+  <div className='lg:mt-[73px] xl:mt-[73px] md:mt-[50px] mt-[20px] flex flex-col lg:flex-row xl:flex-row justify-center items-center gap-[100px]'>
         <div className='' data-aos="zoom-in-right" data-aos-delay="400"> 
         <p className='max-w-[497px]  mt-[30px] text-[30px] leading-[31px] font-[600]'>Detailed planning and execution</p>
         <p className='max-w-[518px] mt-[16px] text-[16px] leading-[26px] font-[Poppins] font-[400] '> For projects that require vigorous planning, forecasting, cost analysis, resource allocation, task management and reporting, ProjectManager outperforms the competition.</p>
@@ -177,7 +177,7 @@ function Services() {
        <div> <img src={Profile} alt='profile' loading='lazy' className='h-[110px] w-[110px]'/></div>
         <div className='flex flex-col'>
        <div className='max-w-[300px]'> <p className=' text-[16px] leading-[26px] font-[Poppins] font-[400]'>The value of formal project management pays for itself quickly.</p></div>
-        <p className='text-[#6DC2ED] text-[14px] leading-[27px] font-[Poppins] expo-medium'>Namrata Parmar</p>
+        <p className='text-cyan text-[14px] leading-[27px] font-[Poppins] expo-medium'>Namrata Parmar</p>
         <p className='text-[12px] leading-[27px] font-[Poppins] font-[400]'>Kaiser Aluminum</p>
 
         </div>
@@ -205,7 +205,7 @@ function Services() {
        <div> <img src={Profile} alt='image' loading='lazy' className='h-[110px] w-[110px]'/></div>
         <div className='flex flex-col'>
        <div className='max-w-[300px]'> <p className=' text-[16px] leading-[26px] font-[Poppins] font-[400]'>The value of formal project management pays for itself quickly.</p></div>
-        <p className='text-[#6DC2ED] text-[14px] leading-[27px] font-[Poppins] expo-medium'>Namrata Parmar</p>
+        <p className='text-cyan text-[14px] leading-[27px] font-[Poppins] expo-medium'>Namrata Parmar</p>
         <p className='text-[12px] leading-[27px] font-[Poppins] font-[400]'>Kaiser Aluminum</p>
 
         </div>
@@ -231,7 +231,7 @@ function Services() {
        <div> <img src={Profile} alt='profile' loading='lazy' className='h-[110px] w-[110px]'/></div>
         <div className='flex flex-col'>
        <div className='max-w-[300px]'> <p className=' text-[16px] leading-[26px] font-[Poppins] font-[400]'>The value of formal project management pays for itself quickly.</p></div>
-        <p className='text-[#6DC2ED] text-[14px] leading-[27px] font-[Poppins] expo-medium'>Namrata Parmar</p>
+        <p className='text-cyan text-[14px] leading-[27px] font-[Poppins] expo-medium'>Namrata Parmar</p>
         <p className='text-[12px] leading-[27px] font-[Poppins] font-[400]'>Kaiser Aluminum</p>
 
         </div>
@@ -258,7 +258,7 @@ function Services() {
        <div> <img src={Profile} alt='profile' loading='lazy' className='h-[110px] w-[110px]'/></div>
         <div className='flex flex-col'>
        <div className='max-w-[300px]'> <p className=' text-[16px] leading-[26px] font-[Poppins] font-[400]'>The value of formal project management pays for itself quickly.</p></div>
-        <p className='text-[#6DC2ED] text-[14px] leading-[27px] font-[Poppins] expo-medium'>Namrata Parmar</p>
+        <p className='text-cyan text-[14px] leading-[27px] font-[Poppins] expo-medium'>Namrata Parmar</p>
         <p className='text-[12px] leading-[27px] font-[Poppins] font-[400]'>Kaiser Aluminum</p>
 
         </div>
@@ -285,7 +285,7 @@ function Services() {
        <div> <img src={Profile} alt='proflie' loading='lazy' className='h-[110px] w-[110px]'/></div>
         <div className='flex flex-col'>
        <div className='max-w-[300px]'> <p className=' text-[16px] leading-[26px] font-[Poppins] font-[400]'>The value of formal project management pays for itself quickly.</p></div>
-        <p className='text-[#6DC2ED] text-[14px] leading-[27px] font-[Poppins] expo-medium'>Namrata Parmar</p>
+        <p className='text-cyan text-[14px] leading-[27px] font-[Poppins] expo-medium'>Namrata Parmar</p>
         <p className='text-[12px] leading-[27px] font-[Poppins] font-[400]'>Kaiser Aluminum</p>
 
         </div>

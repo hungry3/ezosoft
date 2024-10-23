@@ -12,7 +12,7 @@ function Trial() {
          {/* //! input field section is here */}
          <div className='flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row items-center sm:w-[85%] md:w-[70%] w-[100%] gap-4 mt-8 lg:w-[450px] xl:w-[450px] '>
         <input type="text" className=' outline-none  px-4 py-2 w-full rounded-md font-[Poppins]' placeholder='Enter your email address' />
-        <NavLink to="/signup" className='bg-cyanDark rounded-md hover:bg-gradient hover:border border-white sm:w-auto lg:w-auto md:w-auto xl:w-auto w-[100%] '>
+        <NavLink to="/signup" className='bg-cyanDark rounded-md  flex justify-center items-center hover:bg-gradient hover:border border-white sm:w-auto lg:w-auto md:w-auto xl:w-auto w-[100%] '>
         <button className='  text-white  py-2  px-5 rounded text-nowrap font-[Poppins]'>Start Free Trial</button>
         </NavLink>
        
