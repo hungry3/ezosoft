@@ -32,7 +32,7 @@ function Hero() {
   const [showCheckout, setShowCheckout] = useState(false); 
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [selectedCustomOption, setSelectedCustomOption] = useState(null);
-  const [selectedPlanId, setSelectedPlanId] = useState(null); // Track selected plan for checkout
+  const [selectedPlanId, setSelectedPlanId] = useState(null); 
 const [selectedCustomTeamOptionId, setSelectedCustomTeamOptionId] = useState(null); 
 const [showLoginPopup, setShowLoginPopup] = useState(false);
 const [clientSecret, setClientSecret] = useState("");
@@ -104,7 +104,7 @@ const fetchSubscriptionPlans = async () => {
 
         console.log("Fetched clientSecret:", data.client_secret);
         
-        // Ensure the client_secret is not empty
+
         if (!data.client_secret) {
           throw new Error("Received empty client_secret from the server.");
         }
@@ -183,9 +183,9 @@ const fetchSubscriptionPlans = async () => {
     <ToastContainer/>
       <div className="relative w-full -mt-[100px]  lg:h-[120vh] xl:[110vh] bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
         <div className="lg:px-[100px] xl:px-[100px] px-[40px] pb-[100px]">
-          <div className="pt-[200px] flex items-center justify-center">
-            <p className="max-w-[857px] w-full lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] leading-[50px] font-[500] text-white lg:text-center xl:text-center">
-              Plan projects and manage resources on one platform.Start free.
+          <div className=" pt-[200px] md:pt-[400px] flex items-center justify-center">
+            <p className="max-w-[857px] w-full lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] text-center leading-[50px] font-[500] text-white lg:text-center xl:text-center">
+            Plan projects and manage resources on one platform. Start free.
             </p>
           </div>
           {/*trial button */}
@@ -202,9 +202,9 @@ const fetchSubscriptionPlans = async () => {
           {isLoading ? (<div><GlobalLoader/></div>):(
 
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px] mt-[65px] mb-20">
+            <div className="sm:grid grid-cols-1 flex flex-col justify-center items-center   sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px] mt-[200px]">
            
-            <div className="border-none rounded-tr-[48px] rounded-md rounded-bl-[48px] max-w-[293px] w-[100%] pb-[23px] bg-white shadow-custom">
+            <div className="border-none elementCard max-w-[293px] w-[100%] pb-[23px] bg-white shadow-custom">
               <div className="mx-[30px] mt-[43px]">
                 <p className="pt-[43] text-[18px] leading-[26px] font-[Poppins] text-cyanDark ">
                   Free Trial
@@ -273,7 +273,7 @@ const fetchSubscriptionPlans = async () => {
             {plans.map((plan) => (
               <div
                 key={plan._id}
-                className="border-none rounded-tr-[48px] rounded-md rounded-bl-[48px] max-w-[293px] w-[100%] pb-[23px] bg-white shadow-custom"
+                className="border-none elementCard max-w-[293px] w-[100%] pb-[23px] bg-white shadow-custom"
               >
                 <div className="mx-[30px] mt-[43px]">
                   <p className="pt-[43] text-[18px] leading-[26px] font-[Poppins] text-cyanDark ">

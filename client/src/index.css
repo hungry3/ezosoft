@@ -61,7 +61,9 @@ img {
 }
 
 
-
+.elementCard {
+  border-radius: 16px 48px 16px 48px;
+}
 
 /* HTML: <div class="loader"></div> */
 .loader {
