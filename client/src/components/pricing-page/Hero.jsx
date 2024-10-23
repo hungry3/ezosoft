@@ -183,10 +183,11 @@ const fetchSubscriptionPlans = async () => {
     <ToastContainer/>
       <div className="relative w-full -mt-[100px]  lg:h-[120vh] xl:[110vh] bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
         <div className="lg:px-[100px] xl:px-[100px] px-[40px] pb-[100px]">
-          <div className=" pt-[200px] md:pt-[400px] flex items-center justify-center">
-            <p className="max-w-[857px] w-full lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] text-center leading-[50px] font-[500] text-white lg:text-center xl:text-center">
+          <div className=" pt-[200px] md:pt-[400px] flex items-center flex-col gap-4 justify-center">
+            <h2 className="max-w-[857px] w-full lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] text-center leading-[40px] md:leading-[50px] font-[500] text-white lg:text-center xl:text-center ">
             Plan projects and manage resources on one platform. Start free.
-            </p>
+            </h2>
+            <p className=" font-[Poppins] text-[16px] text-center font-[400] text-white"> After every 5 users added, you will receive an exclusive 10% discount.</p>
           </div>
           {/*trial button */}
           <div className=" mt-[70px] flex items-center justify-center flex-shrink-0">
