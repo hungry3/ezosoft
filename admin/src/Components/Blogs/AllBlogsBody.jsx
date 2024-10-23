@@ -9,8 +9,7 @@
   import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { DataGrid } from '@mui/x-data-grid';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+
   import Box from '@mui/material/Box';
   import Typography from '@mui/material/Typography';
   import Modal from '@mui/material/Modal';
@@ -19,6 +18,8 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import active from '/src/assets/images/active.svg'
 import inactive from '/src/assets/images/inactive.svg'
+
+import {FadeLoader} from 'react-spinners'
   const style = {
     position: 'absolute',
     top: '50%',
@@ -151,7 +152,6 @@ import inactive from '/src/assets/images/inactive.svg'
     
       }
     };
-    
 
     const handleSelectedRows = (state) => {
       setSelectedRows(state.selectedRows.map(row => row._id));
@@ -388,11 +388,7 @@ import inactive from '/src/assets/images/inactive.svg'
         width: '200px',
       },
     ];
-    
-
-
-      
-      
+  
     return (
       <>
        <ToastContainer/>
@@ -474,12 +470,14 @@ import inactive from '/src/assets/images/inactive.svg'
             <div className='mt-[10px] lg:mx-[50px] xl:mx-[50px] md:mx-[30px]   border border-[#D9D9D9] bg-[#F9F9F9] rounded-xl flex flex-col gap-[30px] '>
           
           
-          <div className='max-w-[1400px] rounded-xl'>
-          {loading ? (<div><GlobalLoader/></div>) :(
-            <div className="w-full overflow-y-auto">
+          <div className='flex flex-col w-full border rounded-xl'>
+          {loading ? (<div className='flex items-center justify-center'><FadeLoader /></div>) :(
+            <div className="">
+
+          
             <DataTable
-            className="w-full max-w-full overflow-y-auto border-b-2 custom-data-table"
-            columns={columns} 
+            // className="w-full max-w-full overflow-y-auto border-b-2 custom-data-table"
+            columns={columns}
             data={filteredData} 
             selectableRows 
             fixedHeader 
@@ -488,23 +486,23 @@ import inactive from '/src/assets/images/inactive.svg'
             selectableRowsHighlight
             highlightOnHover
             onSelectedRowsChange={handleSelectedRows}
-            customStyles={{
-          rows: {
-            style: {
-              minHeight: '56px', 
-              borderBottom: '1px solid rgba(0, 0, 0, 0.1)', 
-            },
-            hover: {
-              backgroundColor: 'rgba(0, 123, 255, 0.1)', 
-            },
-          },
-          cells: {
-            style: {
-              padding: '12px 16px',
-              flex: 1, 
-            },
-          },
-        }}
+        //     customStyles={{
+        //   rows: {
+        //     style: {
+        //       minHeight: '56px', 
+        //       borderBottom: '1px solid rgba(0, 0, 0, 0.1)', 
+        //     },
+        //     hover: {
+        //       backgroundColor: 'rgba(0, 123, 255, 0.1)', 
+        //     },
+        //   },
+        //   cells: {
+        //     style: {
+        //       padding: '12px 16px',
+        //       flex: 1, 
+        //     },
+        //   },
+        // }}
               />
 
               {/* <DataGrid

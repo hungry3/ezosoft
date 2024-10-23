@@ -76,7 +76,7 @@ const DashboardNavbar = ({ toggleSidebar }) => {
         <div className='ml-[34px] flex items-center justify-center'>
           <p className='font-[Poppins] text-[14px] leading-[21px] font-[500]'>Select Language</p>
           <img src={Flag} alt='flag' className='ml-[7px]' />
-          <img src={user.avatar ||Profile} alt='profile' className='mx-[17px]' />
+          <img src={user? user.avatar || Profile : Profile} alt='profile' className='mx-[17px]' />
         </div>
       </div>
     </div>
