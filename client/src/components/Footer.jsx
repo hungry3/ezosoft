@@ -83,10 +83,13 @@ function Footer() {
   <div className='flex flex-col'>
         <p className=' text-white text-[20px] leading-[20px] font-[600] font-[Poppins]'>Get in touch</p>
         <div className='flex flex-col mt-[23px] gap-[11px]'>
-            <div className='flex items-center justify-center gap-3 cursor-pointer' onClick={handleAdressClick}>
+            <div className='flex items-center justify-center gap-3 cursor-pointer'>
                 <img src={Location} alt='location' loading='lazy'/>
+                <div  onClick={handleAdressClick}>
                 <p className='max-w-[227px] text-[16px] leading-[26px] font-[Poppins] font-[400] text-white'>Flat 20, Reynolds Neck, North
                 Helenaville, FV77 8WS</p>
+                </div>
+                
             </div>
 
             <div className='flex items-center justify-start gap-3'>

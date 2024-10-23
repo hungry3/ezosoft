@@ -1,9 +1,11 @@
 
 import WorkLoad from '/src/assets/images/workload-planner.svg.png'
-import Retainer from '/src/assets/images/Picture → retainers.svg.png'
-import ClientSide from '/src/assets/images/Picture → client-view.svg.png'
+import Retainer from '/src/assets/images/solution3-black.svg'
+import ClientSide from '/src/assets/images/solution-2.svg'
 import SolutionImage from '/src/assets/images/solution-workload-banner.svg'
 import LightIcon1st from '/src/assets/images/solution1-white.svg'
+import Solution2White from '/src/assets/images/solution2-white.svg'
+import Solution3White from '/src/assets/images/solution3-white.svg'
 import { useState } from 'react'
 
 function SolutionSection() {
@@ -43,13 +45,17 @@ function SolutionSection() {
   onClick={() => setActive(2)}
 >
   <div className='mt-[32px] ml-[23px]'>
-    <img src={ClientSide} alt='image' loading='lazy' className='w-[24px] h-[24px]' />
+    {active === 2 ? <img src={Solution2White} alt='image' loading='lazy' className='w-[24px] h-[24px]' /> : <>
+    <img src={ClientSide} alt='image' loading='lazy' className='w-[24px] h-[24px] group-hover:hidden'  />
+    <img src={Solution2White} alt='image' loading='lazy' className='w-[24px] h-[24px] hidden group-hover:block' />
+    </>}
+    
   </div>
   <div className='flex flex-col mt-[25px]'>
-    <p className={` text-[20px] leading-[29px] expo-medium group-hover:text-white ${active === 2 ? 'text-white' : 'text-gray-800'}`}>
+    <p className={` text-[20px] leading-[29px] expo-medium group-hover:text-white group-hover:text-white`}>
       Organize everything in one system of record
     </p>
-    <p className={`max-w-[419px] font-[Poppins] text-[16px] leading-[25px] font-[400] pb-[27px] group-hover:text-white ${active === 2 ? 'text-white' : 'text-gray-600'}`}>
+    <p className={`max-w-[419px] font-[Poppins] text-[16px] leading-[25px] font-[400] pb-[27px] group-hover:text-white group-hover:text-white`}>
       From client assets and project timelines to communications and financial reporting.
     </p>
   </div>
@@ -62,7 +68,7 @@ function SolutionSection() {
   onClick={() => setActive(3)}
 >
   <div className='mt-[32px] ml-[23px]'>
-    <img src={Retainer} alt='image'  loading='lazy' className='w-[24px] h-[24px]' />
+    {active === 3? <img src={Solution3White} alt='image'  loading='lazy' className='w-[24px] h-[24px]' /> : <img src={Retainer} alt='image'  loading='lazy' className='w-[24px] h-[24px]' />}
 
   </div>
   <div className='flex flex-col mt-[25px]'>
