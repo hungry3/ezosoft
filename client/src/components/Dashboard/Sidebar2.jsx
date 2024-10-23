@@ -26,7 +26,7 @@ function Sidebar2({setActiveContent,toggleDarkMode,isDarkMode}) {
 
     const {auth} =useAuth()
 
-    console.log("console auth>>>>>>>>>>>", auth.accessToken.user);
+    // console.log("console auth>>>>>>>>>>>", auth.accessToken.user);
 
      const user =  auth?.accessToken?.user
     
@@ -38,7 +38,7 @@ function Sidebar2({setActiveContent,toggleDarkMode,isDarkMode}) {
     <>
       <div className='relative max-w-[281px] w-full  min-h-screen bg-grey flex flex-col justify-between'>
             <div className='mx-[22px] flex flex-col'>
-            <img src={user.avatar ||Logo} alt='EZOSOFT' className='mt-[26px] w-[157px] h-[30px]'/>
+            <img src={ user? user?.avatar ||Logo : Logo} alt='EZOSOFT' className='mt-[26px] w-[157px] h-[30px]'/>
             <div className='mt-[16px] w-full border border-[#A3A3A3] '></div>
             <div className='flex mt-[21px] gap-[13px]'>
                     <div className='w-[56px] h-[56px] border-[4px] border-[white] rounded-full '>
@@ -46,7 +46,7 @@ function Sidebar2({setActiveContent,toggleDarkMode,isDarkMode}) {
                     </div>
                     <div className='flex flex-col'>
                         <h2 className='font-[Poppins] text-[16px] leading-[24px] font-normal text-white'>Welcome!</h2>
-                        <h2 className='font-[Poppins] text-[16px] leading-[24px] font-normal text-white'>{`${user.firstName}`|| "Sarah Alley"}</h2>
+                        <h2 className='font-[Poppins] text-[16px] leading-[24px] font-normal text-white'>{`${user? user?.firstName :"Jhon"}`|| "Sarah Alley"}</h2>
                     </div>
 
             </div>

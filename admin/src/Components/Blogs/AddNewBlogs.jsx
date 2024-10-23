@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import TextEditor from '../../utils/TextEditor';
 import { ToastContainer,toast } from 'react-toastify';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import ReactQuill from 'react-quill';
 
 const AddNewBlogs = () => {
   const [blog, setBlog] = useState({
@@ -19,6 +20,7 @@ const AddNewBlogs = () => {
   const axiosPrivate = useAxiosPrivate()
   const [loading,setLoading] = useState(false)
   const [categories,setCategories] = useState([])
+  
 
   const fileInputRef = useRef(null);
 
@@ -28,14 +30,14 @@ const AddNewBlogs = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      setLoading(true)
+    
       try {
         const { data } = await axiosPrivate.get('/admin/blog-categories');
         setCategories(data?.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
-      setLoading(false)
+   
     };
 
     fetchCategories();
@@ -67,15 +69,25 @@ const AddNewBlogs = () => {
     setBlog(updatedBlog);
   };
 
-  const handleContentChange = (event) => {
-    const value = event.target.value;
+  const handleContentChange = (value) => {
+    // const value = event.target.value;
     setBlog((prevBlog) => ({ ...prevBlog, content: value }));
   };
 
   const handleDetailDescriptionChange = (value, detailIndex) => {
-    const updatedBlog = { ...blog };
-    updatedBlog.details[detailIndex].description = value;
-    setBlog(updatedBlog);
+
+    setBlog((prevBlog) => {
+      const updatedDetails = prevBlog.details.map((detail, index) => {
+        if (index === detailIndex) {
+          return { ...detail, description: value };
+        }
+        return detail;
+      });
+      return { ...prevBlog, details: updatedDetails };
+    });
+    // const updatedBlog = { ...blog };
+    // updatedBlog.details[detailIndex].description = value;
+    // setBlog(updatedBlog);
   };
 
 
@@ -105,6 +117,7 @@ const AddNewBlogs = () => {
   }
 
     try {
+      setLoading(true)
       
       const response = await axiosPrivate.post('/blog/create', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -113,13 +126,7 @@ const AddNewBlogs = () => {
       if (response.status === 201) {
        
         console.log('Blog created successfully:', response.data);
-        reset({
-          category: '',
-          author: '',
-          title: '',
-          content: '',
-          details: [{ title: '', description: '', image: null }],
-        });
+        setLoading(false)
         setBlog({
           title: '',
           content: '',
@@ -130,7 +137,7 @@ const AddNewBlogs = () => {
         });
         toast.success("Blog is Created Successfuly")
       } else {
-        // toast.error("Something went wrong.Please try again later")
+        
         console.error('Error creating blog:', response.statusText);
       }
     } catch (error) {
@@ -155,7 +162,7 @@ const AddNewBlogs = () => {
             <h2 className='text-[20px] leading-[30px] font-[600] font-[Poppins] '>Upload Blog</h2>
             <div className='flex flex-col md:flex-row lg:flex-row xl:flex-row w-[100%] gap-[20px]'>
               <div className='flex flex-col w-full gap-3'>
-              <div className='flex w-full'>
+              <div className='flex flex-wrap w-full'>
            
 
               <div className='w-full mr-3'>
@@ -209,10 +216,10 @@ const AddNewBlogs = () => {
 
                 {/* Blog Content */}
                 <div className='flex flex-col mt-[20px] '>
-                  <p className='text-[16px] leading-[21px] font-[Poppins] font-[400] mb-2'>Content</p>
+                  <p className='text-[16px] leading-[21px] font-[Poppins] font-[400] mb-2'>Description</p>
                   <div className=''>
-                  {/* <ReactQuill value={blog.content} onChange={handleContentChange} className='w-full border-none h-[260px]' />  */}
-                  <input type='text' placeholder='description' value={blog.content} onChange={handleContentChange} className='mt-[4px]  pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' />
+                  <ReactQuill value={blog.content} onChange={handleContentChange} className='w-full border-none h-[260px]' /> 
+                  {/* <input type='text' placeholder='description' value={blog.content} onChange={handleContentChange} className='mt-[4px]  pl-[22px] py-[8px] rounded-md bg-[#F9F9F9] outline-none border border-[#D9D9D9] text-[14px] font-[Poppins] w-full' /> */}
                   </div>
                   {errors.content && <span className='text-red-400'>Content is required</span>}
                 </div>
@@ -239,9 +246,12 @@ const AddNewBlogs = () => {
             </div>
 
             <div className='mt-[50px] flex justify-end'>
-              <button type='submit' className='px-[20px] py-[10px] rounded-lg bg-[#293950] text-white'>
+            {loading ? (<button type='submit' className='px-[20px] cursor-not-allowed py-[10px] rounded-lg bg-[#293950] text-white'>
+                Submitting...
+              </button>) :( <button type='submit' className='px-[20px] py-[10px] rounded-lg bg-[#293950] text-white'>
                 Submit
-              </button>
+              </button>)}
+             
             </div>
           </div>
         </div>
