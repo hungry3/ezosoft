@@ -4,7 +4,7 @@
 const SecondSection = () => {
   return (
     <>
-    <div className="sm:mt-[300px] md:mt-[100px] lg:mt-[200px] xl:mt-[100px] mt-[300px]"></div>
+    <div className="sm:mt-[300px] md:mt-[100px] lg:mt-[200px] xl:mt-[100px] mt-[200px]"></div>
   <div className="bg-lightBlue  lg:py-[100px] xl:py-[100px] md:py-[70px] py-[50px] flex justify-center items-center flex-col">
     <h2 className="lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] leading-[50px] text-center">
     What is Lorem Ipsum?

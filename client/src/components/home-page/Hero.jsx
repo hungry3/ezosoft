@@ -38,7 +38,7 @@ const Hero = () => {
       </div>
     
     </div>
-<div className='mt-32 sm:-mb-[180px] shadow-custom bouncing-image ' >
+<div className='mt-32 sm:-mb-[280px] shadow-custom bouncing-image ' >
         
 <img src={banner} alt='banner' loading='lazy'/>
 </div>
