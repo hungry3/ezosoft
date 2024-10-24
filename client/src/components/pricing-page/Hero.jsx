@@ -181,16 +181,16 @@ const fetchSubscriptionPlans = async () => {
   return (
     <>
     <ToastContainer/>
-      <div className="relative w-full -mt-[100px]  lg:h-[120vh] xl:[110vh] bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
-        <div className="lg:px-[100px] xl:px-[100px] px-[40px] pb-[100px]">
-          <div className=" pt-[200px] md:pt-[300px] flex items-center flex-col gap-4 justify-center">
+      <div className="relative w-full -mt-[100px]  lg:h-[140vh] xl:[130vh] bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
+        <div className="lg:px-[100px] xl:px-[100px] h-full px-[40px] pb-[100px]">
+          <div className=" pt-[200px] md:pt-[200px] flex items-center flex-col gap-4 justify-center">
             <h2 className="max-w-[857px] w-full lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] text-center leading-[40px] md:leading-[50px] font-[500] text-white lg:text-center xl:text-center ">
             Plan projects and manage resources on one platform. Start free.
             </h2>
             <p className=" font-[Poppins] text-[16px] text-center font-[400] text-white"> After every 5 users added, you will receive an exclusive 10% discount.</p>
           </div>
           {/*trial button */}
-          <div className=" mt-[70px] flex items-center justify-center flex-shrink-0">
+          <div className=" mt-[50px] flex items-center justify-center flex-shrink-0">
             <NavLink to="/signup">
               <button className="bg-grey  hover:bg-gradient hover:border border-white text-white px-4 py-2 rounded-md hover:bg- font-[Poppins]">
                 Start Free Trail
@@ -203,9 +203,9 @@ const fetchSubscriptionPlans = async () => {
           {isLoading ? (<div><GlobalLoader/></div>):(
 
 
-            <div className="sm:grid grid-cols-1 flex flex-col justify-center items-center   sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px] mt-[100px]">
+            <div className="sm:grid grid-cols-1 flex flex-col justify-center lg:justify-start items-center  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px] mt-[50px] ">
            
-            <div className="border-none elementCard max-w-[293px] w-[100%] pb-[23px] bg-white shadow-custom">
+            <div className="border-none elementCard max-w-[293px] w-[100%] pb-[23px] bg-white shadow-custom ">
               <div className="mx-[30px] mt-[43px]">
                 <p className="pt-[43] text-[18px] leading-[26px] font-[Poppins] text-cyanDark ">
                   Free Trial
@@ -224,36 +224,36 @@ const fetchSubscriptionPlans = async () => {
                 </p>
                 <div className="mt-[25px] border border-[#58595B]"></div>
                 <div className="mt-[35px] flex flex-col gap-[14px]">
-                  <div className="flex gap-4">
-                    <img src={RightIcon} className="w-[24px] h-[24px]" />
+                  <div className="flex items-center gap-4">
+                    <img src={RightIcon} className="w-[24px] h-[20px]" />
                     <p className="font-[Poppins] text-[16px] leading-[26px]">
                       Lorem Ipsum
                     </p>
                   </div>
 
-                  <div className="flex gap-4">
-                    <img src={CrossIcon} className="w-[24px] h-[24px]" />
+                  <div className="flex items-start gap-4">
+                    <img src={CrossIcon} className="w-[17px] h-[12px]" />
                     <p className="font-[Poppins] text-[16px] leading-[26px]">
                       Lorem Ipsum
                     </p>
                   </div>
 
-                  <div className="flex gap-4">
-                    <img src={CrossIcon} className="w-[24px] h-[24px]" />
+                  <div className="flex items-center gap-4">
+                    <img src={CrossIcon} className="w-[17px] h-[13px]" />
                     <p className="font-[Poppins] text-[16px] leading-[26px]">
                       Lorem Ipsum
                     </p>
                   </div>
 
-                  <div className="flex gap-4">
-                    <img src={CrossIcon} className="w-[24px] h-[24px]"/>
+                  <div className="flex items-start gap-4">
+                    <img src={CrossIcon} className="w-[17px] h-[12px]"/>
                     <p className="font-[Poppins] text-[16px] leading-[26px]">
                       Lorem Ipsum
                     </p>
                   </div>
 
-                  <div className="flex gap-4">
-                    <img src={CrossIcon} className="w-[24px] h-[24px]"  />
+                  <div className="flex items-center justify-start gap-4">
+                    <img src={CrossIcon} className="w-[17px] h-[12px]"  />
                     <p className="font-[Poppins] text-[16px] leading-[26px]">
                       Lorem Ipsum
                     </p>
@@ -282,20 +282,20 @@ const fetchSubscriptionPlans = async () => {
                   </p>
                   <p className="font-[Poppins] text-[40px] leading-[60px] font-[600] text-cyanDark">
                     ${plan.price}{" "}
-                    <span className="text-[16px] leading-[26px] font-[400] text-black">
+                    <span className="text-[16px] leading-[26px] font-[400] text-black ">
                       {" "}
                       / {plan.duration}
                     </span>
                   </p>
-                  <p className="max-w-[200px] mt-[8px] font-[Poppins] text-[16px] leading-[26px]">
-                    Lorem Ipsum has been the industry's standard dummy text
+                  <p className="max-w-[200px] mt-[8px] font-[Poppins] text-[16px] leading-[26px] h-[110px]">
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
                   </p>
                   <div className="mt-[25px] border border-[#58595B]"></div>
                   <div className="mt-[35px] flex flex-col gap-[14px]">
                     {/* Features */}
                     {plan.details.map((detail, index) => (
-                      <div key={index} className="flex gap-4">
-                      <div className="w-[24px] h-[24px]">
+                      <div key={index} className="flex items-center gap-4">
+                      <div className="w-[17px] h-[12px] ">
                       <img src={detail.icon} alt="Icon" className="w-full h-full" />
                       </div>
                      
@@ -311,14 +311,14 @@ const fetchSubscriptionPlans = async () => {
                       {plan.planName.includes("Custom") ? (
                         <button
                           onClick={() => handleCustomPlanClick(plan)}
-                          className="bg-gradient-to-r from-lime-400 via-lime-500 to-green-500 hover:bg-gradient border border-white text-white px-[28px] py-4 rounded-md font-[Poppins] hover:scale-105 transition-all duration-300 ease-in-out text-nowrap"
+                          className="bg-gradient hover:bg-gradient border border-white text-white px-[28px] py-4 rounded-md font-[Poppins] hover:scale-105 transition-all duration-300 ease-in-out text-nowrap"
                         >
                           Get Custom Plan
                         </button>
                       ) : (
                         <button
                           onClick={() => handleGetStarted(plan)}
-                          className="bg-gradient hover:bg-gradient  border border-white text-white px-[58px] py-4 rounded-md font-[Poppins] hover:scale-105 transition-all duration-300 ease-in-out"
+                          className="bg-gradient hover:bg-gradient text-nowrap  border border-white text-white px-[58px] py-4 rounded-md font-[Poppins] hover:scale-105 transition-all duration-300 ease-in-out"
                         >
                           Get Started
                         </button>

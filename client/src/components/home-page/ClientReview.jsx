@@ -37,7 +37,7 @@ function ClientReview() {
     <div className='w-[100%] bg-white'>
       <div className='lg:m-[100px] xl:m-[100px] m-[30px] bg-white'>
         <div className='flex items-center justify-center mb-[36px]'>
-          <p className='text-center lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] leading-[50px]'>
+          <p className='text-center lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] leading-[40px] md:leading-[50px]'>
             What Our Clients Say About Us
           </p>
         </div>

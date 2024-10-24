@@ -131,6 +131,14 @@ const Navbar = () => {
           >
             Home
           </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+             isActive ? "text-cyanDark , font-[Poppins] font-[600]" : "text-white hover:text-cyanDark , font-[Poppins]"
+            }
+          >
+            About Us
+          </NavLink>
          
           <NavLink
             to="/resources"

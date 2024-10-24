@@ -13,7 +13,7 @@ const Hero = () => {
   return (
     <div>
     <div
-      className="relative w-full -mt-[100px]   lg:pt-[100px] md:pt-[0px] sm:pt-[100px] xl:pt-[100px] lg:h-[115vh] xl:h-[115vh] md:h-[120vh] sm:h-[90vh] h-[80vh]  bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
+      className="relative w-full -mt-[100px]   lg:pt-[100px] md:pt-[0px] sm:pt-[100px] xl:pt-[100px] lg:h-[130vh] xl:h-[135vh] md:h-[120vh] sm:h-[90vh] h-[80vh]  bg-[url('/src/assets/images/mainBg.svg')] bg-cover bg-center">
     {/* bg-[url("/src/assets/images/bgTrail.svg")]  */}
     
       <div className="relative z-10 flex flex-col items-center justify-center h-full ">
@@ -38,7 +38,7 @@ const Hero = () => {
       </div>
     
     </div>
-<div className='mt-32 shadow-custom bouncing-image ' >
+<div className='mt-[50px] mb-[50px] shadow-custom bouncing-image ' >
         
 <img src={banner} alt='banner' loading='lazy'/>
 </div>

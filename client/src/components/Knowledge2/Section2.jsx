@@ -67,7 +67,7 @@ function Section2() {
       </div>
        {/* Dropdown Menu */}
        {isOpen && (
-        <div className="absolute w-full mt-2 bg-white rounded-md shadow-md">
+        <div className="absolute w-full mt-2 bg-white rounded-md shadow-md max-w-[300px]">
           {paragraphs.map((text, index) => (
             <div
               key={index}

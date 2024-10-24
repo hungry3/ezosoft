@@ -13,7 +13,7 @@ function Transforming({bgColor}) {
     <>
       <div className={`bg-${bgColor}`}>
         <div className='py-[30px] md:py-[100px]  px-[50px] '>
-         <div className='text-center sm:text-[40px] text-[30px] leading-[50px] expo-medium '>Transforming the way you work</div>
+         <div className='text-center sm:text-[40px] text-[30px] leading-[40px] md:leading-[50px] expo-medium '>Transforming the way you work</div>
         {/* first Card */}
          <div className='flex flex-wrap items-center justify-center gap-[26px] mt-[50px]'>
          {/* first card */}

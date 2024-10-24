@@ -3,7 +3,7 @@ import Image from '/src/assets/images/knowledge3-image.svg'
 
 function Section1() {
      // Define the state for the active paragraph
-  const [activeIndex, setActiveIndex] = useState(null); 
+  const [activeIndex, setActiveIndex] = useState(0); 
   const [isOpen, setIsOpen] = useState(false); // Control dropdown visibility
 
   // Data array for the items
@@ -33,12 +33,12 @@ function Section1() {
   return (
     <>
       <div className='mx-[30px] md:mx-[50px] lg:mx-[200px] xl:mx-[200px] mt-[35px] pb-[100px]'>
-        <p className='text-[18px] text-[19px] font-[500] font-[Poppins] text-[#197990]'>
+        <p className=' text-[19px] font-[500] font-[Poppins] text-[#197990]'>
           Ezosoft Knowledge Base / Getting started / Software Basics
         </p>
 
         <div className='mt-[35px] flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row gap-[50px]'>
-          <div className='flex flex-col max-w-[213px]  gap-[10px] hidden sm:block'>  
+          <div className=' flex-col max-w-[213px]  gap-[10px] hidden sm:flex'>  
             {paragraphs.map((text, index) => (
               <div
                 key={index}

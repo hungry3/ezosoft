@@ -12,7 +12,7 @@ function SecondSection() {
       <div className='flex flex-col-reverse flex-wrap items-center justify-around gap-3 lg:flex-row lg:flex-nowrap'>
       <div className=''data-aos="zoom-in" data-aos-delay="500"><img src={Image} alt='image-2' loading='lazy'/></div>
       <div className='max-w-[579px] flex flex-col items-center justify-center'>
-      <div className='text-[40px] leading-[50px] expo-medium'>We Can Help You Save Time And Money in Your Business</div>
+      <div className='text-[40px] leading-[40px] md:leading-[50px] expo-medium'>We Can Help You Save Time And Money in Your Business</div>
       <div className='text-[16px] leading-[23px] font-[400] font-[Poppins] mt-[16px]'>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which {"don't"} look even slightly believable.</div>
       <div className='grid grid-cols-2 mt-[31px]'>
       {/* first coloumn */}

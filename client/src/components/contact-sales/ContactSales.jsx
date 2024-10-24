@@ -46,12 +46,12 @@ function ContactSales() {
     <>
     <ToastContainer/>
      <div
-        className="relative w-full  -mt-[100px] md:-mt-[300px]  bg-cover lg:h-[100vh] xl:h-[120vh] md:h-[100vh] h-[100vh] bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center">
+        className="relative w-full  -mt-[100px] md:-mt-[100px]  bg-cover lg:h-[140vh] xl:h-[140vh] md:h-[120vh] h-[100vh] bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center">
 
         
         
       </div>
-      <div className='relative flex lg:flex-row xl:flex-row flex-col lg:-mt-[700px]  lg:mb-[200px]  xl:-mt-[650px] xl:mb-[200px] md:-mt-[700px] md:mb-[300px] sm:-mt-[700px] sm:mb-[200px] -mt-[400px] mb-[100px] items-center justify-between gap-[70px] lg:px-[100px] md:px-[70px] px-[50px]'>
+      <div className='relative flex lg:flex-row xl:flex-row flex-col lg:-mt-[400px]  lg:mb-[200px]  xl:-mt-[650px] xl:mb-[200px] md:-mt-[400px] md:mb-[100px] sm:-mt-[400px] sm:mb-[200px] -mt-[500px] mb-[100px] items-center justify-between gap-[70px] lg:px-[100px] md:px-[70px] px-[30px]'>
         <div className='flex flex-col items-start gap-[15px]' data-aos="fade-up-right" data-aos-delay="500">
         <p className='text-[40px] leading-[50px] font-[600] text-[white]'>Request a meeting with sales</p>
         <p className='max-w-[500px] text-[16px] leading-[24px] font-[Poppins] text-[white]'>Request a meeting to learn about Ezosoft’s advanced features, how we support large teams or get a custom quote for an Enterprise plan.</p>
@@ -107,7 +107,7 @@ function ContactSales() {
             
             <input
             {...register('message', {required:true})}
-             type='text' placeholder=' Write your message' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border w-full border-black rounded-md focus:border-lightBlue'/>
+             type='text' placeholder='How many people are on your team?' className='pl-[24px] py-[15px] text-[16px] font-[400] font-[Poppins] outline-none border w-full border-black rounded-md focus:border-lightBlue'/>
              {errors.message && <div role='alert' className='text-red-500'> Message is required</div>}
             
             <button type='submit' className="w-full py-[15px] text-white bg-blue transition rounded-md  hover:bg-gradient text-[18px] font-[500] font-[Poppins] text-center leading-[20px]">
