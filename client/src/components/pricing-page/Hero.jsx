@@ -203,7 +203,7 @@ const fetchSubscriptionPlans = async () => {
           {isLoading ? (<div><GlobalLoader/></div>):(
 
 
-            <div className="sm:grid grid-cols-1 flex flex-col justify-center items-center   sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px] mt-[200px]">
+            <div className="sm:grid grid-cols-1 flex flex-col justify-center items-center   sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px] mt-[100px]">
            
             <div className="border-none elementCard max-w-[293px] w-[100%] pb-[23px] bg-white shadow-custom">
               <div className="mx-[30px] mt-[43px]">
