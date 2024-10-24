@@ -28,8 +28,8 @@ function Streamline() {
           </div>
           <div className='mt-[10px]'>
             <p className='text-[20px] leading-[27px] font-[600] font-[Poppins]'>Single source of truth</p>
-            <p className='max-w-[245px] text-[16px] leading-[26px] mt-[4px] font-[Poppins]'>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            <p className='max-w-[250px] text-[16px] leading-[26px] mt-[4px] font-[Poppins]'>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.
             </p>
           </div>
         </div>
@@ -44,8 +44,8 @@ function Streamline() {
           </div>
           <div className='mt-[10px]'>
             <p className='text-[20px] leading-[27px] font-[600] font-[Poppins]'>Peace of mind</p>
-            <p className='max-w-[245px] text-[16px] leading-[26px] mt-[4px] font-[Poppins]'>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            <p className='max-w-[250px] text-[16px] leading-[26px] mt-[4px] font-[Poppins]'>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.
             </p>
           </div>
         </div>
@@ -60,8 +60,8 @@ function Streamline() {
           </div>
           <div className='mt-[10px]'>
             <p className='text-[20px] leading-[27px] font-[600] font-[Poppins]'>Eliminate busy work</p>
-            <p className='max-w-[245px] text-[16px] leading-[26px] mt-[4px] font-[Poppins]'>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            <p className='max-w-[250px] text-[16px] leading-[26px] mt-[4px] font-[Poppins]'>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.
             </p>
           </div>
         </div>
@@ -76,8 +76,8 @@ function Streamline() {
           </div>
           <div className='mt-[10px]'>
             <p className='text-[20px] leading-[27px] font-[600] font-[Poppins]'>Access from anywhere</p>
-            <p className='max-w-[245px] text-[16px] leading-[26px] mt-[4px] font-[Poppins]'>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            <p className='max-w-[250px] text-[16px] leading-[26px] mt-[4px] font-[Poppins]'>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.
             </p>
           </div>
         </div>
