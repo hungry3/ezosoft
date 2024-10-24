@@ -25,8 +25,14 @@ img {
 @font-face {
   font-family: 'Exo 2';
   src: url('./assets/fonts/static/Exo2-Medium.ttf') format('truetype');
- 
- 
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Exo 2';
+  src: url('./assets/fonts/static/Exo2-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
 }
 
 @font-face {

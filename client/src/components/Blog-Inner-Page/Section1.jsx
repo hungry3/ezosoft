@@ -50,7 +50,7 @@ console.log("similarBlogs",similarBlogs);
     {isLoading ? ( <BlogSkeleton/>):(
 
 
-  <div className='mx-[100px]'>
+  <div className='mx-[30px] md:mx-[50px]  lg:mx-[100px]'>
         <div className='flex flex-col justify-start'>
   
             <div className='flex flex-col items-start'> <p className='text-[40px] leading-[54px] font-[600] mt-[100px] items-start'>{blog.title}</p>
@@ -79,23 +79,26 @@ console.log("similarBlogs",similarBlogs);
            <div className='flex flex-wrap gap-[30px] w-full'>
 
                 
-{similarBlogs.map((items)=>
+{similarBlogs.map((blog)=>
   
-   <NavLink to={`/blog/${items._id}`} key={items._id} className='flex flex-col mt-[27px] max-w-[388px] w-full border border-[#EBEBEB] rounded-xl'>
-        <img src={items.image} alt={items.title} className='relative rounded-tr-xl rounded-tl-xl w-[400px] h-[237px]'/>
-        <div className='absolute  ml-[22px] mt-[20px] py-[2px] px-[8px] rounded-full bg-blue text-center text-white'>{items.category}</div>
+  <NavLink to={`/blog/${blog._id}`} key={blog._id} className='flex flex-col mt-[31px] max-w-[396px] w-full border border-[#EBEBEB] rounded-xl'>
+<div className='max-w-[400px] h-[240px]'>
+<img src={blog.image} alt={blog.title} className='relative w-full h-full rounded-tr-md rounded-tl-md obj '/>
 
-        <div className='ml-[31px] pb-[20px]'>
-        <div className='flex gap-[10px] mt-[24px] items-center'>
-        <p className='text-[14px] font-[Poppins] font-[400] '>Author:</p>
-            <p className='text-[14px] font-[Poppins] font-[400] text-darkGrey text-nowrap'>{items.author}</p>
-            <div className='w-[3px] h-[3px] rounded-full bg-blue'></div>
-            <p className='text-[14px] font-[Poppins] font-[400] text-darkGrey text-nowrap'>{formatDate(items.createdAt)}</p>  
-        </div>
-        <p className='mt-[16px] max-w-[293px] w-full text-[20px] font-[Poppins] leading-[28px] font-bold '>{items.title}</p>
-          <p className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] leading-[24px] font-[400]' dangerouslySetInnerHTML={{__html:truncateContent(items.content)}}/>
-        </div>
-    </NavLink>
+</div>
+<div className='absolute  ml-[22px] mt-[20px] py-[2px] px-[12px] rounded-full bg-blue text-center text-white'>{blog.category}</div>
+
+<div className='ml-[31px] pb-[20px]'>
+<div className='flex gap-[10px] mt-[24px] items-center'>
+<p className='text-[14px] font-[Poppins] font-[400] '>Author</p>
+    <p className='text-[14px] font-[Poppins] font-[400] text-darkGrey'>{blog.author}</p>
+    <div className='w-[3px] h-[3px] rounded-full bg-blue'></div>
+    <p className='text-[14px] font-[Poppins] font-[400] text-darkGrey'>{formatDate(blog.createdAt)}</p>  
+</div>
+<p className='mt-[16px] max-w-[293px] w-full text-[20px] font-[Poppins] leading-[28px] font-bold '>{blog.title}</p>
+<div className='mt-[16px] max-w-[293px] w-full text-[16px] font-[Poppins] leading-[24px] pb-[30px] font-[400]'  dangerouslySetInnerHTML={{__html:truncateContent(blog.content)}}/>
+</div>
+</NavLink>
    
 )}
   </div>
@@ -118,3 +121,8 @@ console.log("similarBlogs",similarBlogs);
 }
 
 export default Section1
+
+
+
+
+

@@ -36,7 +36,7 @@ const CategoryPage = () => {
     
 
     <BlogNavbar/>
-    <div className="mx-[100px] mt-[100px] mb-10">
+    <div className="mx-[30px] md:mx-[50px] lg:mx-[100] mt-[100px] mb-10">
       <h1 className="mb-4 text-5xl font-bold">Blogs in {category}</h1>
       <div className="flex flex-wrap justify-start gap-4">
 

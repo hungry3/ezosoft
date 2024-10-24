@@ -88,7 +88,7 @@ const Sidebar = ({isCollapsed}) => {
      
     {/* template items */}
     <div className='flex flex-col'>
-       <div  className={`mt-[20px] py-[6px] pl-[16px] pr-[30px] text-white cursor-pointer ${activeTab ==='allTemplates'? 'text-grey bg-lightBlue  rounded-md': ''} `} onClick={() => handleActiveTab('All Templates')}> <h2 className='text-[16px] leading-[24px] font-[600] font-[Poppins]'>All Template</h2></div>
+      <NavLink to='/allTemplates'  className={`mt-[20px] py-[6px] pl-[16px] pr-[30px] text-white cursor-pointer ${activeTab ==='allTemplates'? 'text-grey bg-lightBlue  rounded-md': ''} `} onClick={() => handleActiveTab('All Templates')}> <h2 className='text-[16px] leading-[24px] font-[600] font-[Poppins]'>All Template</h2></NavLink>
 
 
        <div  className={`mt-[15px] py-[6px] pl-[16px] pr-[30px] text-white cursor-pointer ${activeTab==='free-template' ? 'bg-lightBlue text-grey  rounded-md':''}`} onClick={() =>{handleActiveTab('free-template')}}> <h2 className='text-[16px] leading-[24px] font-[600] font-[Poppins]'>Add New Template</h2></div>

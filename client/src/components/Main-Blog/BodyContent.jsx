@@ -46,7 +46,7 @@ const BodyContent = () => {
   
   return (
     <>
-      <div className='mt-[100px] lg:mx-[100px] xl:mx-[100px] md:mx-[40px] mx-[20px] flex flex-col-reverse md:flex-row lg:flex-row xl:flex-row  gap-[50px]'>
+      <div className='mt-[100px] lg:mx-[100px] xl:mx-[100px] md:mx-[40px] mx-[20px] flex justify-center items-center lg:items-start flex-col-reverse md:flex-row lg:flex-row xl:flex-row  gap-[50px] lg:gap-[50px]  flex-wrap-reverse lg:flex-nowrap mb-[60px]'>
      
         <div className='flex flex-wrap justify-start w-full gap-[20px]'>
             <div className='w-[851px] border border-[#EBEBEB] rounded-md flex lg:flex-row xl:flex-row md:flex-row flex-col justify-between'>
@@ -79,7 +79,10 @@ const BodyContent = () => {
                <NavLink to={`/blog/${blog._id}`} key={blog._id}  className='flex flex-col pb-[20px] mx-[13px]'>
                 
                 <div className='flex gap-[20px]'>
-                    <img src={blog.image} alt={blog.title} className='max-w-[110px] max-h-[80px] rounded-lg '/>
+                <div className='w-[110px] h-[80px]'>
+                <img src={blog.image} alt={blog.title} className='w-full h-full rounded-lg '/>
+
+                </div>
                     <div className='flex flex-col gap-2'>
                         <p className='max-w-[162px] w-full text-[15px] leading-[21px] font-[Poppins] font-bold  '>{blog.title}</p>
                         <p className='max-w-[162px] w-full text-[16px] leading-[25px] text-[#58595B] font-[Poppins] font-normal'>{formatDate(blog.createdAt)}</p>
@@ -99,7 +102,7 @@ const BodyContent = () => {
                   <BlogLoader key={index} />
                 )) :  blogs.slice(4).map((blog)=>
                 <NavLink to={`/blog/${blog._id}`} key={blog._id} className='flex flex-col mt-[31px] max-w-[396px] w-full border border-[#EBEBEB] rounded-xl'>
-                    <div className='w-[400px] h-[240px]'>
+                    <div className='max-w-[400px] h-[240px]'>
                     <img src={blog.image} alt={blog.title} className='relative w-full h-full rounded-tr-md rounded-tl-md obj '/>
 
                     </div>
@@ -124,7 +127,7 @@ const BodyContent = () => {
     
 
        {/* sidebar */}
-        <div className='max-w-[356px] w-full border rounded-md border-[#EBEBEB] h-[100%] pt-[46px] items-center justify-start'>
+        <div className='max-w-[356px] w-full border rounded-md border-[#EBEBEB] h-[100%] pt-[46px] items-start  lg:items-center justify-start'>
         <p className='text-[24px] leading-[28px] font-[Poppins] font-[600] text-center'>Categories</p>
         
         

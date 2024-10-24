@@ -26,8 +26,8 @@ function App() {
 
     <Routes>
     <Route  path='/login' element={<Login/>} />
-  <Route element={<ProtectedRoute/>}>
-      {/* <Route exact path='/' element={<User/>} />
+ 
+      <Route exact path='/' element={<User/>} />
       <Route exact path='/allTemplates' element={<AllTemplates/>} />
       <Route path='/view-template/:id' element={<ViewSingleTemplate />} />
      
@@ -35,7 +35,7 @@ function App() {
       <Route exact path='/user' element={<User/>} />
       <Route exact path='/ViewSingleUser/:id' element={<SingleUserPage/>} />
       <Route exact path='/editSingleUser/:id' element={<EditSingleUserPage/>} />
-      <Route exact path='/addTemplates' element={<AddNewTemplates/>} /> */}
+      <Route exact path='/addTemplates' element={<AddNewTemplates/>} />
       <Route exact path='/' element={<AllBlogs/>}/>
       <Route exact path='/allblogs' element={<AllBlogs/>} />
       <Route path='/blogs-category' element={<BlogCategory/>} />
@@ -43,7 +43,7 @@ function App() {
       <Route exact path='/addnewblogs' element={<AddNewBlogs/>} />
       <Route path='/blog/edit/:blogId' element={<EditedBlog/>}/>
       <Route path='/blog/single/:blogId' element={<SingleBlogPage />} />  
-      </Route>
+     
     </Routes>
     </BrowserRouter>
     </AuthProvider>
