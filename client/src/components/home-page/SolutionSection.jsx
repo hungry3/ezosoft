@@ -26,7 +26,9 @@ function SolutionSection() {
   onClick={() => setActive(1)}
 >
   <div className='mt-[32px] ml-[23px]'>
-   {active === 1 ?  <img src={LightIcon1st} alt='image' loading='lazy' className='w-[24px] h-[24px]'  />:  <img src={WorkLoad} alt='image' loading='lazy' className='w-[24px] h-[24px]'  />}
+   {active === 1 ?  <img src={LightIcon1st} alt='image' loading='lazy' className='w-[24px] h-[24px]'  />:<> <img src={WorkLoad} alt='image' loading='lazy' className='w-[24px] h-[24px] group-hover:hidden'  />  
+   <img src={LightIcon1st} alt='image' loading='lazy' className='w-[24px] h-[24px] hidden group-hover:block'  />
+   </> }
   </div>
   <div className='flex flex-col mt-[25px]'>
     <p className={`text-[20px] leading-[29px] expo-medium group-hover:text-white ${active === 1 ? 'text-white' : 'text-gray-800'}`}>
@@ -52,10 +54,10 @@ function SolutionSection() {
     
   </div>
   <div className='flex flex-col mt-[25px]'>
-    <p className={` text-[20px] leading-[29px] expo-medium group-hover:text-white `}>
+    <p className={` text-[20px] leading-[29px] expo-medium group-hover:text-white ${active === 2 ? 'text-white' : 'text-gray-600'} `}>
       Organize everything in one system of record
     </p>
-    <p className={`max-w-[419px] font-[Poppins] text-[16px] leading-[25px] font-[400] pb-[27px] group-hover:text-white`}>
+    <p className={`max-w-[419px] font-[Poppins] text-[16px] leading-[25px] font-[400] pb-[27px] group-hover:text-white   ${active === 2 ? 'text-white' : 'text-gray-600'}`}>
       From client assets and project timelines to communications and financial reporting.
     </p>
   </div>
@@ -68,7 +70,10 @@ function SolutionSection() {
   onClick={() => setActive(3)}
 >
   <div className='mt-[32px] ml-[23px]'>
-    {active === 3? <img src={Solution3White} alt='image'  loading='lazy' className='w-[24px] h-[24px]' /> : <img src={Retainer} alt='image'  loading='lazy' className='w-[24px] h-[24px]' />}
+    {active === 3 ? <img src={Solution3White} alt='image'  loading='lazy' className='w-[24px] h-[24px]' /> :<>
+    <img src={Retainer} alt='image'  loading='lazy' className='w-[24px] h-[24px] group-hover:hidden' />
+    <img src={Solution3White} alt='image'  loading='lazy' className='w-[24px] h-[24px] hidden group-hover:block' /> </> 
+    }
 
   </div>
   <div className='flex flex-col mt-[25px]'>
