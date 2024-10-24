@@ -13,12 +13,12 @@ function SolutionSection() {
   const [ active, setActive] = useState(1)
   return (
     <>
-      <div className='py-[100px] lg:pl:[100px] xl:pl-[100px] bg-lightBlue  overflow-hidden'>
+      <div className=' py-[50px] sm:py-[100px] lg:pl:[100px] xl:pl-[100px] bg-lightBlue  overflow-hidden'>
        <div className='flex items-center justify-center '>
-       <p className='max-w-[787px] expo-medium  text-[25px] md:text-[30px] lg:text-[40px] xl:text-[45px] leading-[50px] text-center'>One solution for all your client operations challenges </p>
+       <p className='max-w-[787px] expo-medium   text-[30px] md:text-[30px] lg:text-[40px] xl:text-[45px]  leading-[30px] md:leading-[50px] text-center'>One solution for all your client operations challenges </p>
        </div>
 
-       <div className='w-[100%] gap-[100px] flex flex-col md:[50%] w-[100%] flex-row lg:flex-row xl-flex-row mt-[86px]'>
+       <div className=' gap-[100px] flex flex-col md:[50%] w-[100%]  lg:flex-row xl:flex-row mt-[40px] sm:mt-[86px]'>
          <div className='lg:w-[50%] xl:w-[50%] md] flex flex-col items-center justify-start mt-[27px] px-[20px]'>
          <div><p className='max-w-[475px] font-semibold text-[24px] leading-[36px]'>Deliver projects profitably, streamline client operations, and delight clients</p></div>
          <div
@@ -52,10 +52,10 @@ function SolutionSection() {
     
   </div>
   <div className='flex flex-col mt-[25px]'>
-    <p className={` text-[20px] leading-[29px] expo-medium group-hover:text-white group-hover:text-white`}>
+    <p className={` text-[20px] leading-[29px] expo-medium group-hover:text-white `}>
       Organize everything in one system of record
     </p>
-    <p className={`max-w-[419px] font-[Poppins] text-[16px] leading-[25px] font-[400] pb-[27px] group-hover:text-white group-hover:text-white`}>
+    <p className={`max-w-[419px] font-[Poppins] text-[16px] leading-[25px] font-[400] pb-[27px] group-hover:text-white`}>
       From client assets and project timelines to communications and financial reporting.
     </p>
   </div>

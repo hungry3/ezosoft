@@ -8,8 +8,8 @@ function SecondSection() {
   });
   return (
     <>
-      <div className='lg:m-[100px] xl:m-[100px] md:m-[50px] m-[30px] '>
-      <div className='flex flex-col-reverse flex-wrap items-center justify-between lg:flex-row lg:flex-nowrap'>
+      <div className='lg:m-[100px] xl:m-[100px] md:m-[50px] mx-[30px] my-[50px] '>
+      <div className='flex flex-col-reverse flex-wrap items-center justify-around gap-3 lg:flex-row lg:flex-nowrap'>
       <div className=''data-aos="zoom-in" data-aos-delay="500"><img src={Image} alt='image-2' loading='lazy'/></div>
       <div className='max-w-[579px] flex flex-col items-center justify-center'>
       <div className='text-[40px] leading-[50px] expo-medium'>We Can Help You Save Time And Money in Your Business</div>

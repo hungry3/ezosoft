@@ -37,7 +37,7 @@ function ClientReview() {
     <div className='w-[100%] bg-white'>
       <div className='lg:m-[100px] xl:m-[100px] m-[30px] bg-white'>
         <div className='flex items-center justify-center mb-[36px]'>
-          <p className='text-center lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] lg:mt-[100px] xl:mt-[100px] md:mt-[70px] sm:mt-[50px] leading-[50px]'>
+          <p className='text-center lg:text-[40px] xl:text-[40px] md:text-[35px] text-[30px] leading-[50px]'>
             What Our Clients Say About Us
           </p>
         </div>
@@ -47,9 +47,9 @@ function ClientReview() {
           {testimonials.map((testimonial, index) => (
             <div key={index} className='flex items-center justify-center w-full'>
               <div className='w-full '>
-                <div className='flex flex-col justify-between  w-full  h-auto bg-[url("/src/assets/images/bg-slider.svg")] bg-cover bg-center rounded-md'>
+                <div className='flex flex-col justify-between w-full  h-auto bg-[url("/src/assets/images/bg-slider.svg")] bg-cover bg-center rounded-md'>
                  <div className='w-full'>
-                 <p className='pl-[20px] md:pl-[20px] lg:pl-[50px] xl:pl-[50px] py-[20px] md:py-[30px] lg:py-[50px] xl:py-[50px] max-w-[343px] font-[Poppins] text-[16px] leading-[26px]'>
+                 <p className='pl-[20px] pr-[20px] md:pl-[20px] lg:pl-[50px] xl:pl-[50px] py-[20px] md:py-[30px] lg:py-[50px] xl:py-[50px] max-w-[343px] font-[Poppins] text-[16px] leading-[26px]'>
                     {testimonial.text}
                   </p>
                  </div>

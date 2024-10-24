@@ -2,12 +2,17 @@ import  { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/images/Logo.svg'
 import useAuth from '../hooks/useAuth';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {auth} = useAuth()
   console.log(("auth", auth));
+  AOS.init({
+    duration: 1000, 
+    delay: 200,     
+  }); 
   
-
   return (
     <nav className="bg-none px-4 lg:px-[100px] xl:px-[100px] md:px-[10px] pt-12 relative z-[20] w-[100%] ">
       <div className=" flex items-center justify-between w-[100%]">
@@ -114,7 +119,10 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute flex flex-col w-full p-4 space-y-3 pl-[50px] rounded-md shadow-2xl lg:hidden bg-gradient right-3 top-18">
+        <div
+  className={`absolute z-10 top-18 left-0 flex flex-col w-full p-4 space-y-3 pl-[50px] rounded-md shadow-2xl lg:hidden bg-gradient transform   ${isOpen ? 'animate-slideIn' : 'hidden'}`}
+      data-aos="fade-down-left" data-aos-delay="10"
+         >
           <NavLink
             to="/"
             className={({ isActive }) =>

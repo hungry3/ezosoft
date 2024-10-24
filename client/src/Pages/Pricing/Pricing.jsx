@@ -25,7 +25,7 @@ function Pricing() {
   
       <Hero/>
 
-      <div className='mt-[400px]'></div>
+      <div className='md:mt-[300px] xl:mt-[400px] mt-[100px]'></div>
       <Faq faqItems={faqItems} faqItems2={faqItems2}/>
       <ClientReview/>
       <Trial/>
