@@ -46,7 +46,7 @@ function ContactSales() {
     <>
     <ToastContainer/>
      <div
-        className="relative w-full  -mt-[100px] md:-mt-[300px]  bg-cover lg:h-[100vh] xl:h-[100vh] md:h-[100vh] h-[90vh] bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center">
+        className="relative w-full  -mt-[100px] md:-mt-[300px]  bg-cover lg:h-[100vh] xl:h-[120vh] md:h-[100vh] h-[100vh] bg-[url('/src/assets/images/mainBg.svg')]  bg-no-repeat bg-center">
 
         
         
