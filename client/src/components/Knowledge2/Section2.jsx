@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 function Section2() {
   // Define the state for the active paragraph
-  const [activeIndex, setActiveIndex] = useState(null);
-  const [isOpen, setIsOpen] = useState(false); // Control dropdown visibility
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false); 
 
   
 
@@ -25,11 +25,11 @@ function Section2() {
     
   ];
   const handleDropdownToggle = () => {
-    setIsOpen(!isOpen); // Toggle dropdown visibility
+    setIsOpen(!isOpen); 
   };
   const handleItemClick = (index) => {
-    setActiveIndex(index); // Set the clicked index as active
-    setIsOpen(false); // Close the dropdown after selecting an item
+    setActiveIndex(index); 
+    setIsOpen(false); 
   };
  
 
@@ -60,6 +60,7 @@ function Section2() {
           <div
         className="text-[19px] font-[400] font-[Poppins] bg-gray-200 rounded-md py-2 px-2 cursor-pointer sm:hidden"
         onClick={handleDropdownToggle}
+        
       >
         {/* Show selected item or default text */}
         {activeIndex !== null ? paragraphs[activeIndex] : "Select an option"}
