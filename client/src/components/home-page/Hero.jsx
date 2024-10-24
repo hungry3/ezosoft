@@ -18,7 +18,7 @@ const Hero = () => {
     
       <div className="relative z-10 flex flex-col items-center justify-center h-full ">
       
-      <div className='max-w-[870.33px] w-full lg:max-w-[1000px] xl:max-w-[1000px] justify-center text-center items-center  md:pt-[0px] lg:pt-[10px] pt-[500px]'>
+      <div className='max-w-[870.33px] w-full lg:max-w-[1000px] xl:max-w-[1000px] justify-center text-center items-center  md:pt-[0px] lg:pt-[10px] mt-[400px]'>
         <h2 className="lg:text-[70px] xl:text-[70px] md:text-[50px] sm:text-[40px] text-[30px] text-white  md:leading-70 lg:leading-70 xl:leading-70 leading-[40px] font-[500]">Project Management <span className='font-bold' style={{fontWeight:"bold"}}>Software </span> for Business Excellence</h2>
 
         <div className='flex flex-col items-center justify-center mt-8 '>
@@ -38,7 +38,7 @@ const Hero = () => {
       </div>
     
     </div>
-<div className='mt-44 shadow-custom bouncing-image ' >
+<div className='mt-32 shadow-custom bouncing-image ' >
         
 <img src={banner} alt='banner' loading='lazy'/>
 </div>
