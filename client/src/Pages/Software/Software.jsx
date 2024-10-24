@@ -8,14 +8,16 @@ import SixthSection from '../../components/software/SixthSection'
 import Trial from '/src/components/home-page/Trial'
 import Footer from '/src/components/Footer'
 import Navbar from '../../components/Navbar'
+import Services from '../../components/home-page/Services'
 
-function software() {
+function software() { 
   return (
     <>
     <Navbar/>
       <Hero/>
       <div className='mt-[100px]'><Transforming bgColor="white"/></div>
-      <SoftServices/>
+      {/* <SoftServices/> */}
+      <Services/>
       <FourthSectioin/>
       <FifthSection/>
       <SixthSection/>
