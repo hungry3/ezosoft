@@ -8,7 +8,7 @@ function Hero() {
        <div className='bg-[url("/src/assets/images/bgTrail.svg")] bg-cover  h-[100%] w-[100%]  bg-no-repeat '>
 
       
-    <div className='lg:mx-[200px] xl:mx-[200px] md:mx-[100px] mx-[30px] flex pb-[94px]'>
+    <div className='lg:mx-[200px] xl:mx-[200px] md:mx-[100px] mx-[30px] flex lg:pb-[94px] xl:pb-[94px] md:pb-[60px] sm:pb-[50px] pb-[30px]'>
 
     <div className='w-full'>
    <div className='flex items-center justify-start pt-[100px]'>
