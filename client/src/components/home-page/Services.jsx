@@ -169,7 +169,7 @@ function Services() {
  
      
 {activeTab==="overview" && (
-  <div className='lg:mt-[73px] xl:mt-[73px] md:mt-[50px] mt-[20px] flex flex-col lg:flex-row xl:flex-row justify-center items-center gap-[100px]'>
+  <div className='flex flex-col lg:flex-row xl:flex-row justify-center items-center gap-[100px]'>
         <div className='' data-aos="zoom-in-right" data-aos-delay="400"> 
         <p className='max-w-[497px]  mt-[30px] text-[30px] leading-[31px] font-[600]'>Detailed planning and execution</p>
         <p className='max-w-[518px] mt-[16px] text-[16px] leading-[26px] font-[Poppins] font-[400] '> For projects that require vigorous planning, forecasting, cost analysis, resource allocation, task management and reporting, ProjectManager outperforms the competition.</p>
