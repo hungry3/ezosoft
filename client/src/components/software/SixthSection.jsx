@@ -10,7 +10,7 @@ function SixthSection() {
   return (
     <>
       <div>
-        <div className='lg:m-[100px] xl:m-[100px] md:m-[50px] m-[30px] flex flex-wrap justify-between gap-[20px]'>
+        <div className='lg:m-[100px] xl:m-[100px] md:m-[50px] m-[30px] flex flex-wrap justify-around gap-[20px]'>
        <div>
         <img src={Image}  alt='image' loading='lazy'   data-aos="zoom-out-right" data-aos-delay="400"/>
        </div>

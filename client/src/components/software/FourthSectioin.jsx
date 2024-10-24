@@ -11,7 +11,7 @@ function FourthSectioin() {
   return (
     <>
       <div>
-        <div className='lg:m-[100px] xl:m-[100px] md:m-[50px] m-[30px] flex flex-wrap  justify-between'>
+        <div className='lg:m-[100px] xl:m-[100px] md:m-[50px] m-[30px] flex flex-wrap  justify-around'>
        <div className=''  data-aos="zoom-out-right" data-aos-delay="400">
         <img src={Image}  alt='image' loading='lazy'/>
        </div>

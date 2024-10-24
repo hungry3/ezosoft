@@ -10,7 +10,7 @@ function FifthSection() {
   return (
     <>
        <div className='bg-lightBlue'>
-        <div className='lg:m-[100px] xl:m-[100px] md:m-[50px] m-[30px] lg:py-[100px] py-[50px]  flex flex-wrap justify-between gap-[20px]'>
+        <div className='lg:m-[100px] xl:m-[100px] md:m-[50px] m-[30px] lg:py-[100px] py-[50px]  flex flex-wrap justify-around '>
       
        {/* text */}
        <div className='flex flex-col justify-center gap-4'  data-aos="zoom-in-right" data-aos-delay="400">
